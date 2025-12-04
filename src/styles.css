@@ -1,2 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "tailwindcss";
+@import "../public/fonts/fonts.css";
+
+
+/*! colors */
+
+@theme {
+    --main-color: #ED2924;
+    --primary-font-color: #440000;
+}
+
+
+
+body {
+    font-family: "Cairo", sans-serif !important;
+
+}
+
+h1,
+h2 {
+    font-family: "Changa", sans-serif;
+}
+
+
+
+/* ! reusable hero background */
+.bg-hero {
+    background-image: url('../public/images/hero/hero.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100%;
+  
+}
+
+.bg-linear{
+      background: linear-gradient(to bottom, #440000, #ED2924);
+}
