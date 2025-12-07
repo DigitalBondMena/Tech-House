@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class SectionTitle {
   @Input() title: string = '';
+  @Input() customClass: string = '';
 }

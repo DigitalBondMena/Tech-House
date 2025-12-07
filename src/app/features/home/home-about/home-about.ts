@@ -8,6 +8,6 @@ import { SectionTitle } from '../../../shared/components/section-title/section-t
   styleUrl: './home-about.css'
 })
 export class HomeAbout {
-   //! section title data
+  //! section title data
   aboutTitle = "من نحن";
 }
