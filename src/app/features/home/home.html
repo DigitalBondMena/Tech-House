@@ -1,11 +1,21 @@
-<section>
-<app-hero-section
-  [title]="homeTitle"
-  [btn]="btn"
-  [subtitle]="homeSubtitle"
-  [paragraph]="homeParagraph"
-  [image]="homeImage"
-  imagePosition="none"
-  [subtitleAboveTitle]="false">
-</app-hero-section>    
+<section class="">
+    <app-hero-section [title]="homeTitle" [btn]="btn" [subtitle]="homeSubtitle" [paragraph]="homeParagraph"
+        [image]="homeImage" imagePosition="none" [subtitleAboveTitle]="false">
+    </app-hero-section>
+    <!-- about   -->
+    <app-home-about></app-home-about>
+    <!-- clients & parteners banners   -->
+     <app-home-banners-sec></app-home-banners-sec>
+    <!-- services   -->
+    <app-home-services></app-home-services>
+    <!-- projects   -->
+    <app-home-projects></app-home-projects>
+    <!-- booking an appointments   -->
+    <app-home-booking></app-home-booking>
+    <!-- clients review   -->
+    <app-home-clients-review></app-home-clients-review>
+    <!-- blogs   -->
+    <app-home-blogs></app-home-blogs>
+    <!-- contact-us   -->
+    <app-contact-us-sec></app-contact-us-sec>
 </section>
