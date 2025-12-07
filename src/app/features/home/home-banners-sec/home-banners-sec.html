@@ -1,8 +1,24 @@
-<section class="container mx-auto px-20 py-20">
-    <app-section-title [title]="partenersTitle">
-    </app-section-title>
-    <app-banner></app-banner>
-    <app-section-title [title]="clientsTitle">
-    </app-section-title>
-    <app-banner></app-banner>
+<section class=" ">
+    <!-- parteners -->
+    <div class="mb-20   w-full ">
+        <div class="container mx-auto px-20">
+            <app-section-title [title]="partenersTitle" class="pb-5">
+            </app-section-title>
+        </div>
+        <div class=" w-full ">
+            <app-banner customClass="-rotate-2 relative -right-1 rounded-l-full w-[95%] mt-10 " class=""></app-banner>
+        </div>
+
+    </div>
+    <!-- clients -->
+    <div class="mb-20  pb-20  w-full ">
+        <div class="container mx-auto px-20">
+            <app-section-title [title]="clientsTitle">
+            </app-section-title>
+        </div>
+        <div class=" w-full overflow-hidden pb-10">
+            <app-banner customClass="-rotate-2 relative -left-50 rounded-r-full w-[95%] mt-10 "></app-banner>
+        </div>
+    </div>
+
 </section>

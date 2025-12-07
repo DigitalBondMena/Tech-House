@@ -13,7 +13,7 @@ import { HomeBannersSec } from './home-banners-sec/home-banners-sec';
 
 @Component({
   selector: 'app-home',
-  imports: [HeroSection , HomeBanner, HomeAbout,HomeBannersSec , HomeServices, HomeProjects, HomeBooking, HomeClientsReview, HomeBlogs, ContactUsSec, Banner],
+  imports: [HeroSection , HomeAbout,HomeBannersSec , HomeServices, HomeProjects, HomeBooking, HomeClientsReview, HomeBlogs, ContactUsSec],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

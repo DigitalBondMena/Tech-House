@@ -4,7 +4,7 @@ import { Banner } from '../../../shared/components/banner/banner';
 
 @Component({
   selector: 'app-home-banners-sec',
-  imports: [SectionTitle,HomeBannersSec,Banner],
+  imports: [SectionTitle,Banner],
   templateUrl: './home-banners-sec.html',
   styleUrl: './home-banners-sec.css'
 })
