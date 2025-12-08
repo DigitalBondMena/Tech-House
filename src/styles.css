@@ -40,3 +40,24 @@ h2 {
 .bg-linear{
       background: linear-gradient(to left, #440000, #ED2924);
 }
+
+/* ! scrollbar styling */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background:  transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #440000, #ED2924);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #940000;
+}
+
+
