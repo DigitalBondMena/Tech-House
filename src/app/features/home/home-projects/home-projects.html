@@ -1,1 +1,24 @@
-<p>home-projects works!</p>
+<section class="container mx-auto px-20 py-20">
+    <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-20">
+    </app-section-title>
+    <div class="flex justify-between items-center bg-[#fef4f4]  rounded-2xl p-10 px-10">
+        <div class="w-1/4 p-5 xl:p-10"> 
+            <img src="/images/projects.png" alt="project" class=" w-[300px] xl:w-[200px] ">
+        </div>
+        <div class="h-full w-3/4 p-5 xl:p-10">
+            <h2 class="text-xl text-[#636363] font-medium mb-6">تطبيق و موقع</h2>
+            <h3 class="text-xl font-bold text-[#440000] mb-6">المصرية الخليجية للاستشارات التعليمية</h3>
+            <p class="mb-12 text-lg font-medium text-[#440000]">موقع متخصص في تقديم حلول تعليمية مبتكرة وخدمات إرشادية للطلاب والمؤسسات الأكاديمية من خلال تصميم هوية بصرية عصرية تعكس رسالتها في دعم رحلات التعلم.</p>
+             <span class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer">عرض تفاصيل المشروع
+                <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
+            </span>
+        </div>
+    </div>
+    <div class="flex justify-center ">
+        <button
+            class="mt-20 ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center]  transition duration-300">
+            مشاريع اكثر
+            <img src="images/icons/arrow-left.png" alt="arrow-left" class="h-7 w-7 p-1 ms-5  bg-white rounded-full">
+        </button>
+    </div>
+</section>
