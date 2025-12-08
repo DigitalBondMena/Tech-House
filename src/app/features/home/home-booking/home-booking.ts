@@ -9,9 +9,7 @@ import { AppButton } from '../../../shared/components/app-button/app-button';
   styleUrl: './home-booking.css'
 })
 export class HomeBooking {
-
-
   //! button data
-  btnText =  "احجز موعدك";
+  btnText = "احجز موعدك";
 
 }
