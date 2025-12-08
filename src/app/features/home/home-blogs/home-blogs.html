@@ -1,1 +1,117 @@
-<p>home-blogs works!</p>
+<section class="container mx-auto  lg:px-20 py-20 text-[#440000]">
+    <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-10">
+    </app-section-title>
+    <div class="flex justify-center mt-4 gap-6 items-start max-h-[60vh]">
+
+        <!-- Card 1 -->
+        <div class="cursor-pointer transition-all duration-800" (click)="activeCard = 1"
+            [class]="activeCard === 1 ? 'w-1/2 pt-0' : 'w-1/4 pt-6'">
+            <img src="/images/blogs-2.jpg" class="rounded-3xl w-full object-cover transition-all duration-800"
+                [class]="activeCard === 1 ? 'h-[50vh]' : 'h-[40vh]'">
+
+
+             <div class="flex flex-col">
+                <div [class]="activeCard === 1 ? 'order-1  ' : ''">
+                    <span class="block transition-all duration-400"
+                        [class]="activeCard === 1 ? 'opacity-0 translate-50 transition-all duration-800' : 'opacity-100 translate-y-0'">
+                        22 جمادى الأولى 1447هـ
+                    </span>
+
+                    <h3 class="mt-4 transition-all duration-400"
+                        [class]="activeCard === 1 ? 'opacity-0 translate-50 text-2xl font-bold transition-all duration-800' : 'opacity-100 translate-y-0 text-xl font-semibold'">
+                        افضل اسعار تصميم المواقع
+                    </h3>
+
+                </div>
+                <div [class]="activeCard === 1 ? '' : 'order-1'">
+                    <span class="block transition-all"
+                        [class]="activeCard === 1 ? 'opacity-100 translate-x-0 transition-all duration-800' : 'opacity-0 translate-x-50'">
+                        22 جمادى الأولى 1447هـ
+                    </span>
+
+                    <h3 class="mt-4 transition-all"
+                        [class]="activeCard === 1 ? 'opacity-100 translate-x-0 text-2xl font-bold transition-all duration-800' : 'opacity-0 translate-x-50 text-xl font-semibold'">
+                        افضل اسعار تصميم المواقع
+                    </h3>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Card 2 (Main) -->
+        <div class="cursor-pointer transition-all duration-800" (click)="activeCard = 2"
+            [class]="activeCard === 2 ? 'w-1/2' : 'w-1/4 pt-6'">
+            <img src="/images/blogs-1.jpg" class="rounded-3xl w-full object-cover transition-all duration-800"
+                [class]="activeCard === 2 ? 'h-[50vh]' : 'h-[40vh] '">
+
+
+              <div class="flex flex-col">
+                <div [class]="activeCard === 2 ? 'order-1  ' : ''">
+                    <span class="block transition-all duration-400"
+                        [class]="activeCard === 2 ? 'opacity-0 -translate-50 transition-all duration-800' : 'opacity-100 translate-y-0'">
+                        22 جمادى الأولى 1447هـ
+                    </span>
+
+                    <h3 class="mt-4 transition-all duration-400"
+                        [class]="activeCard === 2 ? 'opacity-0 translate-50 text-2xl font-bold transition-all duration-800' : 'opacity-100 translate-y-0 text-xl font-semibold'">
+                        افضل اسعار تصميم المواقع
+                    </h3>
+
+                </div>
+                <div [class]="activeCard === 2 ? '' : 'order-1'">
+                    <span class="block transition-all"
+                        [class]="activeCard === 2 ? 'opacity-100 translate-x-0 transition-all duration-800' : 'opacity-0 translate-x-50'">
+                        22 جمادى الأولى 1447هـ
+                    </span>
+
+                    <h3 class="mt-4 transition-all"
+                        [class]="activeCard === 2 ? 'opacity-100 translate-x-0 text-2xl font-bold transition-all duration-800' : 'opacity-0 translate-x-50 text-xl font-semibold'">
+                        افضل اسعار تصميم المواقع
+                    </h3>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="cursor-pointer transition-all duration-800 " (click)="activeCard = 3"
+            [class]="activeCard === 3 ? 'w-1/2 pt-0' : 'w-1/4 pt-6'">
+            <img src="/images/blogs-2.jpg" class="rounded-3xl w-full object-cover transition-all duration-800"
+                [class]="activeCard === 3 ? 'h-[50vh]' : 'h-[40vh]'">
+
+            <div class="flex flex-col">
+                <div [class]="activeCard === 3 ? 'order-1  ' : ''">
+                    <span class="block transition-all duration-400"
+                        [class]="activeCard === 3 ? 'opacity-0 translate-50 transition-all duration-800' : 'opacity-100 translate-y-0'">
+                        22 جمادى الأولى 1447هـ
+                    </span>
+
+                    <h3 class="mt-4 transition-all duration-400"
+                        [class]="activeCard === 3 ? 'opacity-0 translate-50 text-2xl font-bold transition-all duration-800' : 'opacity-100 translate-y-0 text-xl font-semibold'">
+                        افضل اسعار تصميم المواقع
+                    </h3>
+
+                </div>
+                <div [class]="activeCard === 3 ? '' : 'order-1'">
+                    <span class="block transition-all"
+                        [class]="activeCard === 3 ? 'opacity-100 translate-x-0 transition-all duration-800' : 'opacity-0 translate-x-50'">
+                        22 جمادى الأولى 1447هـ
+                    </span>
+
+                    <h3 class="mt-4 transition-all"
+                        [class]="activeCard === 3 ? 'opacity-100 translate-x-0 text-2xl font-bold transition-all duration-800' : 'opacity-0 translate-x-50 text-xl font-semibold'">
+                        افضل اسعار تصميم المواقع
+                    </h3>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="flex justify-center ">
+        <app-app-button [btnText]="btnText"
+            customClass="mt-20! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
+        </app-app-button>
+    </div>
+</section>
