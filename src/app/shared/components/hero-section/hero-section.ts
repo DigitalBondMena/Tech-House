@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { AppButton } from '../app-button/app-button';
 
 @Component({
   selector: 'app-hero-section',
-  imports: [],
+  imports: [AppButton],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.css'
 })
@@ -13,5 +14,10 @@ export class HeroSection {
   @Input() paragraph?: string;
   @Input() image?: string;
   @Input() imagePosition: 'left' | 'center' | 'none' = 'none';
-  @Input() subtitleAboveTitle: boolean = false; 
+  @Input() subtitleAboveTitle: boolean = false;
+
+
+
+  // !btn data
+  btnText = "بتكار يصنع كفائتنا";
 }
