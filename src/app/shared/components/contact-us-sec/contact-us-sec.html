@@ -1,1 +1,17 @@
-<p>contact-us-sec works!</p>
+<section class="container mx-auto lg:px-20 py-20">
+    <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-4">
+    </app-section-title>
+    <p class="text-[#636363] text-2xl font-semibold mb-20">نجاحك الرقمي يبدأ بخطوة معنا بداية تصنع الفرق.</p>
+    <div class="flex justify-between items-start">
+        <div></div>
+        <div>
+            <img src="/images/map.png" alt="map">
+        </div>
+    </div>
+
+    <div class="flex justify-start ">
+        <app-app-button [btnText]="btnText"
+            customClass="mt-20 ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
+        </app-app-button>
+    </div>
+</section>
