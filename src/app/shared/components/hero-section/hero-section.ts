@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AppButton } from '../app-button/app-button';
+import { HomeBanner } from '../../../features/home/home-banner/home-banner';
 
 @Component({
   selector: 'app-hero-section',

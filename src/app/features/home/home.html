@@ -1,11 +1,13 @@
-<section class="">
+<section class="overflow-hidden relative">
+    <app-circle-sidebar></app-circle-sidebar>
     <app-hero-section [title]="homeTitle" [btn]="btn" [subtitle]="homeSubtitle" [paragraph]="homeParagraph"
         [image]="homeImage" imagePosition="none" [subtitleAboveTitle]="false">
     </app-hero-section>
+    <app-home-banner class="translate-y-40"></app-home-banner>
     <!-- about   -->
     <app-home-about></app-home-about>
     <!-- clients & parteners banners   -->
-     <app-home-banners-sec class=""></app-home-banners-sec>
+    <app-home-banners-sec class=""></app-home-banners-sec>
     <!-- services   -->
     <app-home-services></app-home-services>
     <!-- projects   -->

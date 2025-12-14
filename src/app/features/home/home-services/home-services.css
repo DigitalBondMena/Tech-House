@@ -1,4 +1,4 @@
-
+/*! pulse animation */
 .bg-linear-rev{
       background: linear-gradient(to bottom, #440000, #e57c7a);
 }
@@ -56,4 +56,14 @@
   100% {
     box-shadow: 0 0 0 30px rgba(255, 120, 105, 0);
   }
+}
+
+/*! cards and titles animation */
+.service-img {
+  transform-origin: center left; 
+  transition: none;
+}
+
+.service-title {
+  transition: none;
 }

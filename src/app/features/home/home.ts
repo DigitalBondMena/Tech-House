@@ -10,10 +10,11 @@ import { HomeBlogs } from './home-blogs/home-blogs';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 import { Banner } from "../../shared/components/banner/banner";
 import { HomeBannersSec } from './home-banners-sec/home-banners-sec';
+import { CircleSidebar } from '../../shared/components/circle-sidebar/circle-sidebar';
 
 @Component({
   selector: 'app-home',
-  imports: [HeroSection , HomeAbout,HomeBannersSec , HomeServices, HomeProjects, HomeBooking, HomeClientsReview, HomeBlogs, ContactUsSec],
+  imports: [HeroSection ,HomeBanner , HomeAbout,HomeBannersSec , HomeServices, HomeProjects, HomeBooking, HomeClientsReview, HomeBlogs, ContactUsSec , CircleSidebar],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

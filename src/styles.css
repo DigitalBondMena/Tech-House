@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+/* @import "flag-icons/css/flag-icons.min.css"; */
 
 @import "tailwindcss";
 @import "../public/fonts/fonts.css";
@@ -34,11 +35,11 @@ h2 {
     background-attachment: fixed;
     height: 100vh;
     width: 100%;
-  
+
 }
 
-.bg-linear{
-      background: linear-gradient(to left, #440000, #ED2924);
+.bg-linear {
+    background: linear-gradient(to left, #440000, #ED2924);
 }
 
 /* ! scrollbar styling */
@@ -48,7 +49,7 @@ h2 {
 }
 
 ::-webkit-scrollbar-track {
-    background:  transparent;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -59,5 +60,3 @@ h2 {
 ::-webkit-scrollbar-thumb:hover {
     background: #940000;
 }
-
-

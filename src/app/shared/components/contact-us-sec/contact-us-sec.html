@@ -8,6 +8,43 @@
             <img src="/images/map.png" alt="map">
         </div>
     </div>
+    <div class="mt-20">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Full Name -->
+            <div class="flex flex-col gap-2">
+                <label for="fullName" class="text-[#1E1E1E] text-lg font-medium">الاسم بالكامل</label>
+                <span class="p-float-label">
+                    <input id="fullName" type="text" pInputText formControlName="fullName" class="w-full" />
+                </span>
+            </div>
+
+            <!-- Email -->
+            <div class="flex flex-col gap-2">
+                <label for="email" class="text-[#1E1E1E] text-lg font-medium">البريد الالكتروني</label>
+                <span class="p-float-label">
+                    <input id="email" type="email" pInputText formControlName="email" class="w-full" />
+                </span>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="flex flex-col gap-2">
+                <label for="phone" class="text-[#1E1E1E] text-lg font-medium">رقم الهاتف</label>
+                <p-inputGroup>
+                    <p-inputGroupAddon class="p-1">
+                        <img src="/images/saudi-flag.png" alt="Saudi Flag" class="h-6" />
+                        <span class="mx-2">+966</span>
+                    </p-inputGroupAddon>
+                    <input id="phone" type="tel" pInputText formControlName="phone" class="w-full" />
+                </p-inputGroup>
+            </div>
+
+            <!-- Message -->
+            <div class="flex flex-col gap-2 md:col-span-2">
+                <label for="message" class="text-[#1E1E1E] text-lg font-medium">اكتب رسالتك...</label>
+                <textarea id="message" rows="5" pInputTextarea formControlName="message" class="w-full"></textarea>
+            </div>
+        </form>
+    </div>
 
     <div class="flex justify-start ">
         <app-app-button [btnText]="btnText"
