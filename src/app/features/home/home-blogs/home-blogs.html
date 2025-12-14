@@ -2,10 +2,10 @@
     <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-10">
     </app-section-title>
     @if (getDisplayBlogs().length > 0) {
-        <div class="flex  justify-center mt-4 gap-6 items-start max-h-[60vh]">
+        <div class="flex flex-col lg:flex-row justify-center mt-4 gap-6 items-start">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
                 <div class="cursor-pointer transition-all duration-800" (click)="setActive(i + 1)"
-                    [class]="activeCard === (i + 1) ? (i === 0 ? 'w-1/2 pt-0' : i === 1 ? 'w-1/2' : 'w-1/2 pt-0') : 'w-1/4 pt-6'">
+                    [class]="activeCard === (i + 1) ? (i === 0 ? 'w-full lg:w-1/2 pt-0' : i === 1 ? 'w-1/2' : 'w-1/2 pt-0') : 'w-full lg:w-1/4  pt-6'">
                     <img [src]="getResponsiveImage(blog.image)" [alt]="blog.title" class="rounded-3xl w-full object-cover transition-all duration-800"
                         [class]="activeCard === (i + 1) ? 'h-[50vh]' : 'h-[40vh]'">
 
