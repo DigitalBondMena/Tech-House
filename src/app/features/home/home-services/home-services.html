@@ -2,72 +2,86 @@
     <app-section-title [title]="servicesTitle" customClass="flex justify-center mb-20">
     </app-section-title>
 
-    <div class="grid grid-cols-5 container mx-auto lg:px-20 gap-10">
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 container mx-auto lg:px-20 gap-10">
+
 
         <!-- Right Column -->
-        <div class="col-span-2 flex flex-col items-end relative">
+        <div class="col-span-1 lg:col-span-2 flex flex-col items-center lg:items-end relative">
             <!-- First Image -->
             <div class="card py-10 service-card relative z-10">
-                <img src="/images/service.png" alt="service" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                <img src="/images/service.png" alt="service" class="service-img w-full mb-4 rounded-2xl " #imgEl>
             </div>
 
+
             <!-- First Title (right side) -->
-            <div class="title h-[350px] flex items-center justify-end text-4xl font-bold text-[#940000] relative z-0" #titleRight1>
+            <div class="title h-[350px] flex items-center justify-end text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleRight1>
                 <h3 class="service-title  px-4 relative z-20">ذكاء اصطناعي</h3>
                 <div class="absolute inset-0  left-[-100%] z-10" #titleBgRight1></div>
             </div>
+
 
             <!-- Second Image -->
             <div class="card py-10 service-card relative z-10">
                 <img src="/images/service.png" alt="service" class="service-img w-full mb-4 rounded-2xl" #imgEl>
             </div>
 
+
             <!-- Second Title (right side) -->
-            <div class="title h-[350px] flex items-center justify-end text-4xl font-bold text-[#940000] relative z-0" #titleRight2>
+            <div class="title h-[350px] flex items-center justify-end text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleRight2>
                 <h3 class="service-title  px-4 relative z-20">تحسين محركات البحث</h3>
                 <div class="absolute inset-0  left-[-100%] z-10" #titleBgRight2></div>
             </div>
         </div>
 
+
         <!-- العمود النص -->
-        <div class="col-span-1 flex flex-col items-center h-full relative">
+        <div class="hidden lg:flex lg:col-span-1 flex-col items-center h-full relative">
             <div class="w-[1.6px] bg-linear-rev h-full mx-auto rounded-full"></div>
+
 
             <div class="loader absolute -top-5">
                 <span class="pulse pulse-1"></span>
             </div>
 
+
             <div class="loader absolute top-1/4">
                 <span class="pulse pulse-1"></span>
             </div>
 
+
             <div class="loader absolute top-1/2">
                 <span class="pulse pulse-1"></span>
             </div>
+
 
             <div class="loader absolute top-3/4">
                 <span class="pulse pulse-1"></span>
             </div>
         </div>
 
+
         <!-- Left Column -->
-        <div class="col-span-2 flex flex-col items-start relative">
+        <div class="col-span-1 lg:col-span-2 flex flex-col-reverse lg:flex-col items-center lg:items-start relative">
             <!-- First Title (left side) -->
-            <div class="title h-[350px] flex items-center justify-start text-4xl font-bold text-[#940000] relative z-0" #titleLeft1>
+            <div class="title h-[350px] flex items-center justify-start text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleLeft1>
                 <h3 class="service-title  px-4 relative z-20">ادارة وسائل التواصل الاجتماعي</h3>
                 <div class="absolute inset-0  right-[-100%] z-10" #titleBgLeft1></div>
             </div>
+
 
             <!-- First Image -->
             <div class="card py-10 service-card relative z-10">
                 <img src="/images/service.png" alt="service" class="service-img w-full mb-4 rounded-2xl" #imgEl>
             </div>
 
+
             <!-- Second Title (left side) -->
-            <div class="title h-[350px] flex items-center justify-start text-4xl font-bold text-[#940000] relative z-0" #titleLeft2>
+            <div class="title h-[350px] flex items-center justify-start text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleLeft2>
                 <h3 class="service-title  px-4 relative z-20">ادارة وسائل التواصل الاجتماعي</h3>
                 <div class="absolute inset-0  right-[-100%] z-10" #titleBgLeft2></div>
             </div>
+
 
             <!-- Second Image -->
             <div class="card py-10 service-card relative z-10">
@@ -75,6 +89,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="flex justify-center">
         <app-app-button [btnText]="btnText"

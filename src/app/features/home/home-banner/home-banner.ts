@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home-banner.css'
 })
 export class HomeBanner {
-  // Component logic can go here if needed
+
 }

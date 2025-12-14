@@ -27,20 +27,20 @@
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
             <!-- <a href="#" aria-current="page" class="rounded-md bg-gray-950/50 px-3 py-2 text-sm font-medium text-white">Dashboard</a> -->
-            <a href="#" class="rounded-md px-3 py-2 text-sm lg:text-lg font-semibold  text-[#440000]  "> الرئيسية </a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm lg:text-lg font-semibold  text-[#440000]  ">من نحن </a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm lg:text-lg font-semibold  text-[#440000]  ">الخدمات </a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm lg:text-lg font-semibold  text-[#440000]  ">المشاريع</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm lg:text-lg font-semibold  text-[#440000]  ">الوظائف </a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm lg:text-lg font-semibold  text-[#440000]  ">المقالات </a>
+            <a routerLink="/Home" class="rounded-md px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000]  "> الرئيسية </a>
+            <a routerLink="/About-Us" class="rounded-md px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000]  ">من نحن </a>
+            <a routerLink="/Services" class="rounded-md px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000]  ">الخدمات </a>
+            <a routerLink="/Projects" class="rounded-md px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000]  ">المشاريع</a>
+            <a routerLink="/Jops" class="rounded-md px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000]  ">الوظائف </a>
+            <a routerLink="/Blogs" class="rounded-md px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000]  ">المقالات </a>
             <!-- <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-[#440000]  ">تواصل معنا </a> -->
           </div>
         </div>
         <div class="ml-4 flex items-center">
-          <button
+          <a routerLink="/Contact-Us"
             class="rounded-full bg-[#ED2924] px-5 py-2.5 text-sm font-medium text-white cursor-pointer hover:bg-red-600 hover:shadow-lg transition-all duration-300">
             تواصل معنا
-          </button>
+          </a>
         </div>
       </div>
 
@@ -50,14 +50,20 @@
   <div id="mobile-menu" hidden class="block sm:hidden">
     <div class="space-y-1 px-2 pt-2 pb-3">
       <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-      <a href="#" aria-current="page"
-        class="block rounded-md bg-gray-950/50 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-      <a href="#"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Team</a>
-      <a href="#"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
-      <a href="#"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
+      <a routerLink="/Home"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">الرئيسية</a>
+      <a routerLink="/About-Us"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">من نحن</a>
+      <a routerLink="/Services"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">الخدمات</a>
+      <a routerLink="/Projects"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">المشاريع</a>
+      <a routerLink="/Jops"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">الوظائف</a>
+      <a routerLink="/Blogs"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">المقالات</a>
+      <a routerLink="/Contact-Us"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">تواصل معنا</a>
     </div>
   </div>
 </nav>

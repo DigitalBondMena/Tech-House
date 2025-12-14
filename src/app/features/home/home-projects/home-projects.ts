@@ -1,6 +1,7 @@
-import { Component, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChildren, QueryList, Input } from '@angular/core';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
+import { Project } from '../../../core/models/home.model';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/all';
 
@@ -11,11 +12,18 @@ import { Flip } from 'gsap/all';
   styleUrl: './home-projects.css'
 })
 export class HomeProjects implements AfterViewInit {
+  @Input() projects: Project[] = [];
+
   //! section title data
   projectsTitle = "مشاريعنا";
 
   //! button data
   btnText = "مشاريع اكثر";
+
+  // Helper method to get responsive image
+  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string }): string {
+    return image.desktop;
+  }
 
   // Track the active card index
   private activeCardIndex = 1; // Start with the middle card active

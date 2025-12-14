@@ -1,54 +1,89 @@
 <section class="container mx-auto lg:px-20 py-20">
-    <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-4">
-    </app-section-title>
-    <p class="text-[#636363] text-2xl font-semibold mb-20">نجاحك الرقمي يبدأ بخطوة معنا بداية تصنع الفرق.</p>
-    <div class="flex justify-between items-start">
-        <div></div>
-        <div>
-            <img src="/images/map.png" alt="map">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        <!-- Right Side - Contact Form -->
+        <div class="flex flex-col h-full">
+            <app-section-title [title]="contactTitle" customClass="flex justify-start mb-4">
+            </app-section-title>
+            <p class="text-[#636363] text-xl font-semibold mb-8">{{ contactSubtitle }}</p>
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6 flex-1" novalidate>
+                <!-- Full Name -->
+                <p-floatlabel variant="on">
+                    <input pInputText id="fullName" formControlName="fullName" 
+                        [invalid]="fullNameControl.invalid && fullNameControl.touched"
+                        class="w-full" />
+                    <label for="fullName">الاسم الكامل</label>
+                </p-floatlabel>
+
+                <!-- Email -->
+                <p-floatlabel variant="on">
+                    <input pInputText id="email" type="email" formControlName="email" 
+                        [invalid]="emailControl.invalid && emailControl.touched"
+                        class="w-full" />
+                    <label for="email">البريد الإلكتروني</label>
+                </p-floatlabel>
+
+                <!-- Phone Number -->
+                <p-floatlabel variant="on">
+                    <p-inputGroup>
+                        <p-inputGroupAddon class="p-1 cursor-pointer">
+                            <p-select [options]="countries" [(ngModel)]="selectedCountryModel"
+                                [ngModelOptions]="{standalone: true}" (onChange)="onCountryChange($event.value)"
+                                optionLabel="name" [dataKey]="'code'" [style]="{'width': '140px', 'border': 'none'}"
+                                [panelStyle]="{'max-height': '300px'}" [showClear]="false"
+                                [appendTo]="'self'"
+                                class="country-select">
+                                <ng-template let-country pTemplate="selectedItem">
+                                    <div class="flex items-center gap-2" *ngIf="country">
+                                        <span class="fi fi-{{country.code}}"></span>
+                                        <span>{{country.dialCode}}</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-country pTemplate="item">
+                                    <div class="flex items-center gap-2 py-2">
+                                        <span class="fi fi-{{country.code}}"></span>
+                                        <span>{{country.name}}</span>
+                                        <span class="text-gray-500 mr-auto">{{country.dialCode}}</span>
+                                    </div>
+                                </ng-template>
+                            </p-select>
+                        </p-inputGroupAddon>
+                        <input id="phone" type="tel" pInputText formControlName="phone" 
+                            [invalid]="phoneControl.invalid && phoneControl.touched"
+                            class="w-full" />
+                    </p-inputGroup>
+                    <label for="phone">رقم الجوال</label>
+                </p-floatlabel>
+
+                <!-- Message -->
+                <p-floatlabel variant="on" class="flex-1 flex flex-col">
+                    <textarea id="message" rows="5" pInputTextarea formControlName="message" 
+                        [invalid]="messageControl.invalid && messageControl.touched"
+                        class="w-full flex-1"></textarea>
+                    <label for="message">اكتب رسالتك</label>
+                </p-floatlabel>
+
+                <!-- Submit Button -->
+                <app-app-button 
+                    [btnText]="BtnText" 
+                    [disabled]="contactForm.invalid"
+                    (buttonClick)="onSubmit()"
+                    customClass="mt-0! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center transition duration-300">
+                </app-app-button>
+
+                <!-- <div class="flex justify-start mt-2">
+                    <button type="submit" 
+                        class="ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center transition duration-300 hover:bg-[#d1201b] disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span class="mr-2">←</span>
+                        <span>{{ sendBtnText }}</span>
+                    </button>
+                </div> -->
+            </form>
         </div>
-    </div>
-    <div class="mt-20">
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Full Name -->
-            <div class="flex flex-col gap-2">
-                <label for="fullName" class="text-[#1E1E1E] text-lg font-medium">الاسم بالكامل</label>
-                <span class="p-float-label">
-                    <input id="fullName" type="text" pInputText formControlName="fullName" class="w-full" />
-                </span>
-            </div>
+        <!-- Left Side - Map -->
+        <div class="h-full">
+            <img src="/images/map.png" alt="map" class="w-full h-full object-cover rounded-lg">
+        </div>
 
-            <!-- Email -->
-            <div class="flex flex-col gap-2">
-                <label for="email" class="text-[#1E1E1E] text-lg font-medium">البريد الالكتروني</label>
-                <span class="p-float-label">
-                    <input id="email" type="email" pInputText formControlName="email" class="w-full" />
-                </span>
-            </div>
 
-            <!-- Phone Number -->
-            <div class="flex flex-col gap-2">
-                <label for="phone" class="text-[#1E1E1E] text-lg font-medium">رقم الهاتف</label>
-                <p-inputGroup>
-                    <p-inputGroupAddon class="p-1">
-                        <img src="/images/saudi-flag.png" alt="Saudi Flag" class="h-6" />
-                        <span class="mx-2">+966</span>
-                    </p-inputGroupAddon>
-                    <input id="phone" type="tel" pInputText formControlName="phone" class="w-full" />
-                </p-inputGroup>
-            </div>
-
-            <!-- Message -->
-            <div class="flex flex-col gap-2 md:col-span-2">
-                <label for="message" class="text-[#1E1E1E] text-lg font-medium">اكتب رسالتك...</label>
-                <textarea id="message" rows="5" pInputTextarea formControlName="message" class="w-full"></textarea>
-            </div>
-        </form>
-    </div>
-
-    <div class="flex justify-start ">
-        <app-app-button [btnText]="btnText"
-            customClass="mt-20 ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
-        </app-app-button>
     </div>
 </section>

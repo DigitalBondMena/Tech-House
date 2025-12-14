@@ -1,64 +1,29 @@
 <section class="container mx-auto lg:px-20 py-20 ">
     <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-20 ">
     </app-section-title>
-    <div class="flex flex-col gap-10 relative h-[80vh] pt-30">
-        <!-- Card 1 (Back) -->
-        <div #projectCard class="project-card absolute -rotate-4 -translate-y-20 flex justify-between items-center bg-gray-200 rounded-3xl p-15 px-10 transition-all duration-300 cursor-pointer"
-             (click)="onCardClick(0)">
-            <div class="w-1/4 p-5 xl:p-10">
-                <img src="/images/projects.png" alt="project" class="w-[300px] xl:w-[200px]">
-            </div>
-            <div class="h-full w-3/4 p-5 xl:p-10">
-                <h2 class="text-xl text-[#636363] font-medium mb-6">تطبيق و موقع</h2>
-                <h3 class="text-xl font-bold text-[#440000] mb-6">المصرية الخليجية للاستشارات التعليمية</h3>
-                <p class="mb-12 text-lg font-medium text-[#440000]">موقع متخصص في تقديم حلول تعليمية مبتكرة وخدمات
-                    إرشادية
-                    للطلاب والمؤسسات الأكاديمية من خلال تصميم هوية بصرية عصرية تعكس رسالتها في دعم رحلات التعلم.</p>
-                <span class="underline text-[#ED2924] font-semibold text-xl flex items-center">عرض تفاصيل
-                    المشروع
-                    <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
-                </span>
-            </div>
+    @if (projects.length > 0) {
+        <div class="flex flex-col gap-10 relative h-[80vh] pt-30 lg:mx-30 my-10 ">
+            @for (project of projects.slice(0, 3); track project.slug; let i = $index) {
+                <div #projectCard 
+                     class="project-card absolute flex justify-between items-center rounded-3xl p-8 px-10 transition-all duration-300 cursor-pointer"
+                     [class]="i === 0 ? '-rotate-4 -translate-y-20 bg-gray-200' : i === 1 ? 'active-card bg-white shadow-lg' : 'rotate-4 translate-y-20 bg-gray-100'"
+                     (click)="onCardClick(i)">
+                    <!-- <div class="w-1/4 p-5 xl:p-10">
+                        <img [src]="getResponsiveImage(project.image)" [alt]="project.title" class="w-[300px] xl:w-[200px]">
+                    </div> -->
+                    <div class="h-full w-3/4 p-5 xl:p-10">
+                        <h2 class="text-xl text-[#636363] font-medium mb-6">{{ project.category_name }}</h2>
+                        <h3 class="text-xl font-bold text-[#440000] mb-6">{{ project.title }}</h3>
+                        <p class="mb-12 text-lg font-medium text-[#440000]">{{ project.text }}</p>
+                        <span class="underline text-[#ED2924] font-semibold text-xl flex items-center justify-center">عرض تفاصيل
+                            المشروع
+                            <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1 w-8! ">
+                        </span>
+                    </div>
+                </div>
+            }
         </div>
-
-        <!-- Card 2 (Active) -->
-        <div #projectCard class="project-card active-card absolute  flex justify-between items-center bg-white shadow-lg rounded-3xl p-15 px-10 transition-all duration-300 cursor-pointer"
-             (click)="onCardClick(1)">
-            <div class="w-1/4 p-5 xl:p-10">
-                <img src="/images/projects.png" alt="project" class="w-[300px] xl:w-[200px]">
-            </div>
-            <div class="h-full w-3/4 p-5 xl:p-10">
-                <h2 class="text-xl text-[#636363] font-medium mb-6">تطبيق و موقع</h2>
-                <h3 class="text-xl font-bold text-[#440000] mb-6">المصرية الخليجية للاستشارات التعليمية</h3>
-                <p class="mb-12 text-lg font-medium text-[#440000]">موقع متخصص في تقديم حلول تعليمية مبتكرة وخدمات
-                    إرشادية
-                    للطلاب والمؤسسات الأكاديمية من خلال تصميم هوية بصرية عصرية تعكس رسالتها في دعم رحلات التعلم.</p>
-                <span class="underline text-[#ED2924] font-semibold text-xl flex items-center">عرض تفاصيل
-                    المشروع
-                    <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
-                </span>
-            </div>
-        </div>
-
-        <!-- Card 3 (Front) -->
-        <div #projectCard class="project-card absolute rotate-4 translate-y-20 flex justify-between items-center bg-gray-100 rounded-3xl p-15 px-10 transition-all duration-300 cursor-pointer"
-             (click)="onCardClick(2)">
-            <div class="w-1/4 p-5 xl:p-10">
-                <img src="/images/projects.png" alt="project" class="w-[300px] xl:w-[200px]">
-            </div>
-            <div class="h-full w-3/4 p-5 xl:p-10">
-                <h2 class="text-xl text-[#636363] font-medium mb-6">تطبيق و موقع</h2>
-                <h3 class="text-xl font-bold text-[#440000] mb-6">المصرية الخليجية للاستشارات التعليمية</h3>
-                <p class="mb-12 text-lg font-medium text-[#440000]">موقع متخصص في تقديم حلول تعليمية مبتكرة وخدمات
-                    إرشادية
-                    للطلاب والمؤسسات الأكاديمية من خلال تصميم هوية بصرية عصرية تعكس رسالتها في دعم رحلات التعلم.</p>
-                <span class="underline text-[#ED2924] font-semibold text-xl flex items-center">عرض تفاصيل
-                    المشروع
-                    <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
-                </span>
-            </div>
-        </div>
-    </div>
+    }
 
     <div class="flex justify-center ">
         <app-app-button [btnText]="btnText"

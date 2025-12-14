@@ -1,5 +1,10 @@
 <button
-    class="mt-20 ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center]  transition duration-300" [class]="customClass">
+    [disabled]="disabled"
+    (click)="onClick()"
+    class="mt-20 ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center]  transition duration-300" 
+    [class]="customClass"
+    [class.opacity-50]="disabled"
+    [class.cursor-not-allowed]="disabled">
   {{ btnText }}
     <img src="images/icons/arrow-left.png" alt="arrow-left" class="h-7 w-7 p-1 ms-5  bg-white rounded-full">
 </button>

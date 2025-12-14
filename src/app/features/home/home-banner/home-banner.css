@@ -58,13 +58,7 @@
     position: relative;
 }
 
-.banner-text {
-    font-weight: 800;
-    font-size: 46px;
-    white-space: nowrap;
-    letter-spacing: 0.5px;
-    font-family: 'Cairo', sans-serif;
-}
+
 
 .banner-tag-icon {
     transform: skew(12deg);

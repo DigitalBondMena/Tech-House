@@ -1,6 +1,7 @@
-import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
+import { Service } from '../../../core/models/home.model';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -14,11 +15,18 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true
 })
 export class HomeServices implements AfterViewInit {
+  @Input() services: Service[] = [];
+
   //! section title data
   servicesTitle = "خدماتنا";
 
   //! button data
   btnText = "خدمات اكثر";
+
+  // Helper method to get responsive image
+  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string }): string {
+    return image.desktop;
+  }
 
   // Right side elements
   @ViewChild('titleRight1') titleRight1!: ElementRef;

@@ -1,23 +1,31 @@
 <section class="overflow-hidden relative">
     <app-circle-sidebar></app-circle-sidebar>
-    <app-hero-section [title]="homeTitle" [btn]="btn" [subtitle]="homeSubtitle" [paragraph]="homeParagraph"
-        [image]="homeImage" imagePosition="none" [subtitleAboveTitle]="false">
-    </app-hero-section>
+    @if (heroSection()) {
+        <app-hero-section 
+            [title]="heroSection()!.title" 
+            [btn]="heroSection()!.input_title" 
+            [subtitle]="heroSection()!.scroll_title" 
+            [paragraph]=""
+            [image]="getResponsiveImage(heroSection()!.image)" 
+            imagePosition="none" 
+            [subtitleAboveTitle]="false">
+        </app-hero-section>
+    }
     <app-home-banner class="translate-y-40"></app-home-banner>
     <!-- about   -->
-    <app-home-about></app-home-about>
+    <app-home-about [aboutData]="aboutHome()"></app-home-about>
     <!-- clients & parteners banners   -->
     <app-home-banners-sec class=""></app-home-banners-sec>
     <!-- services   -->
-    <app-home-services></app-home-services>
+    <app-home-services [services]="services()"></app-home-services>
     <!-- projects   -->
-    <app-home-projects></app-home-projects>
+    <app-home-projects [projects]="projects()"></app-home-projects>
     <!-- booking an appointments   -->
     <app-home-booking></app-home-booking>
     <!-- clients review   -->
-    <app-home-clients-review></app-home-clients-review>
+    <app-home-clients-review [testimonials]="testimonials()"></app-home-clients-review>
     <!-- blogs   -->
-    <app-home-blogs></app-home-blogs>
+    <app-home-blogs [blogs]="blogs()"></app-home-blogs>
     <!-- contact-us   -->
     <app-contact-us-sec></app-contact-us-sec>
 </section>

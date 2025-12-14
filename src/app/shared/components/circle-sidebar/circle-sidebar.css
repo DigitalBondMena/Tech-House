@@ -1,7 +1,7 @@
 .sidebar {
   position: absolute;
-  transform: translateY(80%);
-  left: -12%;
+  transform: translateY(60%);
+  left: -40%;
   width: 350px;
   height: 350px;
   border-radius: 50%;
@@ -13,6 +13,52 @@
   background: radial-gradient(circle, rgba(0, 0, 0, 0) 50%, #440000 40%);
 
 }
+
+/* Tailwind breakpoints */
+
+/* Small screens ≥ 640px */
+@media (min-width: 640px) {
+  .sidebar {
+    transform: translateY(60%);
+    left: -35%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+  }
+}
+
+/* Medium screens ≥ 768px */
+@media (min-width: 768px) {
+  .sidebar {
+    transform: translateY(60%);
+    left: -27%;
+  }
+}
+
+/* Large screens ≥ 1024px */
+@media (min-width: 1024px) {
+  .sidebar {
+    transform: translateY(60%);
+    left: -23%;
+  }
+}
+
+/* Extra Large screens ≥ 1280px */
+@media (min-width: 1280px) {
+  .sidebar {
+    transform: translateY(60%);
+    left: -19%;
+  }
+}
+
+/* 2XL screens ≥ 1536px */
+@media (min-width: 1536px) {
+  .sidebar {
+    transform: translateY(60%);
+    left: -15%;
+  }
+}
+
 
 .orbit {
   position: absolute;

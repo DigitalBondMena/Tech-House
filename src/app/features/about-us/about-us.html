@@ -1,11 +1,46 @@
- <!-- <div class="grid grid-cols-2   py-20 items-center justify-between">
-            <div class="col-span-1">
-                <app-section-title [title]="aboutTitle" [iconSrc]="srcAboutIcon">
-                </app-section-title>
-            </div>
-            <div class="col-span-1">
-                <div class="card w-full h-[300px] bg-card rounded-3xl">
+<app-hero-section [title]="heroTitle" [paragraph]="heroParagraph" [image]="heroImage" imagePosition="none">
+</app-hero-section>
+<section class="container mx-auto lg:px-20 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <!-- Right Side - Our Story Text -->
+        <div class="order-2 lg:order-1">
+            <app-section-title [title]="storyTitle" customClass="mb-6">
+            </app-section-title>
+            <p class="text-[#440000] text-xl font-medium leading-relaxed">
+                {{ storyText }}
+            </p>
+        </div>
 
-                </div>
+        <!-- Left Side - Project Card -->
+        <div class="order-1 lg:order-2">
+            <div class="bg-[#ED2924] rounded-3xl p-8 text-white">
+                <h3 class="text-3xl font-bold mb-6">{{ projectCardTitle }}</h3>
+                <p class="text-lg mb-8 leading-relaxed">
+                    {{ projectCardText }}
+                </p>
+                <app-app-button [btnText]="contactBtnText"
+                    customClass="bg-[#B90000] text-white rounded-full px-6 py-3 flex items-center justify-center hover:bg-[#A00000] transition duration-300">
+                </app-app-button>
             </div>
-        </div> -->
+        </div>
+    </div>
+</section>
+
+<!-- Partners and Clients Section - شركاؤنا وعملائنا -->
+<section class="py-60 overflow-hidden ">
+    <div class=" mb-10">
+        <app-section-title [title]="partnersTitle" customClass="mb-5">
+        </app-section-title>
+    </div>
+    <div class="w-full">
+        <app-banner direction="right" customClass="-rotate-[10deg] translate-y-[130px] relative  w-[120%] -right-40 ">
+        </app-banner>
+    </div>
+    <div class="w-full">
+        <app-banner direction="left" customClass="rotate-[10deg] translate-y-[10px] relative  w-[120%] -right-40 bg-[#940000]!">
+        </app-banner>
+    </div>
+</section>
+
+<!-- Contact Us Section - تواصل معنا -->
+<app-contact-us-sec></app-contact-us-sec>

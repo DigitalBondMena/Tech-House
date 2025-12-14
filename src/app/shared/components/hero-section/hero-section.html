@@ -8,7 +8,7 @@
                 <div>
                     <!-- Subtitle >> above >> main title -->
                     @if (subtitle && subtitleAboveTitle) {
-                    <p class="text-lg ">{{ subtitle }}</p>
+                    <p class="text-lg  text-white">{{ subtitle }}</p>
                     }
 
                     <!-- Title -->
@@ -26,12 +26,12 @@
                     }
                     <!-- Subtitle >> under >> main title -->
                     @if (subtitle && !subtitleAboveTitle) {
-                    <p class="text-lg">{{ subtitle }}</p>
+                    <p class="text-lg  text-white">{{ subtitle }}</p>
                     }
 
                     <!-- Paragraph -->
                     @if (paragraph) {
-                    <p class="text-base">{{ paragraph }}</p>
+                    <p class="text-2xl font-medium  text-white mt-10 max-w-xl ">{{ paragraph }}</p>
                     }
                     
                 </div>

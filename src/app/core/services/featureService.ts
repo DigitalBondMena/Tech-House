@@ -1,0 +1,41 @@
+import { Injectable, inject, signal, computed } from '@angular/core';
+import { API_END_POINTS } from '../constant/ApiEndPoints';
+
+import { HomeResponse } from '../models/home.model';
+import { ApiService } from './apiService';
+
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FeatureService {
+
+  private apiService = inject(ApiService);
+
+  // 🔹 Internal API Response Signal Reference
+  private apiResponseSignal = signal<HomeResponse | null>(null);
+
+  // 🔹 Home Data Signal (computed from API response)
+  homeData = computed(() => this.apiResponseSignal());
+
+  // =====================
+  // HOME API
+  // =====================
+  loadHomeData(): void {
+    const result = this.apiService.get<HomeResponse>(API_END_POINTS.HOME);
+    
+    // Watch the signal and update when data arrives
+    // Since the API service updates the signal asynchronously,
+    // we'll check periodically until data is available
+    const checkInterval = setInterval(() => {
+      const data = result();
+      if (data) {
+        this.apiResponseSignal.set(data);
+        clearInterval(checkInterval);
+      }
+    }, 50);
+
+    // Clean up after 30 seconds if no data arrives (timeout)
+    setTimeout(() => clearInterval(checkInterval), 30000);
+  }
+}

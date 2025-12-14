@@ -1,35 +1,52 @@
- <section class="container mx-auto lg:px-20 py-20">
-        <div class="flex justify-between items-center">
-            <app-section-title [title]="aboutTitle">
-            </app-section-title>
-            <span class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer ">معرفة المزيد
-                <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
-            </span>
-        </div>
-        <div class="grid grid-cols-2  items-start ">
-            <div class="col-span-1">
-                <p class="text-xl font-semibold  mt-6 text-[#440000] w-xl">
-                    نقدم حلولاً مبتكرة بهوية فريدة وبرمجة متطورة و تقنيات ذكاء اصطناعي وخدمات تسويقية حديثة لتمكين
-                    أعمالكم من النمو والتميز وتحقيق نمو حقيقي من خلال بناء علاقات طويلة المدى معهم .
-                </p>
-                <div class="flex items-center justify-start text-[#440000]">
-                    <span class="w-[140px] h-[140px] rounded-full bg-[#FEF8F8] border border-[#B90000]  flex flex-col items-center justify-center m-6 relative z-30">
-                        <h3 class="text-3xl font-bold ">+٩٥</h3>
-                        <p>حلول مبتكرة</p>
-                    </span>
-                    <span class="w-[140px] h-[140px] rounded-full bg-[#FEF8F8] border border-[#B90000]  flex flex-col items-center justify-center m-6 relative z-20 translate-x-16 ">
-                        <h3 class="text-3xl font-bold">+٩٥</h3>
-                        <p>حلول مبتكرة</p>
-                    </span>
-                    <span class="w-[140px] h-[140px] rounded-full bg-[#FEF8F8] border border-[#B90000]  flex flex-col items-center justify-center m-6 relative z-10 translate-x-32">
-                        <h3 class="text-3xl font-bold">+٩٥</h3>
-                        <p>حلول مبتكرة</p>
-                    </span>
-                </div>
-            </div>
+<section #aboutSection class="container mx-auto lg:px-20 py-20">
+  @if (aboutData) {
 
-            <div class="col-span-1 ms-auto">
-                <img src="images/About-us.png" alt="about-us" class="w-full">
-            </div>
-        </div>
-    </section>
+  <div class="flex justify-between items-center ">
+    <app-section-title [title]="aboutData.title"></app-section-title>
+
+    <span class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer">
+      معرفة المزيد
+      <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
+    </span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 items-start mt-10">
+
+    <!-- TEXT + COUNTERS -->
+    <div>
+      <p class="text-xl font-semibold mt-6 text-[#440000] max-w-xl">
+        {{ aboutData.text }}
+      </p>
+
+      <div class="flex items-center justify-start text-[#440000] mt-10">
+
+        @if (counters(); as countersData) {
+        @for (counter of countersData.slice(0, 3); track $index; let i = $index) {
+
+        <span #counterElement class="md:w-[140px] md:h-[140px] w-[100px] h-[100px] rounded-full bg-[#FEF8F8]
+                         border border-[#B90000]
+                         flex flex-col items-center justify-center
+                         m-6 relative" [class]="
+                    i === 0 ? 'z-30' :
+                    i === 1 ? 'z-20 translate-x-16' :
+                              'z-10 translate-x-32'
+                  ">
+          <h3 class="text-2xl lg:text-3xl font-bold">
+            {{ animatedCounters[i] || 0 }}
+          </h3>
+          <p class="text-center px-2 text-xs xl:text-lg ">{{ counter.title }}</p>
+        </span>
+
+        }
+        }
+      </div>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="ms-auto">
+      <img [src]="getResponsiveImage()" [alt]="aboutData.title" class="w-full" />
+    </div>
+
+  </div>
+  }
+</section>
