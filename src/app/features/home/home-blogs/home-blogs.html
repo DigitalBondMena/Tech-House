@@ -4,10 +4,22 @@
     @if (getDisplayBlogs().length > 0) {
         <div class="flex flex-col lg:flex-row justify-center mt-4 gap-6 items-start">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
-                <div class="cursor-pointer transition-all duration-800" (click)="setActive(i + 1)"
+                <div class="cursor-pointer transition-all duration-800 blog-card" (click)="setActive(i + 1)"
                     [class]="activeCard === (i + 1) ? (i === 0 ? 'w-full lg:w-1/2 pt-0' : i === 1 ? 'w-1/2' : 'w-1/2 pt-0') : 'w-full lg:w-1/4  pt-6'">
-                    <img [src]="getResponsiveImage(blog.image)" [alt]="blog.title" class="rounded-3xl w-full object-cover transition-all duration-800"
-                        [class]="activeCard === (i + 1) ? 'h-[50vh]' : 'h-[40vh]'">
+                    <div class="relative blog-image-container">
+                        <img [src]="getResponsiveImage(blog.image)" [alt]="blog.title" class="rounded-3xl w-full object-cover transition-all duration-800"
+                            [class]="activeCard === (i + 1) ? 'h-[50vh]' : 'h-[40vh]'">
+                        @if (activeCard === (i + 1)) {
+                            <div class="blog-hover-overlay">
+                         
+                                    <img src="/images/blog-hover.png" 
+                                         class="blog-hover-image cursor-pointer w-12 h-12 object-cover"
+                                         [alt]="blog.title" 
+                                         (click)="navigateToProjectDetails(blog, $event)">
+                                
+                            </div>
+                        }
+                    </div>
 
                     <div class="flex flex-col">
                         <div [class]="activeCard === (i + 1) ? 'order-1  ' : ''">

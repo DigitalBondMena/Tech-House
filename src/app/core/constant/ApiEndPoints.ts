@@ -8,12 +8,14 @@ export const API_END_POINTS = {
 
     //! SHARED
     //! Contact-us sec
-    CONTACT_US: '/contactus',
+    CONTACT_US: '/contact',
     //! banners sec
     BANNERS: '/partners',
     COUNTERS: '/coutners',
     //! Service sec
     SERVICESEC: '/titles',
+    //! Service sec
+ 
 
 
 

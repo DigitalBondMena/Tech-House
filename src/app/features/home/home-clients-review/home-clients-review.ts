@@ -15,8 +15,4 @@ export class HomeClientsReview {
     return image.desktop;
   }
 
-  // Get current testimonial (for carousel, showing first one for now)
-  getCurrentTestimonial(): Testimonial | null {
-    return this.testimonials.length > 0 ? this.testimonials[0] : null;
-  }
 }

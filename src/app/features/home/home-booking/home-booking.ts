@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { AppButton } from '../../../shared/components/app-button/app-button';
+import { CTASection } from '../../../core/models/home.model';
 
 
 @Component({
@@ -9,6 +10,9 @@ import { AppButton } from '../../../shared/components/app-button/app-button';
   styleUrl: './home-booking.css'
 })
 export class HomeBooking {
+  //! Input for CTA Section data
+  ctasection = input<CTASection | null>(null);
+
   //! button data
   btnText = "احجز موعدك";
 

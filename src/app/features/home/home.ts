@@ -33,6 +33,7 @@ export class Home implements OnInit {
   projects = computed(() => this.homeData()?.projects ?? []);
   testimonials = computed(() => this.homeData()?.testimonials ?? []);
   blogs = computed(() => this.homeData()?.blogs ?? []);
+  ctasection = computed(() => this.homeData()?.ctasection ?? null);
 
   // 🔹 Helper method to get responsive image based on screen size
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {

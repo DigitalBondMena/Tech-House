@@ -4,14 +4,12 @@
         <app-hero-section 
             [title]="heroSection()!.title" 
             [btn]="heroSection()!.input_title" 
-            [subtitle]="heroSection()!.scroll_title" 
-            [paragraph]=""
-            [image]="getResponsiveImage(heroSection()!.image)" 
-            imagePosition="none" 
+            [image]="'/images/hero/Animation Hero Section.gif'" 
+            imagePosition="center" 
             [subtitleAboveTitle]="false">
         </app-hero-section>
     }
-    <app-home-banner class="translate-y-40"></app-home-banner>
+    <app-home-banner class="translate-y-40" [scrollTitle]="heroSection()?.scroll_title"></app-home-banner>
     <!-- about   -->
     <app-home-about [aboutData]="aboutHome()"></app-home-about>
     <!-- clients & parteners banners   -->
@@ -21,7 +19,7 @@
     <!-- projects   -->
     <app-home-projects [projects]="projects()"></app-home-projects>
     <!-- booking an appointments   -->
-    <app-home-booking></app-home-booking>
+    <app-home-booking [ctasection]="ctasection()"></app-home-booking>
     <!-- clients review   -->
     <app-home-clients-review [testimonials]="testimonials()"></app-home-clients-review>
     <!-- blogs   -->

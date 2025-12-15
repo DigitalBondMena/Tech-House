@@ -8,9 +8,9 @@
                      class="project-card absolute flex justify-between items-center rounded-3xl p-8 px-10 transition-all duration-300 cursor-pointer"
                      [class]="i === 0 ? '-rotate-4 -translate-y-20 bg-gray-200' : i === 1 ? 'active-card bg-white shadow-lg' : 'rotate-4 translate-y-20 bg-gray-100'"
                      (click)="onCardClick(i)">
-                    <!-- <div class="w-1/4 p-5 xl:p-10">
+                    <div class="w-1/4 p-5 xl:p-10">
                         <img [src]="getResponsiveImage(project.image)" [alt]="project.title" class="w-[300px] xl:w-[200px]">
-                    </div> -->
+                    </div>
                     <div class="h-full w-3/4 p-5 xl:p-10">
                         <h2 class="text-xl text-[#636363] font-medium mb-6">{{ project.category_name }}</h2>
                         <h3 class="text-xl font-bold text-[#440000] mb-6">{{ project.title }}</h3>

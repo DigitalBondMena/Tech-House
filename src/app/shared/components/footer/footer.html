@@ -1,96 +1,97 @@
 <footer class="flex w-full flex-col justify-end h-auto ">
     <div class="bg-linear ">
         <div
-            class="container mx-auto lg:px-20 bg-hero-footer flex flex-col items-start justify-between space-y-12  pb-8 pt-12 md:flex-row md:space-y-0 md:space-x-12 ">
-            <div class="flex w-full flex-col space-y-4  md:w-2/5 ">
-                <div class="w-full text-lg font-extrabold md:w-fit ">
-                    <img src="/images/logo/logo-light.webp" alt="logo">
+            class="container mx-auto lg:px-20 bg-hero-footer flex flex-col items-start justify-center space-y-12  pb-8 pt-12 md:flex-row md:space-y-0 md:space-x-12 ">
+            <div class="flex w-full flex-col space-y-4 md:w-1/2 lg:w-2/5">
+                <div class="w-full text-lg font-extrabold md:w-fit">
+                    <img [src]="getResponsiveImage(contactUsData()?.logo)" alt="logo">
                 </div>
-                <p class="text-sm max-w-xs text-white">
-                    نحن شريكك الحقيقي من البداية للنهاية، نقدم لك حلول مبتكرة، تقنيات حديثة ودعم مستمر لضمان أن كل خطوة
-                    نحو
-                    نجاحك الرقمي متقنة ومثمرة
-                </p>
+                <div class="text-sm max-w-xs text-white" [innerHTML]="getSanitizedHtml(contactUsData()?.footer_text)">
+                </div>
+                <div class="flex flex-col space-y-2 text-white text-xs">
+                    <span class="flex items-center justify-start">
+                        <img src="/images/social-icons/call-outline (1).png" alt="phone " class="w-5 h-5 me-2">
+                        <a [href]="'tel:' + contactUsData()?.phone" class="hover:underline">
+                            {{ contactUsData()?.phone }}
+                        </a>
+                    </span>
+                    <span class="flex items-center justify-start">
+                        <img src="/images/social-icons/call-outline (2).png" alt="email " class="w-5 h-5 me-2">
+                        <a [href]="'mailto:' + contactUsData()?.email" class="hover:underline">
+                            {{ contactUsData()?.email }}
+                        </a>
+                    </span>
+                    <span class="flex items-center justify-start">
+                        <img src="/images/social-icons/call-outline (3).png" alt="address " class="w-5 h-5 me-2">
+                        @if (contactUsData()?.address) {
+                        <a [href]="contactUsData()?.social?.map_url || getGoogleMapsUrl(contactUsData()?.address)"
+                            target="_blank" rel="noopener noreferrer" class="hover:underline">
+                            {{ contactUsData()?.address }}
+                        </a>
+                        }
+                    </span>
+                </div>
+                <div class="flex flex-row-reverse items-center justify-end gap-4">
+                    @if (contactUsData()?.social?.facebook_url) {
+                    <a [href]="contactUsData()?.social?.facebook_url" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/social-icons/facebook.png" alt="facebook" class="w-5.5 h-5.5">
+                    </a>
+                    }
+                    @if (contactUsData()?.social?.instagram_url) {
+                    <a [href]="contactUsData()?.social?.instagram_url" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/social-icons/instagram.png" alt="instagram" class="w-8 h-8">
+                    </a>
+                    }
+                    @if (contactUsData()?.whatsapp_number) {
+                    <a [href]="contactUsData()?.whatsapp_number" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/social-icons/whatsapp.png" alt="whatsapp" class="w-6 h-6">
+                    </a>
+                    }
+                    @if (contactUsData()?.social?.linkedin_url) {
+                    <a [href]="contactUsData()?.social?.linkedin_url" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/social-icons/linked-in.png" alt="linkedin" class="w-5 h-5">
+                    </a>
+                    }
+                    @if (contactUsData()?.social?.tiktok_url) {
+                    <a [href]="contactUsData()?.social?.tiktok_url" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/social-icons/tiktok.png" alt="tiktok" class="w-6 h-6">
+                    </a>
+                    }
+
+                </div>
             </div>
-            <div class="w-full  text-white md:w-1/5 ">
-                <div class="text-sm font-semibold">Company</div>
-                <ul class="text-sm">
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            About
-                        </a>
+            <div class="flex w-full flex-col space-y-4 md:w-1/2 lg:w-2/5">
+                <div class="text-sm font-semibold text-white">خدماتنا</div>
+                <ul class="text-sm text-white space-y-2">
+                    @if (servicesSection(); as services) {
+                    @if (services && services.length > 0) {
+                    @for (service of services; track service.slug || service.title) {
+                    <li>
+                        {{ service.title }}
                     </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Terms of Service
-                        </a>
-                    </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Privacy Policy
-                        </a>
-                    </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Cookie Policy
-                        </a>
-                    </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Cookie Policy
-                        </a>
-                    </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Cookie Policy
-                        </a>
-                    </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Cookie Policy
-                        </a>
-                    </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Cookie Policy
-                        </a>
-                    </li>
+                    }
+                    } @else {
+                    <li class="text-gray-400">جاري التحميل...</li>
+                    }
+                    } @else {
+                    <li class="text-gray-400">جاري التحميل...</li>
+                    }
                 </ul>
             </div>
-            <div class="w-full  text-white md:w-1/5 ">
-                <div class="text-sm font-semibold">Solutions</div>
-                <ul class="text-sm">
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Business Line of Credit
-                        </a>
+            <div class="flex w-full flex-col space-y-4 md:w-1/2 lg:w-2/5">
+                <div class="text-sm font-semibold text-white">روابط سريعة</div>
+                <ul class="text-sm text-white space-y-2">
+                    <li>
+                        <a routerLink="/About-Us" class="hover:underline">من نحن</a>
                     </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            SBA Loan
-                        </a>
+                    <li>
+                        <a routerLink="/Projects" class="hover:underline">المشاريع</a>
                     </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Revenue Based Financing
-                        </a>
+                    <li>
+                        <a routerLink="/Jops" class="hover:underline">الوظائف</a>
                     </li>
-                    <li class="pt-3">
-                        <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                            href="#" rel="noopener noreferrer" target="_blank">
-                            Invoice Factoring
-                        </a>
+                    <li>
+                        <a routerLink="/Blogs" class="hover:underline">المقالات</a>
                     </li>
                 </ul>
             </div>
@@ -99,11 +100,16 @@
     <div class="bg-[#2B0000]  py-4  text-sm text-white  md:flex-row ">
         <div class="container mx-auto lg:px-20 flex justify-between  items-center">
             <div class="flex items-end">
-                <img src="/images/logo/logo-light2.webp" alt="logo" class="me-5  w-16">
-                جميع الحقوق محفوظة © 2025
+
+                <!-- {{ contactUsData()?.copyright || 'جميع الحقوق محفوظة © 2025' }} -->
+                <span class="text-xs flex items-end justify-center ">جميع الحقوق محفوظة <img src="/images/logo/logo-light2.webp"
+                        alt="logo" class="mx-5  w-16">
+                    © 2025</span>
+
             </div>
             <div>
-                <a class="underline text-white">سياسة الخصوصية</a>
+                <a [href]="contactUsData()?.privacyPolicyUrl || '#'" target="_blank" rel="noopener noreferrer"
+                    class="underline text-white">سياسة الخصوصية</a>
             </div>
         </div>
     </div>

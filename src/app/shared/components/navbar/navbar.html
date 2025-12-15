@@ -1,7 +1,7 @@
 <nav [class]="isScrolled() ? 'fixed  top-0 container mx-auto lg:px-20 z-50 mt-4 mb-2 transition-all duration-400 ' : 'fixed top-0 container mx-auto lg:px-20 z-50! mt-12 mb-2 transition-all duration-400' ">
   <div class="  p-6 rounded-full bg-white border border-[#ED2924]">
     <div class="relative flex  items-center justify-between">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div class="absolute inset-y-0 left-0 flex items-center md:hidden">
         <!-- Mobile menu button-->
         <button type="button" command="--toggle" commandfor="mobile-menu"
           class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
@@ -17,12 +17,12 @@
           </svg>
         </button>
       </div>
-      <div class="flex  items-center justify-between w-full  ">
+      <div class="flex  items-center  justify-evenly lg:justify-between w-full  ">
         <!--! logo -->
         <div class="flex shrink-0 items-center">
           <img src="images/logo/logo.webp" alt="Your Company" class="h-12 w-auto" />
         </div>
-        <div class="hidden sm:ml-6 sm:block ">
+        <div class="hidden md:ml-6 md:block ">
           <!--! links -->
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->

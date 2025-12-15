@@ -23,7 +23,7 @@
         @if (counters(); as countersData) {
         @for (counter of countersData.slice(0, 3); track $index; let i = $index) {
 
-        <span #counterElement class="md:w-[140px] md:h-[140px] w-[100px] h-[100px] rounded-full bg-[#FEF8F8]
+        <span #counterElement class="md:w-[140px] w-[100px] h-[100px] md:h-[140px] lg:w-[180px] lg:h-[100px] xl:w-[120px] xl:h-[120px] 2xl:w-[140px] 2xl:h-[140px] rounded-full bg-[#FEF8F8]
                          border border-[#B90000]
                          flex flex-col items-center justify-center
                          m-6 relative" [class]="
@@ -32,7 +32,7 @@
                               'z-10 translate-x-32'
                   ">
           <h3 class="text-2xl lg:text-3xl font-bold">
-            {{ animatedCounters[i] || 0 }}
+            {{ (animatedCounters[i] ?? 0) }}
           </h3>
           <p class="text-center px-2 text-xs xl:text-lg ">{{ counter.title }}</p>
         </span>

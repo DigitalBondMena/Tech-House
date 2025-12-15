@@ -44,36 +44,58 @@ export class HomeServices implements AfterViewInit {
   @ViewChildren('imgEl') images!: QueryList<ElementRef>;
 
   ngAfterViewInit() {
-    // Animate right side titles (appearing from left to right)
-    this.animateTitle(this.titleRight1.nativeElement, this.titleBgRight1.nativeElement, 'right');
-    this.animateTitle(this.titleRight2.nativeElement, this.titleBgRight2.nativeElement, 'right');
-    
-    // Animate left side titles (appearing from right to left)
-    this.animateTitle(this.titleLeft1.nativeElement, this.titleBgLeft1.nativeElement, 'left');
-    this.animateTitle(this.titleLeft2.nativeElement, this.titleBgLeft2.nativeElement, 'left');
+    // Use setTimeout to ensure DOM is fully ready
+    setTimeout(() => {
+      // Animate right side titles (appearing from left to right)
+      if (this.titleRight1?.nativeElement && this.titleBgRight1?.nativeElement) {
+        this.animateTitle(this.titleRight1.nativeElement, this.titleBgRight1.nativeElement, 'right');
+      }
+      if (this.titleRight2?.nativeElement && this.titleBgRight2?.nativeElement) {
+        this.animateTitle(this.titleRight2.nativeElement, this.titleBgRight2.nativeElement, 'right');
+      }
+      
+      // Animate left side titles (appearing from right to left)
+      if (this.titleLeft1?.nativeElement && this.titleBgLeft1?.nativeElement) {
+        this.animateTitle(this.titleLeft1.nativeElement, this.titleBgLeft1.nativeElement, 'left');
+      }
+      if (this.titleLeft2?.nativeElement && this.titleBgLeft2?.nativeElement) {
+        this.animateTitle(this.titleLeft2.nativeElement, this.titleBgLeft2.nativeElement, 'left');
+      }
 
-    // Animate images with rotation and scale effect (no repeat on scroll)
-    this.images.forEach((img, index) => {
-      gsap.fromTo(img.nativeElement,
-        { 
-          opacity: 0,
-          rotateY: -90,
-          scale: 0.9
-        },
-        {
-          opacity: 1,
-          rotateY: 0,
-          scale: 1,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: img.nativeElement,
-            start: "top 80%",
-            toggleActions: "play none none none"
+      // Animate images with rotation and scale effect (no repeat on scroll)
+      if (this.images && this.images.length > 0) {
+        this.images.forEach((img, index) => {
+          if (img?.nativeElement) {
+            // Set initial state first
+            gsap.set(img.nativeElement, {
+              opacity: 0,
+              rotateY: -90,
+              scale: 0.9,
+              transformStyle: "preserve-3d",
+              perspective: 1000
+            });
+
+            // Create animation with ScrollTrigger
+            gsap.to(img.nativeElement, {
+              opacity: 1,
+              rotateY: 0,
+              scale: 1,
+              duration: 1.2,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: img.nativeElement,
+                start: "top 80%",
+                toggleActions: "play none none none",
+                once: true
+              }
+            });
           }
-        }
-      );
-    });
+        });
+      }
+
+      // Refresh ScrollTrigger after all animations are set up
+      ScrollTrigger.refresh();
+    }, 100);
   }
 
   private animateTitle(titleElement: HTMLElement, bgElement: HTMLElement, direction: 'left' | 'right') {

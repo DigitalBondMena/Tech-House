@@ -1,36 +1,179 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
-import { ApiService } from './apiService';
-import { Counter, CountersResponse } from '../models/home.model';
+import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse } from '../models/home.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedFeatureService {
-  private apiService = inject(ApiService);
+  private http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
 
   // 🔹 Internal API Response Signal Reference
   private countersResponseSignal = signal<Counter[] | null>(null);
+  private contactUsResponseSignal = signal<ContactUsData | null>(null);
+  private servicesSectionSignal = signal<ServiceTitle[] | null>(null);
+
+  // 🔹 Loading flags to prevent multiple requests
+  private contactUsLoading = false;
+  private servicesSectionLoading = false;
+  private countersLoading = false;
 
   // 🔹 Counters Data Signal (computed from API response)
   counters = computed(() => this.countersResponseSignal());
+
+  // 🔹 Contact Us Data Signal (computed from API response)
+  contactUsData = computed(() => this.contactUsResponseSignal());
+
+  // 🔹 Services Section Data Signal (computed from API response)
+  servicesSection = computed(() => this.servicesSectionSignal());
 
   // =====================
   // COUNTERS API
   // =====================
   loadCounters(): void {
-    const result = this.apiService.get<CountersResponse>(API_END_POINTS.COUNTERS);
-    
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data && data.counters) {
-        this.countersResponseSignal.set(data.counters);
-        clearInterval(checkInterval);
-      }
-    }, 50);
+    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
+    if (this.countersResponseSignal() || this.countersLoading) {
+      return;
+    }
 
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.countersLoading = true;
+    
+    this.http.get<CountersResponse>(`${this.baseUrl}${API_END_POINTS.COUNTERS}`).subscribe({
+      next: (data) => {
+        if (data && data.counters) {
+          this.countersResponseSignal.set(data.counters);
+        }
+        this.countersLoading = false;
+      },
+      error: (err) => {
+        // Only log if it's not a network/CORS error (status 0)
+        if (err.status !== 0) {
+          console.error('Error loading counters:', err);
+        }
+        this.countersLoading = false;
+      }
+    });
+  }
+
+  // =====================
+  // CONTACT US API (for Footer)
+  // =====================
+  loadContactUsData(): void {
+    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
+    if (this.contactUsResponseSignal() || this.contactUsLoading) {
+      return;
+    }
+
+    this.contactUsLoading = true;
+    
+    this.http.get<ContactUsResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_US}`).subscribe({
+      next: (data) => {
+        // التحقق من structure البيانات
+        const contactUs = data.contactUs || data;
+        
+        if (contactUs) {
+          // استخراج الحقول المطلوبة فقط
+          const contactData: ContactUsData = {
+            footer_text: contactUs.footer_text,
+            working_hours: contactUs.working_hours,
+            email: contactUs.email,
+            phone: contactUs.phone,
+            whatsapp_number: contactUs.whatsapp_number,
+            address: contactUs.address,
+            
+            logo: contactUs.logo,
+            copyright: contactUs.copyright,
+            privacyPolicyUrl: contactUs.privacyPolicyUrl,
+            
+            // استخراج social media data
+            social: contactUs.social ? {
+              map_url: contactUs.social.map_url,
+              facebook_url: contactUs.social.facebook_url,
+              instagram_url: contactUs.social.instagram_url,
+              linkedin_url: contactUs.social.linkedin_url,
+              tiktok_url: contactUs.social.tiktok_url,
+              snapchat_url: contactUs.social.snapchat_url
+            } : undefined
+          };
+          
+          this.contactUsResponseSignal.set(contactData);
+        }
+        this.contactUsLoading = false;
+      },
+      error: (err) => {
+        // Only log if it's not a network/CORS error (status 0)
+        if (err.status !== 0) {
+          console.error('Error loading contact us data:', err);
+        }
+        this.contactUsLoading = false;
+      }
+    });
+  }
+
+  // =====================
+  // SERVICES SECTION API (for Footer)
+  // =====================
+  loadServicesSection(): void {
+    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
+    if (this.servicesSectionSignal() || this.servicesSectionLoading) {
+      return;
+    }
+
+    this.servicesSectionLoading = true;
+    
+    this.http.get<ServicesSectionResponse | any>(`${this.baseUrl}${API_END_POINTS.SERVICESEC}`).subscribe({
+      next: (data) => {
+        // محاولة استخراج البيانات بطرق مختلفة
+        let services: ServiceTitle[] = [];
+        
+        // الطريقة 1: إذا كان data.serviceTitles موجود
+        if (Array.isArray(data.serviceTitles)) {
+          services = data.serviceTitles;
+        }
+        // الطريقة 2: إذا كان data.services موجود
+        else if (Array.isArray(data.services)) {
+          services = data.services;
+        }
+        // الطريقة 3: إذا كان data.titles موجود
+        else if (Array.isArray(data.titles)) {
+          services = data.titles;
+        }
+        // الطريقة 4: إذا كان data نفسه array
+        else if (Array.isArray(data)) {
+          services = data;
+        }
+        // الطريقة 5: إذا كان data.data موجود
+        else if (Array.isArray(data.data)) {
+          services = data.data;
+        }
+        // الطريقة 6: إذا كان data.data.serviceTitles موجود
+        else if (Array.isArray(data.data?.serviceTitles)) {
+          services = data.data.serviceTitles;
+        }
+        // الطريقة 7: إذا كان data.data.services موجود
+        else if (Array.isArray(data.data?.services)) {
+          services = data.data.services;
+        }
+        // الطريقة 8: إذا كان data.data.titles موجود
+        else if (Array.isArray(data.data?.titles)) {
+          services = data.data.titles;
+        }
+        
+        if (services.length > 0) {
+          this.servicesSectionSignal.set(services);
+        }
+        this.servicesSectionLoading = false;
+      },
+      error: (err) => {
+        // Only log if it's not a network/CORS error (status 0)
+        if (err.status !== 0) {
+          console.error('Error loading services section:', err);
+        }
+        this.servicesSectionLoading = false;
+      }
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { Blog } from '../../../core/models/home.model';
@@ -18,15 +19,27 @@ export class HomeBlogs {
   //! button data
   btnText = "مقالات اكثر";
 
-  activeCard: number = 1; // Default to middle card (index 1)
+  activeCard: number = 2; // Default to middle card (index 1)
+
+  constructor(private router: Router) {}
 
   //! method to set active card
-  setActive(cardNumber: number) {
+  setActive(cardNumber: number, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.activeCard = cardNumber;
   }
 
+  //! method to navigate to project details
+  navigateToProjectDetails(blog: Blog, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/Project-Det'], { queryParams: { slug: blog.slug } });
+  }
+
   // Helper method to get responsive image
-  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string }): string {
+  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
+    if (!image) return '';
     return image.desktop;
   }
 
