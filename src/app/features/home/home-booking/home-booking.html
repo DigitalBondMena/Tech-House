@@ -1,7 +1,7 @@
 <section class=" py-20 bg-booking flex items-center justify-center video-background" 
          [style.background-image]="ctasection()?.video ? 'none' : 'url(\'/images/book.png\')'">
     @if (ctasection()?.video) {
-        <video class="video-bg" autoplay muted loop playsinline>
+        <video #videoElement class="video-bg" autoplay muted loop playsinline preload="auto">
             <source [src]="ctasection()!.video" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
