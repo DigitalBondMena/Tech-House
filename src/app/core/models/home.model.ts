@@ -189,3 +189,22 @@ export interface ServicesSectionResponse {
   titles?: ServiceTitle[];
 }
 
+/**
+ * Client/Partner Item
+ */
+export interface ClientPartner {
+  title: string;
+  url: string | null;
+  is_active: boolean;
+  order: number;
+  image: ResponsiveImage;
+}
+
+/**
+ * Partners/Clients API Response
+ */
+export interface PartnersClientsResponse {
+  clients: ClientPartner[];
+  partners: ClientPartner[];
+}
+

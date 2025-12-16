@@ -24,17 +24,26 @@ export class HomeServices implements AfterViewInit {
   btnText = "خدمات اكثر";
 
   // Helper method to get responsive image
-  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string }): string {
+  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
+    if (!image) return '';
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 768) {
+        return image.mobile;
+      } else if (width < 1024) {
+        return image.tablet;
+      }
+    }
     return image.desktop;
   }
 
-  // Right side elements
+  // Right side elements (titles for even-indexed services)
   @ViewChild('titleRight1') titleRight1!: ElementRef;
   @ViewChild('titleBgRight1') titleBgRight1!: ElementRef;
   @ViewChild('titleRight2') titleRight2!: ElementRef;
   @ViewChild('titleBgRight2') titleBgRight2!: ElementRef;
   
-  // Left side elements
+  // Left side elements (titles for odd-indexed services)
   @ViewChild('titleLeft1') titleLeft1!: ElementRef;
   @ViewChild('titleBgLeft1') titleBgLeft1!: ElementRef;
   @ViewChild('titleLeft2') titleLeft2!: ElementRef;

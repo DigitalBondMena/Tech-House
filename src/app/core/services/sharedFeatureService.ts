@@ -2,7 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
-import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse } from '../models/home.model';
+import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse } from '../models/home.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +15,13 @@ export class SharedFeatureService {
   private countersResponseSignal = signal<Counter[] | null>(null);
   private contactUsResponseSignal = signal<ContactUsData | null>(null);
   private servicesSectionSignal = signal<ServiceTitle[] | null>(null);
+  private partnersClientsResponseSignal = signal<PartnersClientsResponse | null>(null);
 
   // 🔹 Loading flags to prevent multiple requests
   private contactUsLoading = false;
   private servicesSectionLoading = false;
   private countersLoading = false;
+  private partnersClientsLoading = false;
 
   // 🔹 Counters Data Signal (computed from API response)
   counters = computed(() => this.countersResponseSignal());
@@ -29,6 +31,17 @@ export class SharedFeatureService {
 
   // 🔹 Services Section Data Signal (computed from API response)
   servicesSection = computed(() => this.servicesSectionSignal());
+
+  // 🔹 Partners/Clients Data Signals (computed from API response)
+  partners = computed(() => {
+    const data = this.partnersClientsResponseSignal();
+    return data?.partners?.filter(p => p.is_active).sort((a, b) => a.order - b.order) || [];
+  });
+
+  clients = computed(() => {
+    const data = this.partnersClientsResponseSignal();
+    return data?.clients?.filter(c => c.is_active).sort((a, b) => a.order - b.order) || [];
+  });
 
   // =====================
   // COUNTERS API
@@ -176,4 +189,35 @@ export class SharedFeatureService {
       }
     });
   }
+
+  // =====================
+  // PARTNERS/CLIENTS API
+  // =====================
+  loadPartnersClients(): void {
+    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
+    if (this.partnersClientsResponseSignal() || this.partnersClientsLoading) {
+      return;
+    }
+
+    this.partnersClientsLoading = true;
+    
+    this.http.get<PartnersClientsResponse>(`${this.baseUrl}${API_END_POINTS.BANNERS}`).subscribe({
+      next: (data) => {
+        if (data && (data.clients || data.partners)) {
+          this.partnersClientsResponseSignal.set(data);
+        }
+        this.partnersClientsLoading = false;
+      },
+      error: (err) => {
+        // Only log if it's not a network/CORS error (status 0)
+        if (err.status !== 0) {
+          console.error('Error loading partners/clients:', err);
+        }
+        this.partnersClientsLoading = false;
+      }
+    });
+  }
 }
+
+
+

@@ -40,6 +40,14 @@ export class HomeBlogs {
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
     if (!image) return '';
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 768) {
+        return image.mobile;
+      } else if (width < 1024) {
+        return image.tablet;
+      }
+    }
     return image.desktop;
   }
 
