@@ -2,7 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
-import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse } from '../models/home.model';
+import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse } from '../models/home.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +16,14 @@ export class SharedFeatureService {
   private contactUsResponseSignal = signal<ContactUsData | null>(null);
   private servicesSectionSignal = signal<ServiceTitle[] | null>(null);
   private partnersClientsResponseSignal = signal<PartnersClientsResponse | null>(null);
+  private privacyPolicyResponseSignal = signal<PrivacyPolicyData | null>(null);
 
   // 🔹 Loading flags to prevent multiple requests
   private contactUsLoading = false;
   private servicesSectionLoading = false;
   private countersLoading = false;
   private partnersClientsLoading = false;
+  private privacyPolicyLoading = false;
 
   // 🔹 Counters Data Signal (computed from API response)
   counters = computed(() => this.countersResponseSignal());
@@ -42,6 +44,9 @@ export class SharedFeatureService {
     const data = this.partnersClientsResponseSignal();
     return data?.clients?.filter(c => c.is_active).sort((a, b) => a.order - b.order) || [];
   });
+
+  // 🔹 Privacy Policy Data Signal (computed from API response)
+  privacyPolicyData = computed(() => this.privacyPolicyResponseSignal());
 
   // =====================
   // COUNTERS API
@@ -214,6 +219,107 @@ export class SharedFeatureService {
           console.error('Error loading partners/clients:', err);
         }
         this.partnersClientsLoading = false;
+      }
+    });
+  }
+
+  // =====================
+  // PRIVACY POLICY API
+  // =====================
+  loadPrivacyPolicy(): void {
+    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
+    if (this.privacyPolicyResponseSignal() || this.privacyPolicyLoading) {
+      return;
+    }
+
+    this.privacyPolicyLoading = true;
+    
+    this.http.get<PrivacyPolicyResponse | any>(`${this.baseUrl}${API_END_POINTS.PRIVACYPOLICY}`).subscribe({
+      next: (data) => {
+        // محاولة استخراج البيانات بطرق مختلفة
+        let privacyData: PrivacyPolicyData | null = null;
+        
+        // الطريقة 1: إذا كان data.bannerSection موجود (الأولوية)
+        if (data.bannerSection) {
+          privacyData = {
+            title: data.bannerSection.title || '',
+            paragraph: data.bannerSection.text,
+            image: data.bannerSection.image,
+            sections: data.sections || [],
+            bannerSection: data.bannerSection,
+            privacyPolicy: data.privacyPolicy
+          };
+        }
+        // الطريقة 2: إذا كان data.privacyPolicy موجود (كـ object منفصل)
+        else if (data.privacyPolicy && (data.privacyPolicy.title || data.privacyPolicy.text)) {
+          // إذا كان privacyPolicy يحتوي على title و text فقط (PrivacyPolicyContent)
+          privacyData = {
+            title: data.title || '',
+            paragraph: data.paragraph,
+            image: data.image || { desktop: '', tablet: '', mobile: '' },
+            sections: data.sections || [],
+            privacyPolicy: data.privacyPolicy
+          };
+        }
+        // الطريقة 3: إذا كانت البيانات مباشرة في data
+        else if (data.title || data.image) {
+          privacyData = {
+            title: data.title || '',
+            paragraph: data.paragraph,
+            image: data.image,
+            sections: data.sections || []
+          };
+        }
+        // الطريقة 4: إذا كان data.data موجود
+        else if (data.data) {
+          if (data.data.bannerSection) {
+            privacyData = {
+              title: data.data.bannerSection.title || '',
+              paragraph: data.data.bannerSection.text,
+              image: data.data.bannerSection.image,
+              sections: data.data.sections || [],
+              bannerSection: data.data.bannerSection,
+              privacyPolicy: data.data.privacyPolicy || data.privacyPolicy
+            };
+          } else if (data.data.privacyPolicy) {
+            privacyData = {
+              ...data.data.privacyPolicy,
+              privacyPolicy: data.data.privacyPolicy
+            };
+          } else if (data.data.title || data.data.image) {
+            privacyData = {
+              title: data.data.title || '',
+              paragraph: data.data.paragraph,
+              image: data.data.image,
+              sections: data.data.sections || [],
+              privacyPolicy: data.data.privacyPolicy || data.privacyPolicy
+            };
+          }
+        }
+        
+        // إذا كان privacyPolicy موجود مباشرة في data
+        if (!privacyData && data.privacyPolicy) {
+          privacyData = {
+            title: data.bannerSection?.title || data.title || '',
+            paragraph: data.bannerSection?.text || data.paragraph,
+            image: data.bannerSection?.image || data.image || { desktop: '', tablet: '', mobile: '' },
+            sections: data.sections || [],
+            bannerSection: data.bannerSection,
+            privacyPolicy: data.privacyPolicy
+          };
+        }
+        
+        if (privacyData) {
+          this.privacyPolicyResponseSignal.set(privacyData);
+        }
+        this.privacyPolicyLoading = false;
+      },
+      error: (err) => {
+        // Only log if it's not a network/CORS error (status 0)
+        if (err.status !== 0) {
+          console.error('Error loading privacy policy:', err);
+        }
+        this.privacyPolicyLoading = false;
       }
     });
   }

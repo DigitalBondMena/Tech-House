@@ -208,3 +208,55 @@ export interface PartnersClientsResponse {
   partners: ClientPartner[];
 }
 
+/**
+ * Privacy Policy Section Item
+ */
+export interface PrivacyPolicySection {
+  title: string;
+  content: string[];
+}
+
+/**
+ * Banner Section Data
+ */
+export interface BannerSection {
+  small_title?: string;
+  title: string;
+  text?: string;
+  meta_title?: string;
+  meta_description?: string;
+  image: ResponsiveImage;
+}
+
+/**
+ * Privacy Policy Content
+ */
+export interface PrivacyPolicyContent {
+  title: string;
+  text?: string;
+}
+
+/**
+ * Privacy Policy Data
+ */
+export interface PrivacyPolicyData {
+  title: string;
+  paragraph?: string;
+  image: ResponsiveImage;
+  sections?: PrivacyPolicySection[];
+  bannerSection?: BannerSection;
+  privacyPolicy?: PrivacyPolicyContent;
+}
+
+/**
+ * Privacy Policy API Response
+ */
+export interface PrivacyPolicyResponse {
+  privacyPolicy?: PrivacyPolicyData | PrivacyPolicyContent;
+  title?: string;
+  paragraph?: string;
+  image?: ResponsiveImage;
+  sections?: PrivacyPolicySection[];
+  bannerSection?: BannerSection;
+}
+
