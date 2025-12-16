@@ -9,7 +9,9 @@
                      [class]="i === 0 ? '-rotate-4 -translate-y-20 bg-gray-200' : i === 1 ? 'active-card bg-white shadow-lg' : 'rotate-4 translate-y-20 bg-gray-100'"
                      (click)="onCardClick(i)">
                     <div class="w-1/4 p-5 xl:p-10">
-                        <img [src]="getResponsiveImage(project.image)" [alt]="project.title" class="w-[300px] xl:w-[200px]">
+                        @if (getResponsiveImage(project.image)) {
+                            <img [ngSrc]="getResponsiveImage(project.image)" [alt]="project.title" width="300" height="300" class="w-[300px] xl:w-[200px]">
+                        }
                     </div>
                     <div class="h-full w-3/4 p-5 xl:p-10">
                         <h2 class="text-xl text-[#636363] font-medium mb-6">{{ project.category_name }}</h2>
@@ -17,7 +19,7 @@
                         <p class="mb-12 text-lg font-medium text-[#440000]">{{ project.text }}</p>
                         <span class="underline text-[#ED2924] font-semibold text-xl flex items-center justify-center">عرض تفاصيل
                             المشروع
-                            <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1 w-8! ">
+                            <img ngSrc="images/icons/arrow-left.png" alt="arrow-left" width="32" height="32" class="mx-1 w-8! ">
                         </span>
                     </div>
                 </div>

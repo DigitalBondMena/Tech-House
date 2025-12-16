@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { Blog } from '../../../core/models/home.model';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-home-blogs',
-  imports: [SectionTitle, AppButton],
+  imports: [SectionTitle, AppButton, NgOptimizedImage],
   templateUrl: './home-blogs.html',
   styleUrl: './home-blogs.css'
 })
@@ -39,16 +40,16 @@ export class HomeBlogs {
 
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
-    if (!image) return '';
+    if (!image) return '/images/placeholder.png';
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
       if (width < 768) {
-        return image.mobile;
+        return image.mobile || image.desktop || '/images/placeholder.png';
       } else if (width < 1024) {
-        return image.tablet;
+        return image.tablet || image.desktop || '/images/placeholder.png';
       }
     }
-    return image.desktop;
+    return image.desktop || '/images/placeholder.png';
   }
 
   // Get blogs for display (first 3)

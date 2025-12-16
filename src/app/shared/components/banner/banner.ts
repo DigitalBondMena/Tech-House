@@ -1,10 +1,12 @@
-import { Component, Input, AfterViewInit, OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, Input, AfterViewInit, OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
 import { ClientPartner } from '../../../core/models/home.model';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-banner',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './banner.html',
   styleUrl: './banner.css'
 })
@@ -17,18 +19,21 @@ export class Banner implements AfterViewInit, OnChanges {
 
   private animationInitialized = false;
   private timeline: gsap.core.Timeline | null = null;
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // Helper method to get responsive image
-  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string }): string {
+  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
+    if (!image) return '/images/placeholder.png';
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
       if (width < 768) {
-        return image.mobile;
+        return image.mobile || image.desktop || '/images/placeholder.png';
       } else if (width < 1024) {
-        return image.tablet;
+        return image.tablet || image.desktop || '/images/placeholder.png';
       }
     }
-    return image.desktop;
+    return image.desktop || '/images/placeholder.png';
   }
 
   // Get items to display (duplicate for seamless loop)
@@ -39,6 +44,11 @@ export class Banner implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // Only run animations in browser, not in SSR
+    if (!this.isBrowser) {
+      return;
+    }
+
     // If items changed, re-initialize animation
     if (changes['items'] && !changes['items'].firstChange) {
       this.animationInitialized = false;
@@ -49,6 +59,11 @@ export class Banner implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
+    // Only run animations in browser, not in SSR
+    if (!this.isBrowser) {
+      return;
+    }
+
     // Subscribe to QueryList changes to handle dynamic items
     this.icons.changes.subscribe(() => {
       if (this.items.length > 0 && this.icons.length > 0 && !this.animationInitialized) {
@@ -63,6 +78,11 @@ export class Banner implements AfterViewInit, OnChanges {
   }
 
   private tryInitAnimation() {
+    // Only run animations in browser, not in SSR
+    if (!this.isBrowser) {
+      return;
+    }
+
     if (this.items.length > 0 && this.icons.length > 0) {
       setTimeout(() => {
         if (!this.animationInitialized && this.icons.length > 0) {
@@ -78,6 +98,11 @@ export class Banner implements AfterViewInit, OnChanges {
   }
 
   private privateInitAnimation() {
+    // Only run animations in browser, not in SSR
+    if (!this.isBrowser) {
+      return;
+    }
+
     // Kill existing animation if any
     if (this.timeline) {
       this.timeline.kill();

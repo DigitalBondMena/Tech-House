@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AppButton } from '../app-button/app-button';
 import { HomeBanner } from '../../../features/home/home-banner/home-banner';
 
 @Component({
   selector: 'app-hero-section',
-  imports: [AppButton, CommonModule],
+  imports: [AppButton, CommonModule, NgOptimizedImage],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.css'
 })

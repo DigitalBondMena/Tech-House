@@ -2,7 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
-import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse } from '../models/home.model';
+import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse, ContactHero, ContactHeroResponse } from '../models/home.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +14,14 @@ export class SharedFeatureService {
   // 🔹 Internal API Response Signal Reference
   private countersResponseSignal = signal<Counter[] | null>(null);
   private contactUsResponseSignal = signal<ContactUsData | null>(null);
+  private contactHeroResponseSignal = signal<ContactHero | null>(null);
   private servicesSectionSignal = signal<ServiceTitle[] | null>(null);
   private partnersClientsResponseSignal = signal<PartnersClientsResponse | null>(null);
   private privacyPolicyResponseSignal = signal<PrivacyPolicyData | null>(null);
 
   // 🔹 Loading flags to prevent multiple requests
   private contactUsLoading = false;
+  private contactHeroLoading = false;
   private servicesSectionLoading = false;
   private countersLoading = false;
   private partnersClientsLoading = false;
@@ -30,6 +32,9 @@ export class SharedFeatureService {
 
   // 🔹 Contact Us Data Signal (computed from API response)
   contactUsData = computed(() => this.contactUsResponseSignal());
+
+  // 🔹 Contact Hero Data Signal (computed from API response)
+  contactHero = computed(() => this.contactHeroResponseSignal());
 
   // 🔹 Services Section Data Signal (computed from API response)
   servicesSection = computed(() => this.servicesSectionSignal());
@@ -77,6 +82,79 @@ export class SharedFeatureService {
   }
 
   // =====================
+  // CONTACT HERO API
+  // =====================
+  loadContactHero(): void {
+    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
+    if (this.contactHeroResponseSignal() || this.contactHeroLoading) {
+      return;
+    }
+
+    this.contactHeroLoading = true;
+    
+    this.http.get<ContactHeroResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_HERO}`).subscribe({
+      next: (data) => {
+        // التحقق من structure البيانات
+        let heroData: ContactHero | null = null;
+        
+        // الطريقة 1: إذا كان data.bannerSection موجود (الأولوية)
+        if (data.bannerSection) {
+          heroData = {
+            title: data.bannerSection.title || '',
+            paragraph: data.bannerSection.text,
+            image: data.bannerSection.image
+          };
+        }
+        // الطريقة 2: إذا كان data.contactHero موجود
+        else if (data.contactHero) {
+          heroData = data.contactHero;
+        }
+        // الطريقة 3: إذا كانت البيانات مباشرة في data
+        else if (data.title || data.image) {
+          heroData = {
+            title: data.title || '',
+            paragraph: data.paragraph,
+            image: data.image
+          };
+        }
+        // الطريقة 4: إذا كان data.data موجود
+        else if (data.data) {
+          if (data.data.bannerSection) {
+            heroData = {
+              title: data.data.bannerSection.title || '',
+              paragraph: data.data.bannerSection.text,
+              image: data.data.bannerSection.image
+            };
+          } else if (data.data.contactHero) {
+            heroData = data.data.contactHero;
+          } else if (data.data.title || data.data.image) {
+            heroData = {
+              title: data.data.title || '',
+              paragraph: data.data.paragraph,
+              image: data.data.image
+            };
+          }
+        }
+        
+        if (heroData) {
+          console.log('Contact Hero Data loaded:', heroData);
+          this.contactHeroResponseSignal.set(heroData);
+        } else {
+          console.warn('Contact Hero Data is null or empty:', data);
+        }
+        this.contactHeroLoading = false;
+      },
+      error: (err) => {
+        // Only log if it's not a network/CORS error (status 0)
+        if (err.status !== 0) {
+          console.error('Error loading contact hero:', err);
+        }
+        this.contactHeroLoading = false;
+      }
+    });
+  }
+
+  // =====================
   // CONTACT US API (for Footer)
   // =====================
   loadContactUsData(): void {
@@ -102,9 +180,19 @@ export class SharedFeatureService {
             whatsapp_number: contactUs.whatsapp_number,
             address: contactUs.address,
             
+            // إضافة image من contact API
+            image: contactUs.image,
+            
             logo: contactUs.logo,
             copyright: contactUs.copyright,
             privacyPolicyUrl: contactUs.privacyPolicyUrl,
+            
+            // إضافة image من contact API
+            contactInfo: {
+              email: contactUs.email,
+              phone: contactUs.phone,
+              address: contactUs.address
+            },
             
             // استخراج social media data
             social: contactUs.social ? {
@@ -117,6 +205,7 @@ export class SharedFeatureService {
             } : undefined
           };
           
+          console.log('Contact Us Data loaded:', contactData);
           this.contactUsResponseSignal.set(contactData);
         }
         this.contactUsLoading = false;

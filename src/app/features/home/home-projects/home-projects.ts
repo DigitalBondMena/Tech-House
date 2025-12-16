@@ -2,12 +2,13 @@ import { Component, AfterViewInit, ElementRef, ViewChildren, QueryList, Input } 
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { Project } from '../../../core/models/home.model';
+import { NgOptimizedImage } from '@angular/common';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/all';
 
 @Component({
   selector: 'app-home-projects',
-  imports: [SectionTitle, AppButton],
+  imports: [SectionTitle, AppButton, NgOptimizedImage],
   templateUrl: './home-projects.html',
   styleUrl: './home-projects.css'
 })
@@ -21,7 +22,10 @@ export class HomeProjects implements AfterViewInit {
   btnText = "مشاريع اكثر";
 
   // Helper method to get responsive image
-  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string }): string {
+  getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
+    if (!image || !image.desktop) {
+      return '/images/placeholder.png'; // Fallback image
+    }
     return image.desktop;
   }
 

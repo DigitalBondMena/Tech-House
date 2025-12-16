@@ -15,11 +15,12 @@ import { isPlatformBrowser } from '@angular/common';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AboutHome } from '../../../core/models/home.model';
 import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-home-about',
   standalone: true,
-  imports: [SectionTitle],
+  imports: [SectionTitle, NgOptimizedImage],
   templateUrl: './home-about.html',
   styleUrl: './home-about.css'
 })
@@ -162,6 +163,6 @@ export class HomeAbout implements AfterViewInit, OnDestroy {
   }
 
   getResponsiveImage(): string {
-    return this.aboutData?.image?.desktop ?? '';
+    return this.aboutData?.image?.desktop || '/images/placeholder.png';
   }
 }

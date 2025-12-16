@@ -6,7 +6,7 @@
 
     <span class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer">
       معرفة المزيد
-      <img src="images/icons/arrow-left.png" alt="arrow-left" class="mx-1">
+      <img ngSrc="images/icons/arrow-left.png" alt="arrow-left" width="24" height="24" class="mx-1">
     </span>
   </div>
 
@@ -44,7 +44,9 @@
 
     <!-- IMAGE -->
     <div class="ms-auto">
-      <img [src]="getResponsiveImage()" [alt]="aboutData.title" class="w-full" />
+      @if (getResponsiveImage()) {
+        <img [ngSrc]="getResponsiveImage()" [alt]="aboutData.title" width="800" height="600" class="w-full" />
+      }
     </div>
 
   </div>

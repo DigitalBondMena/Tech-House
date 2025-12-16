@@ -2,6 +2,7 @@ import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewIni
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { Service } from '../../../core/models/home.model';
+import { NgOptimizedImage } from '@angular/common';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -9,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-home-services',
-  imports: [SectionTitle, AppButton],
+  imports: [SectionTitle, AppButton, NgOptimizedImage],
   templateUrl: './home-services.html',
   styleUrl: './home-services.css',
   standalone: true
@@ -25,16 +26,16 @@ export class HomeServices implements AfterViewInit {
 
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
-    if (!image) return '';
+    if (!image) return '/images/placeholder.png';
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
       if (width < 768) {
-        return image.mobile;
+        return image.mobile || image.desktop || '/images/placeholder.png';
       } else if (width < 1024) {
-        return image.tablet;
+        return image.tablet || image.desktop || '/images/placeholder.png';
       }
     }
-    return image.desktop;
+    return image.desktop || '/images/placeholder.png';
   }
 
   // Right side elements (titles for even-indexed services)

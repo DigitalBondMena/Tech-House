@@ -7,18 +7,22 @@
     @for (item of getDisplayItems(); track $index) {
       @if (item.url) {
         <a [href]="item.url" target="_blank" rel="noopener noreferrer" #iconRef class="h-16 flex items-center px-2">
-          <img [src]="getResponsiveImage(item.image)" [alt]="item.title" class="h-full w-auto object-contain max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+          @if (getResponsiveImage(item.image)) {
+            <img [ngSrc]="getResponsiveImage(item.image)" [alt]="item.title" width="260" height="64" class="h-full w-auto object-contain max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+          }
         </a>
       } @else {
         <div #iconRef class="h-16 flex items-center px-2">
-          <img [src]="getResponsiveImage(item.image)" [alt]="item.title" class="h-full w-auto object-contain max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+          @if (getResponsiveImage(item.image)) {
+            <img [ngSrc]="getResponsiveImage(item.image)" [alt]="item.title" width="260" height="64" class="h-full w-auto object-contain max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+          }
         </div>
       }
     }
   } @else {
     <!-- Fallback: show placeholder images if no data -->
     @for (i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]; track i) {
-      <img src="images/banner.png" #iconRef class="h-16" />
+      <img ngSrc="images/banner.png" width="180" height="64" #iconRef class="h-16" />
     }
   }
 </div>

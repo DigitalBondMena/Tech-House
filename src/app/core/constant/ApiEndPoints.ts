@@ -10,6 +10,7 @@ export const API_END_POINTS = {
     //! SHARED
     //! Contact-us sec
     CONTACT_US: '/contact',
+    CONTACT_HERO: '/contactbanner',
     //! banners sec
     BANNERS: '/partners',
     COUNTERS: '/coutners',
@@ -21,7 +22,7 @@ export const API_END_POINTS = {
 
 
     //! Submit Form
-    SUBMIT_CONTACT_FORM: '/contactus/submit',
+    SUBMIT_CONTACT_FORM: '/submit-form',
     
 
 };

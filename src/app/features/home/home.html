@@ -1,17 +1,16 @@
 <section class="overflow-hidden relative">
     <app-circle-sidebar></app-circle-sidebar>
     @if (heroSection()) {
-        <app-hero-section 
-            [title]="heroSection()!.title" 
-            [btn]="heroSection()!.input_title" 
-            [image]="'/images/hero/Animation Hero Section.gif'" 
-            imagePosition="center" 
-            [subtitleAboveTitle]="false">
-        </app-hero-section>
+    <app-hero-section [title]="heroSection()!.title" [btn]="heroSection()!.input_title"
+        [image]="'/images/hero/Animation Hero Section.gif'" imagePosition="center" [subtitleAboveTitle]="false">
+    </app-hero-section>
     }
+
     <app-home-banner class="translate-y-40" [scrollTitle]="heroSection()?.scroll_title"></app-home-banner>
     <!-- about   -->
+
     <app-home-about [aboutData]="aboutHome()"></app-home-about>
+
     <!-- clients & parteners banners   -->
     <app-home-banners-sec class=""></app-home-banners-sec>
     <!-- services   -->

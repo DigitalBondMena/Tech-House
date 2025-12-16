@@ -1,29 +1,55 @@
-<app-hero-section [title]="heroTitle" [paragraph]="heroParagraph" [image]="heroImage" imagePosition="none">
+@if (bannerSection()) {
+<app-hero-section [title]="bannerSection()?.title || ''" [paragraph]="bannerSection()?.text || ''"
+    [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
+    [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
+    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[38px]! lg:-bottom-[0px]! -left-[80px]! lg:-left-[0px]!">
+    >
+
 </app-hero-section>
+}
+
+@if (aboutInformation()) {
 <section class="container mx-auto lg:px-20 py-20">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <!-- Right Side - Our Story Text -->
-        <div class="order-2 lg:order-1">
-            <app-section-title [title]="storyTitle" customClass="mb-6">
+        <div class=" col-span-1 order-2 lg:order-1">
+            <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6">
             </app-section-title>
-            <p class="text-[#440000] text-xl font-medium leading-relaxed">
-                {{ storyText }}
-            </p>
-        </div>
-
-        <div class="order-1 lg:order-2">
-            <div class="bg-[#ED2924] rounded-3xl p-8 text-white">
-                <h3 class="text-3xl font-bold mb-6">{{ projectCardTitle }}</h3>
-                <p class="text-lg mb-8 leading-relaxed">
-                    {{ projectCardText }}
-                </p>
-                <app-app-button [btnText]="contactBtnText"
-                    customClass="bg-[#B90000] text-white rounded-full px-6 py-3 flex items-center justify-center hover:bg-[#A00000] transition duration-300">
-                </app-app-button>
+            <div class="text-[#440000] text-xl font-medium leading-relaxed"
+                [innerHTML]="aboutInformation()?.text || ''">
             </div>
         </div>
+
+        <!-- Left Side - Red Card (Project Card) -->
+        @if (aboutSections().length > 0) {
+   
+        <div class="col-span-1 order-1 lg:order-2">
+            <div class="sticky-cards-container">
+                @for (section of aboutSections(); track section.order; let i = $index) {
+                  <div
+                    #cardElement
+                    class="about-card bg-linear-about text-center rounded-3xl p-8 text-white"
+                    [class.mb-10]="i === 0"
+                  >
+                    <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
+                    <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
+              
+                    <app-app-button
+                      [btnText]="contactBtnText"
+                      customClass="bg-[#B90000] text-white mx-auto rounded-full px-6 py-3"
+                    ></app-app-button>
+                  </div>
+                }
+              </div>
+             
+        </div>
+        
+        
+        }
     </div>
 </section>
+}
+
 
 
 <section class="py-60 overflow-hidden ">
@@ -36,7 +62,8 @@
         </app-banner>
     </div>
     <div class="w-full">
-        <app-banner direction="left" customClass="rotate-[10deg] translate-y-[10px] relative  w-[120%] -right-40 bg-[#940000]!">
+        <app-banner direction="left"
+            customClass="rotate-[10deg] translate-y-[10px] relative  w-[120%] -right-40 bg-[#940000]!">
         </app-banner>
     </div>
 </section>

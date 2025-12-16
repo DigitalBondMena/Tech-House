@@ -140,6 +140,7 @@ export interface ContactUsData {
   phone?: string;
   whatsapp_number?: string;
   address?: string;
+  image?: ResponsiveImage; // Image for contact section
   companySection?: FooterSection;
   solutionsSection?: FooterSection;
   copyright?: string;
@@ -258,5 +259,57 @@ export interface PrivacyPolicyResponse {
   image?: ResponsiveImage;
   sections?: PrivacyPolicySection[];
   bannerSection?: BannerSection;
+}
+
+/**
+ * About Section Item
+ */
+export interface AboutSection {
+  title: string;
+  text: string;
+  image: ResponsiveImage;
+  order: number;
+  is_active: boolean;
+}
+
+/**
+ * About Information
+ */
+export interface AboutInformation {
+  title: string;
+  text: string;
+}
+
+/**
+ * About API Response
+ */
+export interface AboutResponse {
+  bannerSection: BannerSection;
+  aboutInformation: AboutInformation;
+  aboutSection: AboutSection[];
+}
+
+/**
+ * Contact Hero Section Data
+ */
+export interface ContactHero {
+  title: string;
+  paragraph?: string;
+  image: ResponsiveImage;
+}
+
+/**
+ * Contact Hero API Response
+ */
+export interface ContactHeroResponse {
+  bannerSection?: {
+    title?: string;
+    text?: string;
+    image?: ResponsiveImage;
+  };
+  contactHero?: ContactHero;
+  title?: string;
+  paragraph?: string;
+  image?: ResponsiveImage;
 }
 

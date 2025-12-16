@@ -1,0 +1,27 @@
+.bg-linear-about {
+    background: linear-gradient(to top, #440000, #ED2924);
+}
+
+.sticky-cards-container {
+    position: relative;
+    min-height: 600px; /* مساحة كافية للكروت */
+}
+
+.about-card {
+    width: 100%;
+    will-change: transform;
+}
+
+.about-card:first-child {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0;
+}
+
+.about-card:nth-child(2),
+.about-card:nth-child(3) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}

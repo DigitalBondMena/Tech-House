@@ -11,7 +11,9 @@
             @if (services.length > 0) {
                 <!-- First Image (service 0) - Right side -->
                 <div class="card py-10 service-card relative z-10">
-                    <img [src]="getResponsiveImage(services[0]?.image)" [alt]="services[0]?.title" class="service-img w-full mb-4 rounded-2xl " #imgEl>
+                    @if (getResponsiveImage(services[0]?.image)) {
+                        <img [ngSrc]="getResponsiveImage(services[0]?.image)" [alt]="services[0]?.title" width="600" height="400" class="service-img w-full mb-4 rounded-2xl " #imgEl>
+                    }
                 </div>
             }
 
@@ -26,7 +28,9 @@
             @if (services.length > 2) {
                 <!-- Second Image (service 2) - Right side -->
                 <div class="card py-10 service-card relative z-10">
-                    <img [src]="getResponsiveImage(services[2]?.image)" [alt]="services[2]?.title" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                    @if (getResponsiveImage(services[2]?.image)) {
+                        <img [ngSrc]="getResponsiveImage(services[2]?.image)" [alt]="services[2]?.title" width="600" height="400" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                    }
                 </div>
             }
 
@@ -79,7 +83,9 @@
             @if (services.length > 1) {
                 <!-- First Image (service 1) - Left side -->
                 <div class="card py-10 service-card relative z-10">
-                    <img [src]="getResponsiveImage(services[1]?.image)" [alt]="services[1]?.title" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                    @if (getResponsiveImage(services[1]?.image)) {
+                        <img [ngSrc]="getResponsiveImage(services[1]?.image)" [alt]="services[1]?.title" width="600" height="400" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                    }
                 </div>
             }
 
@@ -94,7 +100,9 @@
             @if (services.length > 3) {
                 <!-- Second Image (service 3) - Left side -->
                 <div class="card py-10 service-card relative z-10">
-                    <img [src]="getResponsiveImage(services[3]?.image)" [alt]="services[3]?.title" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                    @if (getResponsiveImage(services[3]?.image)) {
+                        <img [ngSrc]="getResponsiveImage(services[3]?.image)" [alt]="services[3]?.title" width="600" height="400" class="service-img w-full mb-4 rounded-2xl" #imgEl>
+                    }
                 </div>
             }
         </div>
