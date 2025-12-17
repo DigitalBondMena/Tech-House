@@ -15,4 +15,6 @@ section {
     box-shadow: 0 10px 25px rgba(237, 41, 36, 0.3);
 }
 
-
+.bg-counter {
+    background: linear-gradient(to bottom, #440000, #ED2924);
+}

@@ -39,7 +39,7 @@
 @media (min-width: 1024px) {
   .sidebar {
     transform: translateY(60%);
-    left: -23%;
+    left: -20%;
   }
 }
 

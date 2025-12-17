@@ -11,7 +11,7 @@
 <!-- Contact Information Section -->
 @if (contactUsData()) {
 <section class="overflow-hidden" dir="rtl">
-    <app-circle-sidebar></app-circle-sidebar>
+    <app-circle-sidebar class="hidden xl:block"></app-circle-sidebar>
     <div class="container mx-auto lg:px-20 py-40 bg-white relative ">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <!-- Left Side - Image -->
@@ -68,14 +68,14 @@
                     }
                 </div>
                 @if (counters() && counters()!.length > 0) {
-                <section #countersSection class="container mx-auto lg:px-20 py-12 bg-white" dir="rtl">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <section #countersSection class="container mx-auto  py-12 bg-white" dir="rtl">
+                    <div class="grid  grid-cols-3 gap-6">
                         @for (counter of counters()!.slice(0, 3); track $index; let i = $index) {
-                        <div class="bg-[#ED2924] rounded-2xl p-8 text-center text-white">
-                            <h3 class="text-5xl md:text-6xl font-bold mb-4">
+                        <div class="bg-counter rounded-2xl p-3 lg:p-6  text-center text-white">
+                            <h3 class="text-3xl  font-bold mb-4">
                                 {{ animatedCounters[i] || 0 }}
                             </h3>
-                            <p class="text-lg md:text-xl">{{ counter.title }}</p>
+                            <p class="text-lg ">{{ counter.title }}</p>
                         </div>
                         }
                     </div>
