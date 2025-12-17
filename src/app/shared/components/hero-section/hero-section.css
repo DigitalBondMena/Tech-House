@@ -1,29 +1,31 @@
-.hero-image {
-
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-
+.typing-indicator {
+  display: inline-block;
+  animation: blink 1s infinite;
+  margin-right: 2px;
+  font-weight: 600;
 }
 
-@media (min-width: 640px) {}
-
-@media (min-width: 768px) {}
-
-@media (min-width: 1024px) {
-         .hero-image {
-       left: -10%;
-    }
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
 }
 
-@media (min-width: 1280px) {
-      .hero-image {
-       left: 0%;
-    }
+.subtitle-container {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-@media (min-width: 1536px) {
-    .hero-image {
-       left: 10%;
-    }
+.subtitle-wrapper {
+  display: inline-block;
+  position: relative;
 }
+
+.subtitle-animated {
+  display: inline-block;
+  white-space: nowrap;
+}
+

@@ -313,3 +313,22 @@ export interface ContactHeroResponse {
   image?: ResponsiveImage;
 }
 
+/**
+ * Service Detail Item
+ */
+export interface ServiceDetail {
+  title: string;
+  text: string;
+  is_active: boolean;
+  image: ResponsiveImage;
+  keywords: string[];
+}
+
+/**
+ * Services API Response
+ */
+export interface ServicesResponse {
+  bannerSection: BannerSection;
+  services: ServiceDetail[];
+}
+

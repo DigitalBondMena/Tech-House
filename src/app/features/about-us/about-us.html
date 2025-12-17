@@ -10,9 +10,9 @@
 
 @if (aboutInformation()) {
 <section class="container mx-auto lg:px-20 py-20">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <div class="cards-section grid grid-cols-1 lg:grid-cols-2 gap-12 items-start relative">
         <!-- Right Side - Our Story Text -->
-        <div class=" col-span-1 order-2 lg:order-1">
+        <div class="to-stay-card col-span-1 order-2 lg:order-1">
             <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6">
             </app-section-title>
             <div class="text-[#440000] text-xl font-medium leading-relaxed"
@@ -23,13 +23,13 @@
         <!-- Left Side - Red Card (Project Card) -->
         @if (aboutSections().length > 0) {
    
-        <div class="col-span-1 order-1 lg:order-2">
-            <div class="sticky-cards-container">
-                @for (section of aboutSections(); track section.order; let i = $index) {
+        <div class="cards col-span-1 order-1 lg:order-2">
+            <!-- <div class="sticky-cards-container"> -->
+                @for (section of aboutSections(); track section.order) {
                   <div
                     #cardElement
-                    class="about-card bg-linear-about text-center rounded-3xl p-8 text-white"
-                    [class.mb-10]="i === 0"
+                    class="card about-card bg-linear-about text-center rounded-3xl p-8 text-white"
+                
                   >
                     <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
                     <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
@@ -40,14 +40,17 @@
                     ></app-app-button>
                   </div>
                 }
-              </div>
+              <!-- </div> -->
              
         </div>
-        
+   
+          
         
         }
     </div>
 </section>
+
+
 }
 
 
@@ -58,12 +61,12 @@
         </app-section-title>
     </div>
     <div class="w-full">
-        <app-banner direction="right" customClass="-rotate-[10deg] translate-y-[130px] relative  w-[120%] -right-40 ">
+        <app-banner [items]="partners()" direction="right" customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[140%] lg:w-[120%] -right-40 ">
         </app-banner>
     </div>
     <div class="w-full">
-        <app-banner direction="left"
-            customClass="rotate-[10deg] translate-y-[10px] relative  w-[120%] -right-40 bg-[#940000]!">
+        <app-banner [items]="clients()" direction="left"
+            customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[140%] lg:w-[120%] -right-40 bg-[#940000]!">
         </app-banner>
     </div>
 </section>

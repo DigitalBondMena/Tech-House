@@ -8,13 +8,13 @@
       @if (item.url) {
         <a [href]="item.url" target="_blank" rel="noopener noreferrer" #iconRef class="h-16 flex items-center px-2">
           @if (getResponsiveImage(item.image)) {
-            <img [ngSrc]="getResponsiveImage(item.image)" [alt]="item.title" width="260" height="64" class="h-full w-auto object-contain max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+            <img [ngSrc]="getResponsiveImage(item.image)" [alt]="item.title" width="260" height="64" class="h-full w-auto  max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
           }
         </a>
       } @else {
         <div #iconRef class="h-16 flex items-center px-2">
           @if (getResponsiveImage(item.image)) {
-            <img [ngSrc]="getResponsiveImage(item.image)" [alt]="item.title" width="260" height="64" class="h-full w-auto object-contain max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+            <img [ngSrc]="getResponsiveImage(item.image)" [alt]="item.title" width="260" height="64" class="h-full w-auto  max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
           }
         </div>
       }

@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling({
-        scrollPositionRestoration: 'top' // Always scroll to top on route change
+        scrollPositionRestoration: 'top' 
       })
     ), 
     provideClientHydration(withEventReplay()),
