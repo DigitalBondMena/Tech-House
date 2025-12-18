@@ -50,18 +50,58 @@ export class BlogDet {
     return null;
   });
 
-  activeContent = computed(() => {
-    const activeSection = this.activeSection();
-    let html = '';
+  fullContent = computed(() => {
+    // جعل computed يعتمد على activeSectionIndex للتحديث
+    const activeIndex = this.activeSectionIndex();
+    let html = this.blog()?.text ?? '';
     
-    if (activeSection) {
-      html = activeSection.content;
-    } else {
-      html = this.blog()?.text ?? '';
-    }
-    
-    // إزالة أو تعديل inline styles التي تمنع justify
+    // إضافة IDs و classes للعناوين h2 للـ scroll
     if (html) {
+      const sections = this.sections();
+      // نستخدم regex للعثور على جميع h2 وإضافة IDs
+      html = html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (match, attributes, content) => {
+        // تنظيف المحتوى من HTML tags للمقارنة
+        const cleanContent = content.replace(/<[^>]*>/g, '').trim();
+        
+        // البحث عن القسم المقابل
+        const sectionIndex = sections.findIndex(s => {
+          const cleanTitle = s.title.trim();
+          return cleanContent === cleanTitle || cleanContent.includes(cleanTitle) || cleanTitle.includes(cleanContent);
+        });
+        
+        const finalIndex = sectionIndex >= 0 ? sectionIndex : -1;
+        
+        // إضافة class للعنوان النشط
+        let classAttr = '';
+        if (finalIndex === activeIndex && finalIndex >= 0) {
+          classAttr = ' class="section-heading-active"';
+        } else {
+          classAttr = ' class="section-heading"';
+        }
+        
+        // إضافة أو استبدال id
+        let newAttributes = attributes;
+        if (finalIndex >= 0) {
+          if (newAttributes.includes('id=')) {
+            newAttributes = newAttributes.replace(/id="[^"]*"/, `id="section-${finalIndex}"`);
+          } else {
+            newAttributes = `${newAttributes} id="section-${finalIndex}"`;
+          }
+        }
+        
+        // إضافة class
+        if (!newAttributes.includes('class=')) {
+          newAttributes = `${newAttributes}${classAttr}`;
+        } else {
+          newAttributes = newAttributes.replace(/class="([^"]*)"/, (m: string, classes: string) => {
+            return `class="${classes} ${finalIndex === activeIndex && finalIndex >= 0 ? 'section-heading-active' : 'section-heading'}"`;
+          });
+        }
+        
+        return `<h2${newAttributes}>${content}</h2>`;
+      });
+      
+      // إزالة أو تعديل inline styles التي تمنع justify
       // استبدال text-align في inline styles (مع أو بدون مسافات)
       html = html.replace(/style\s*=\s*"([^"]*)text-align\s*:\s*(left|right|center)([^"]*)"/gi, 
         (match, before, align, after) => {
@@ -100,6 +140,29 @@ export class BlogDet {
       const html = this.blog()?.text;
       if (html) {
         this.extractSections(html);
+      }
+    });
+
+    // تحديث المحتوى عند تغيير العنوان النشط
+    effect(() => {
+      const activeIndex = this.activeSectionIndex();
+      const sections = this.sections();
+      if (activeIndex >= 0 && sections.length > 0 && this.isBrowser) {
+        // تحديث classes للعناوين بعد render
+        setTimeout(() => {
+          sections.forEach((section, index) => {
+            const element = document.getElementById(`section-${index}`);
+            if (element) {
+              if (index === activeIndex) {
+                element.classList.add('section-heading-active');
+                element.classList.remove('section-heading');
+              } else {
+                element.classList.remove('section-heading-active');
+                element.classList.add('section-heading');
+              }
+            }
+          });
+        }, 100);
       }
     });
   }
@@ -146,14 +209,32 @@ export class BlogDet {
   navigateToSection(i: number) {
     if (i >= 0 && i < this.sections().length) {
       this.activeSectionIndex.set(i);
-      // التمرير إلى المحتوى عند الضغط على عنوان
+      // التمرير إلى العنوان المقابل في المحتوى
       if (this.isBrowser) {
+        // استخدام setTimeout مع delay أكبر لضمان تحديث DOM
         setTimeout(() => {
-          const contentElement = document.querySelector('.blog-content');
-          if (contentElement) {
-            contentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
+          const sectionId = `section-${i}`;
+          // محاولة متعددة للعثور على العنصر
+          let attempts = 0;
+          const findAndScroll = () => {
+            const targetElement = document.getElementById(sectionId);
+            if (targetElement) {
+              // حساب الموضع مع offset
+              const elementPosition = targetElement.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - 120; // 120px offset من الأعلى
+              
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            } else if (attempts < 5) {
+              // إعادة المحاولة إذا لم يتم العثور على العنصر
+              attempts++;
+              setTimeout(findAndScroll, 100);
+            }
+          };
+          findAndScroll();
+        }, 200);
       }
     }
   }

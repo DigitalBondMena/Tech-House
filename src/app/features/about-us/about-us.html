@@ -1,6 +1,6 @@
 @if (bannerSection()) {
 <app-hero-section [title]="bannerSection()?.title || ''" [paragraph]="bannerSection()?.text || ''"
-    [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
+    customClass="h-[80vh]!" [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
     [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
     imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[38px]! lg:-bottom-[0px]! -left-[80px]! lg:-left-[0px]!">
     >
@@ -22,30 +22,24 @@
 
         <!-- Left Side - Red Card (Project Card) -->
         @if (aboutSections().length > 0) {
-   
+
         <div class="cards col-span-1 order-1 lg:order-2">
             <!-- <div class="sticky-cards-container"> -->
-                @for (section of aboutSections(); track section.order) {
-                  <div
-                    #cardElement
-                    class="card about-card bg-linear-about text-center rounded-3xl p-8 text-white"
-                
-                  >
-                    <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
-                    <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
-              
-                    <app-app-button
-                      [btnText]="contactBtnText"
-                      customClass="bg-[#B90000] text-white mx-auto rounded-full px-6 py-3"
-                    ></app-app-button>
-                  </div>
-                }
-              <!-- </div> -->
-             
+            @for (section of aboutSections(); track section.order) {
+            <div #cardElement class="card about-card bg-linear-about text-center rounded-3xl p-8 text-white">
+                <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
+                <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
+
+                <app-app-button [btnText]="contactBtnText"
+                    customClass="bg-[#B90000] text-white mx-auto rounded-full px-6 py-3"></app-app-button>
+            </div>
+            }
+            <!-- </div> -->
+
         </div>
-   
-          
-        
+
+
+
         }
     </div>
 </section>
@@ -61,7 +55,8 @@
         </app-section-title>
     </div>
     <div class="w-full">
-        <app-banner [items]="partners()" direction="right" customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[140%] lg:w-[120%] -right-40 ">
+        <app-banner [items]="partners()" direction="right"
+            customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[140%] lg:w-[120%] -right-40 ">
         </app-banner>
     </div>
     <div class="w-full">

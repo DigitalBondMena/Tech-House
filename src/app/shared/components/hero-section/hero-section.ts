@@ -19,6 +19,7 @@ export class HeroSection implements AfterViewInit, OnChanges {
   @Input() imagePosition: 'left' | 'center' | 'none' = 'none';
   @Input() subtitleAboveTitle: boolean = false;
   @Input() imageClass: string = ''; // Custom classes for the image
+  @Input() customClass: string = ''; // Custom classes for the hero section
 
   @ViewChild('subtitleElement', { static: false }) subtitleElement!: ElementRef<HTMLSpanElement>;
   @ViewChild('subtitleContainer', { static: false }) subtitleContainer!: ElementRef<HTMLDivElement>;

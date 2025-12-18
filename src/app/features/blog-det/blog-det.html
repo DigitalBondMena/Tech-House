@@ -16,7 +16,7 @@
     @if (hasBlog()) {
     <section class="container mx-auto lg:px-20 py-12 md:py-20">
       <!-- العنوان الأساسي للمقالة -->
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-[#440000] mb-8 md:mb-12 text-center" dir="rtl">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-[#940000] mb-8 md:mb-12 " dir="rtl">
         {{ blog()?.title }}
       </h1>
 
@@ -24,29 +24,29 @@
     
         <!-- TOC - Table of Contents -->
         <div class="lg:col-span-1">
-          <div class="mb-8 md:mb-12">
-            
-    
-            <div class="rounded-2xl p-4 md:p-6 lg:p-8 border border-[#440000]">
+          <div class="mb-8 md:mb-12 border border-[#440000] rounded-2xl p-8">
+            <div class="toc-container">
                 <div class="flex items-center gap-2 mb-4 md:mb-6">
                     <img src="images/title/title.png" alt="title-icon">
-                    <h2 class="text-xl md:text-2xl font-bold text-[#440000] ">محتويات المقالة</h2>
-                  </div>
-              <ul class="space-y-3">
+                    <h2 class="toc-title">محتويات المقالة</h2>
+                </div>
+              <ul class="toc-list">
                 @for (section of sections(); track section.id; let i = $index) {
                 <li 
-                  class="text-base md:text-lg text-[#440000] list-decimal list-inside cursor-pointer hover:text-[#ED2924] transition-colors flex items-center gap-2"
-                  [class.text-[#ED2924]]="isSectionActive(i)"
+                  class="toc-item"
+                  [class.toc-item-active]="isSectionActive(i)"
                   (click)="navigateToSection(i)">
-                  <span>{{ section.title }}</span>
+                  <span class="toc-number">{{ i + 1 }}.</span>
+                  <span class="toc-text">{{ section.title }}</span>
                   @if (isSectionActive(i)) {
-                  <span class="text-[#ED2924] font-bold">✓</span>
+            
+                  <span class="toc-active-bar"></span>
                   }
                 </li>
                 }
                 @if (sections().length === 0) {
-                <li class="text-base md:text-lg text-[#440000] list-decimal list-inside">
-                  لا توجد عناوين متاحة
+                <li class="toc-item">
+                  <span class="toc-text">لا توجد عناوين متاحة</span>
                 </li>
                 }
               </ul>
@@ -89,16 +89,9 @@
     
         <!-- Article Content -->
         <div class="lg:col-span-2">
-          <!-- عنوان القسم النشط -->
-          @if (activeSection(); as section) {
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-[#440000] mb-6 md:mb-8 text-center">
-            {{ section.title }}
-          </h2>
-          }
-    
           <div
             class="blog-content prose prose-lg max-w-none text-base md:text-lg text-[#440000] leading-relaxed text-justify!"
-            [innerHTML]="activeContent()"
+            [innerHTML]="fullContent()"
           ></div>
         </div>
     
