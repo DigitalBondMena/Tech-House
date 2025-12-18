@@ -19,6 +19,10 @@ body {
 
 }
 
+.cairo-font{
+    font-family: "Cairo", sans-serif !important;
+}
+
 h1,
 h2 {
     font-family: "Changa", sans-serif;

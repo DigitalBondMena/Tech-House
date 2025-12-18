@@ -332,3 +332,85 @@ export interface ServicesResponse {
   services: ServiceDetail[];
 }
 
+/**
+ * Blog Item for Blogs Page
+ */
+export interface BlogItem {
+  id: number;
+  title: string;
+  small_text: string;
+  slug: string;
+  publish_at_ar: string;
+  image: ResponsiveImage;
+}
+
+/**
+ * Pagination Link
+ */
+export interface PaginationLink {
+  url: string | null;
+  label: string;
+  active: boolean;
+}
+
+/**
+ * Blogs Pagination Data
+ */
+export interface BlogsPaginationData {
+  current_page: number;
+  data: BlogItem[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLink[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
+
+/**
+ * Blogs API Response
+ */
+export interface BlogsResponse {
+  bannerSection: BannerSection;
+  blogs: BlogsPaginationData;
+}
+
+/**
+ * Blog Detail Item
+ */
+export interface BlogDetail {
+  title: string;
+  small_text: string;
+  text: string; // HTML content
+  slug: string;
+  publish_at_ar: string;
+  image: string[]; // Array of 3 image URLs [mobile, tablet, desktop]
+  meta_title: string;
+  meta_description: string;
+  faq_schema: any | null;
+}
+
+/**
+ * Related Blog Item
+ */
+export interface RelatedBlog {
+  title: string;
+  small_text: string;
+  slug: string;
+  publish_at_ar: string;
+  image: ResponsiveImage;
+}
+
+/**
+ * Blog Details API Response
+ */
+export interface BlogDetailsResponse {
+  blog: BlogDetail;
+  related_blogs: RelatedBlog[];
+}
+

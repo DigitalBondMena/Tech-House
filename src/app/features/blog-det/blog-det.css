@@ -1,0 +1,544 @@
+/* Blog Content Styling */
+.blog-content {
+    color: #440000;
+    line-height: 1.8;
+    font-family: "Cairo", sans-serif !important;
+    direction: rtl !important;
+    text-align: justify !important;
+    overflow-wrap: break-word !important;
+    text-justify: inter-word !important;
+}
+
+/* Apply styles to all elements inside blog-content */
+.blog-content * {
+    font-family: "Cairo", sans-serif !important;
+    direction: rtl !important;
+    text-align: justify !important;
+    color: #440000 !important;
+    font-size: 20px !important;
+    font-weight: 500 !important;
+}
+
+/* Force justify on all text elements */
+.blog-content *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(img):not(table) {
+    text-align: justify !important;
+}
+
+/* Paragraphs */
+.blog-content :deep(p),
+.blog-content p {
+    margin-bottom: 1.5rem !important;
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+    color: #440000 !important;
+    font-family: "Cairo", sans-serif !important;
+    direction: rtl !important;
+    text-align: justify !important;
+}
+
+/* Headings */
+.blog-content :deep(h1),
+.blog-content :deep(h2),
+.blog-content :deep(h3),
+.blog-content :deep(h4),
+.blog-content :deep(h5),
+.blog-content :deep(h6),
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+    color: #440000 !important;
+    font-weight: bold !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+    font-family: "Changa", sans-serif !important;
+    direction: rtl !important;
+}
+
+.blog-content :deep(h1),
+.blog-content h1 {
+    font-size: 2.5rem !important;
+}
+
+.blog-content :deep(h2),
+.blog-content h2 {
+    font-size: 2rem !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.blog-content :deep(h3),
+.blog-content h3 {
+    font-size: 1.75rem !important;
+}
+
+.blog-content :deep(h4),
+.blog-content h4 {
+    font-size: 1.5rem !important;
+}
+
+.blog-content :deep(h5),
+.blog-content h5 {
+    font-size: 1.25rem !important;
+}
+
+.blog-content :deep(h6),
+.blog-content h6 {
+    font-size: 1.125rem !important;
+}
+
+/* Strong and Bold */
+.blog-content :deep(strong),
+.blog-content :deep(b),
+.blog-content strong,
+.blog-content b {
+    color: #440000 !important;
+    font-weight: bold !important;
+    font-family: "Cairo", sans-serif !important;
+}
+
+/* Links */
+.blog-content :deep(a),
+.blog-content a {
+    color: #ED2924 !important;
+    text-decoration: underline !important;
+    transition: color 0.3s ease !important;
+    font-family: "Cairo", sans-serif !important;
+}
+
+.blog-content :deep(a:hover),
+.blog-content a:hover {
+    color: #440000 !important;
+}
+
+/* Italic and Emphasis */
+.blog-content :deep(em),
+.blog-content :deep(i),
+.blog-content em,
+.blog-content i {
+    font-style: italic !important;
+    font-family: "Cairo", sans-serif !important;
+    color: #440000 !important;
+}
+
+/* Underline */
+.blog-content :deep(u),
+.blog-content u {
+    text-decoration: underline !important;
+    font-family: "Cairo", sans-serif !important;
+    color: #440000 !important;
+}
+
+/* Mark/Highlight */
+.blog-content :deep(mark),
+.blog-content mark {
+    background-color: #ffeb3b !important;
+    color: #440000 !important;
+    padding: 0.1em 0.2em !important;
+    font-family: "Cairo", sans-serif !important;
+}
+
+/* Lists */
+.blog-content :deep(ul),
+.blog-content :deep(ol),
+.blog-content ul,
+.blog-content ol {
+    margin: 1.5rem 0 !important;
+    padding-right: 2rem !important;
+    direction: rtl !important;
+}
+
+.blog-content :deep(li),
+.blog-content li {
+    margin-bottom: 0.75rem !important;
+    line-height: 1.8 !important;
+    color: #440000 !important;
+    font-family: "Cairo", sans-serif !important;
+    direction: rtl !important;
+}
+
+/* Images */
+.blog-content :deep(img),
+.blog-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 0.5rem !important;
+    margin: 1.5rem 0 !important;
+    display: block !important;
+}
+
+/* Code and Pre */
+.blog-content :deep(code) {
+    background-color: #f5f5f5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.blog-content :deep(pre) {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.blog-content :deep(pre code) {
+    background-color: transparent;
+    padding: 0;
+}
+
+/* Tables */
+.blog-content :deep(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    direction: rtl;
+}
+
+.blog-content :deep(th),
+.blog-content :deep(td) {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: right;
+}
+
+.blog-content :deep(th) {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #440000;
+}
+
+/* Highlighted Quote Section Styling */
+.blog-content :deep(blockquote),
+.blog-content :deep(.quote-section) {
+    background-color: #8B0000;
+    color: white;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 0.5rem;
+    position: relative;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    font-family: "Cairo", sans-serif;
+    direction: rtl;
+}
+
+.blog-content :deep(blockquote::before),
+.blog-content :deep(.quote-section::before) {
+    content: '"';
+    font-size: 4rem;
+    color: white;
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-family: serif;
+    opacity: 0.8;
+}
+
+.blog-content :deep(blockquote p),
+.blog-content :deep(.quote-section p) {
+    color: white;
+    margin-bottom: 0;
+}
+
+/* Sidebar Styling */
+.sidebar-section {
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+/* Table of Contents Styling */
+.table-of-contents ul {
+    list-style: decimal;
+    padding-right: 1.5rem;
+}
+
+.table-of-contents li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+/* Related Blog Cards */
+.related-blog-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.related-blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.related-blog-card img {
+    transition: transform 0.3s ease;
+}
+
+.related-blog-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Div and Span */
+.blog-content :deep(div),
+.blog-content div {
+    direction: rtl !important;
+    font-family: "Cairo", sans-serif !important;
+    text-align: justify !important;
+}
+
+.blog-content :deep(span),
+.blog-content span {
+    font-family: "Cairo", sans-serif !important;
+    color: #440000 !important;
+    direction: rtl !important;
+    text-align: justify !important;
+    font-size: 2rem !important;
+    font-weight: 500 !important;
+}
+
+/* Remove any inline styles that might override */
+.blog-content :deep([style*="font-family"]),
+.blog-content :deep([style*="direction"]),
+.blog-content :deep([style*="text-align"]) {
+    font-family: "Cairo", sans-serif !important;
+    direction: rtl !important;
+    text-align: justify !important;
+}
+
+/* Override inline text-align styles from editor */
+.blog-content :deep([style*="text-align: left"]),
+.blog-content :deep([style*="text-align:right"]),
+.blog-content :deep([style*="text-align: center"]),
+.blog-content :deep([style*="text-align:left"]),
+.blog-content :deep([style*="text-align:center"]) {
+    text-align: justify !important;
+}
+
+/* Force justify on all text containers */
+.blog-content :deep(div[style]),
+.blog-content :deep(p[style]),
+.blog-content :deep(span[style]) {
+    text-align: justify !important;
+}
+
+/* Text alignment */
+.blog-content :deep(.text-center) {
+    text-align: center;
+}
+
+.blog-content :deep(.text-right) {
+    text-align: right;
+}
+
+.blog-content :deep(.text-left) {
+    text-align: left;
+}
+
+.blog-content :deep(.text-justify) {
+    text-align: justify;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .blog-content :deep(p) {
+        font-size: 0.95rem;
+    }
+    
+    .blog-content :deep(h2) {
+        font-size: 1.75rem;
+    }
+    
+    .blog-content :deep(h3) {
+        font-size: 1.5rem;
+    }
+    
+    .blog-content :deep(blockquote),
+    .blog-content :deep(.quote-section) {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-content :deep(p) {
+        font-size: 0.9rem;
+    }
+    
+    .blog-content :deep(h1) {
+        font-size: 2rem;
+    }
+    
+    .blog-content :deep(h2) {
+        font-size: 1.5rem;
+    }
+    
+    .blog-content :deep(h3) {
+        font-size: 1.25rem;
+    }
+    
+    .blog-content :deep(blockquote),
+    .blog-content :deep(.quote-section) {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .blog-content :deep(blockquote::before),
+    .blog-content :deep(.quote-section::before) {
+        font-size: 3rem;
+        right: 0.5rem;
+        top: 0.25rem;
+    }
+}
+
+/* Prose styling for better typography */
+.prose {
+    color: #440000;
+}
+
+.prose p {
+    margin-bottom: 1.5rem;
+}
+
+.prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Custom Hero Section for Blog Details */
+.blog-hero-section {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.blog-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(68, 0, 0, 0.4), rgba(237, 41, 36, 0.3));
+    z-index: 1;
+}
+
+.blog-hero-content {
+    /* min-height: 400px; */
+    padding: 4rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Table of Contents - Active Section Indicator */
+.table-of-contents li {
+    position: relative;
+    padding-right: 1.5rem;
+}
+
+.table-of-contents li.cursor-pointer {
+    transition: all 0.3s ease;
+}
+
+.table-of-contents li.cursor-pointer:hover {
+    transform: translateX(-5px);
+}
+
+/* Active section checkmark */
+.table-of-contents li .text-\[#ED2924\] {
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* Responsive hero adjustments */
+@media (max-width: 1024px) {
+    /* .bg-hero {
+        min-height: 50vh;
+    } */
+    
+    .hero-content {
+        min-height: 300px;
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    /* .bg-hero {
+        min-height: 40vh;
+        padding: 2rem 0;
+    } */
+    
+    .hero-content {
+        min-height: 250px;
+    }
+}
+
+/* Force justify on all content elements - Override editor styles */
+.blog-content :deep(*) {
+    text-align: justify !important;
+}
+
+/* Exclude headings, images, and tables from justify */
+.blog-content :deep(h1),
+.blog-content :deep(h2),
+.blog-content :deep(h3),
+.blog-content :deep(h4),
+.blog-content :deep(h5),
+.blog-content :deep(h6),
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+    text-align: center !important;
+}
+
+.blog-content :deep(img),
+.blog-content img {
+    text-align: center !important;
+}
+
+/* Force justify on paragraphs and divs specifically */
+.blog-content :deep(p),
+.blog-content :deep(div),
+.blog-content p,
+.blog-content div {
+    text-align: justify !important;
+}
+
+/* Override any inline style with text-align */
+.blog-content :deep([style*="text-align"]),
+.blog-content [style*="text-align"] {
+    text-align: justify !important;
+}
+
+/* Specific override for common editor inline styles */
+.blog-content :deep([style*="text-align: left"]),
+.blog-content :deep([style*="text-align:left"]),
+.blog-content :deep([style*="text-align: right"]),
+.blog-content :deep([style*="text-align:right"]),
+.blog-content :deep([style*="text-align: center"]),
+.blog-content :deep([style*="text-align:center"]) {
+    text-align: justify !important;
+}
+

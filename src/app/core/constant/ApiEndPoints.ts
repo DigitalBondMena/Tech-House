@@ -5,6 +5,7 @@ export const API_END_POINTS = {
     SERVICES: '/services',
     PROJECTS: '/projects/all',
     BLOGS: '/blogs',
+    BLOG_DETAILS: '/blog/{slug}',
     PRIVACYPOLICY: '/privacy',
 
     //! SHARED

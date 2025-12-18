@@ -64,11 +64,10 @@ export class AboutUs implements OnInit, AfterViewInit, OnDestroy {
       if (this.aboutSections().length > 0 && this.viewReady) {
         // مباشرة بعد التأكد من وجود البطاقات
         this.cards.changes.subscribe(() => {
-          if (this.cards.length) this.initStackedCards();
         });
 
         // لو العناصر موجودة بالفعل عند التحميل
-        if (this.cards.length) this.initStackedCards();
+      
       }
     });
   }
@@ -94,83 +93,7 @@ export class AboutUs implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private initStackedCards(): void {
-    // Clean up any existing ScrollTriggers for this section
-    ScrollTrigger.getAll().forEach(st => {
-      const trigger = st.vars.trigger;
-      if (trigger && typeof trigger !== 'string' && trigger instanceof Element) {
-        if (trigger.classList?.contains('cards-section')) {
-          st.kill();
-        }
-      } else if (trigger === '.cards-section') {
-        st.kill();
-      }
-    });
-
-    if (this.tl) {
-      this.tl.kill();
-    }
-
-    const cardsArray = this.cards.toArray().map(c => c.nativeElement);
-    if (cardsArray.length === 0) return;
-
-    const cardsContainer = cardsArray[0].parentElement;
-    if (!cardsContainer) return;
-
-    // Set initial state for all cards - stacked on top of each other
-    gsap.set(cardsArray, {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      y: (i) => i * 40, // Stack cards with offset
-      scale: (i) => 1 - i * 0.08, // Scale down cards behind
-      zIndex: (i) => cardsArray.length - i, // First card on top
-      opacity: 1
-    });
-
-    // Set container height to accommodate stacked cards
-    const cardHeight = cardsArray[0].offsetHeight;
-    const stackOffset = 40; // Offset between stacked cards
-    gsap.set(cardsContainer, {
-      height: cardHeight + (cardsArray.length - 1) * stackOffset
-    });
-
-    // Calculate scroll distance - use viewport height for smooth scrolling
-    const scrollDistance = window.innerHeight * cardsArray.length;
-    
-    this.tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.cards-section',
-        start: 'top top',
-        end: () => `+=${scrollDistance}`,
-        scrub: 1, // Smooth scrubbing
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true
-      }
-    });
-
-    // Animate each card to move to top position as we scroll
-    // The key is that each card moves to y: 0 (top) and scale: 1 (full size)
-    cardsArray.forEach((card, i) => {
-      // Initial position: i * stackOffset
-      // Target position: 0 (top)
-      const targetY = 0;
-      const targetScale = 1;
-      
-      // Each card gets a portion of the timeline
-      const startTime = i;
-      const duration = 1;
-      
-      this.tl.to(card, {
-        y: targetY, // Move to top position
-        scale: targetScale, // Scale to full size
-        ease: 'none',
-        duration: duration
-      }, startTime);
-    });
-  }
+ 
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
     if (!image) return '/images/placeholder.png';
