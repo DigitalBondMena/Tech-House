@@ -2,7 +2,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
-import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse } from '../models/home.model';
+import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse } from '../models/home.model';
 import { ApiService } from './apiservice';
 
 
@@ -34,6 +34,14 @@ export class FeatureService {
   // 🔹 Blog Details Signal
   private blogDetailsResponseSignal = signal<BlogDetailsResponse | null>(null);
   blogDetailsData = computed(() => this.blogDetailsResponseSignal());
+
+  // 🔹 Projects Signal
+  private projectsResponseSignal = signal<ProjectsResponse | null>(null);
+  projectsData = computed(() => this.projectsResponseSignal());
+
+  // 🔹 Project Details Signal
+  projectDetailsResponseSignal = signal<ProjectDetailsResponse | null>(null);
+  projectDetailsData = computed(() => this.projectDetailsResponseSignal());
 
   // =====================
   // HOME API
@@ -132,5 +140,104 @@ export class FeatureService {
 
     // Clean up after 30 seconds if no data arrives (timeout)
     setTimeout(() => clearInterval(checkInterval), 30000);
+  }
+
+  // =====================
+  // PROJECTS API
+  // =====================
+  loadProjectsData(page: number = 1, slug?: string): void {
+    let endpoint = `${API_END_POINTS.PROJECTS}?page=${page}`;
+    if (slug) {
+      endpoint = `/projects/${slug}?page=${page}`;
+    }
+    const result = this.apiService.get<ProjectsResponse>(endpoint);
+    
+    // Watch the signal and update when data arrives
+    const checkInterval = setInterval(() => {
+      const data = result();
+      if (data) {
+        this.projectsResponseSignal.set(data);
+        clearInterval(checkInterval);
+      }
+    }, 50);
+
+    // Clean up after 30 seconds if no data arrives (timeout)
+    setTimeout(() => clearInterval(checkInterval), 30000);
+  }
+
+  // =====================
+  // PROJECT DETAILS API
+  // =====================
+  loadProjectDetails(slug: string): void {
+    // Reset previous data
+    this.projectDetailsResponseSignal.set(null);
+    
+    // Encode the slug to handle Arabic characters
+    const encodedSlug = encodeURIComponent(slug);
+    const endpoint = API_END_POINTS.PROJECT_DETAILS.replace('{slug}', encodedSlug);
+    
+    console.log('Loading project details for slug:', slug);
+    console.log('Encoded slug:', encodedSlug);
+    console.log('Endpoint:', endpoint);
+    
+    // Try both response types - sometimes API might return different structure
+    const result = this.apiService.get<any>(endpoint);
+    
+    // Watch the signal and update when data arrives
+    const checkInterval = setInterval(() => {
+      const data = result();
+      if (data) {
+        console.log('Raw API response:', data);
+        
+        // Check if it's ProjectDetailsResponse (has project property)
+        if (data.project) {
+          console.log('Data is ProjectDetailsResponse format');
+          this.projectDetailsResponseSignal.set(data as ProjectDetailsResponse);
+          clearInterval(checkInterval);
+        }
+        // Check if it's ProjectsResponse (has projects array) - extract the matching project
+        else if (data.projects && Array.isArray(data.projects.data)) {
+          console.log('Data is ProjectsResponse format, searching for project...');
+          const projectItem = data.projects.data.find((p: any) => p.slug === slug);
+          if (projectItem) {
+            console.log('Found project in list:', projectItem);
+            // Convert ProjectItem to ProjectDetail format
+            // Note: This might not have all fields, so we need to make another API call
+            // For now, let's try to get full details
+            this.projectDetailsResponseSignal.set({
+              project: projectItem as any
+            } as ProjectDetailsResponse);
+            clearInterval(checkInterval);
+          } else {
+            console.warn('Project not found in list');
+            // Set null to trigger error state
+            this.projectDetailsResponseSignal.set(null);
+            clearInterval(checkInterval);
+          }
+        }
+        // If data has project at root level (direct project object)
+        else if (data.id && data.slug) {
+          console.log('Data is direct project object');
+          this.projectDetailsResponseSignal.set({
+            project: data
+          } as ProjectDetailsResponse);
+          clearInterval(checkInterval);
+        }
+        else {
+          console.warn('Unknown data format:', data);
+          this.projectDetailsResponseSignal.set(null);
+          clearInterval(checkInterval);
+        }
+      }
+    }, 50);
+
+    // Clean up after 30 seconds if no data arrives (timeout)
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      const finalData = result();
+      if (!finalData) {
+        console.error('Failed to load project details after timeout');
+      }
+    }, 30000);
   }
 }

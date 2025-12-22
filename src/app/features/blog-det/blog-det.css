@@ -1,4 +1,6 @@
 .blog-content{color:#440000;line-height:1.8;font-family:"Cairo",sans-serif!important;direction:rtl!important;text-align:justify!important;overflow-wrap:break-word!important;text-justify:inter-word!important}
+.blog-content :deep(*),.blog-content *{font-family:"Cairo",sans-serif!important}
+.blog-content :deep(h1),.blog-content :deep(h2),.blog-content :deep(h3),.blog-content :deep(h4),.blog-content :deep(h5),.blog-content :deep(h6),.blog-content h1,.blog-content h2,.blog-content h3,.blog-content h4,.blog-content h5,.blog-content h6{font-family:"Changa",sans-serif!important}
 .blog-content :deep(span),.blog-content span{font-family:"Cairo",sans-serif!important;direction:rtl!important;text-align:justify!important;color:#440000!important;font-size:20px!important;font-weight:500!important}
 .blog-content *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(img):not(table){text-align:justify!important}
 .blog-content :deep(p),.blog-content p{margin-bottom:1.5rem!important;font-size:1rem!important;line-height:1.8!important;color:#440000!important;font-family:"Cairo",sans-serif!important;direction:rtl!important;text-align:justify!important}

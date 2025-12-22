@@ -101,7 +101,16 @@ export class BlogDet {
         return `<h2${newAttributes}>${content}</h2>`;
       });
       
-      // إزالة أو تعديل inline styles التي تمنع justify
+      // إزالة أو تعديل inline styles التي تمنع justify و font-family
+      // إزالة font-family من inline styles لأن CSS rules ستطبقها
+      html = html.replace(/style\s*=\s*"([^"]*)"/gi, (match, styles) => {
+        // إزالة font-family من inline styles
+        let cleanedStyles = styles.replace(/font-family\s*:\s*[^;]+;?\s*/gi, '');
+        // تنظيف الفواصل الزائدة
+        cleanedStyles = cleanedStyles.replace(/;\s*;/g, ';').replace(/^\s*;\s*|\s*;\s*$/g, '');
+        return `style="${cleanedStyles}"`;
+      });
+      
       // استبدال text-align في inline styles (مع أو بدون مسافات)
       html = html.replace(/style\s*=\s*"([^"]*)text-align\s*:\s*(left|right|center)([^"]*)"/gi, 
         (match, before, align, after) => {

@@ -414,3 +414,74 @@ export interface BlogDetailsResponse {
   related_blogs: RelatedBlog[];
 }
 
+/**
+ * Project Item for Projects Page
+ */
+export interface ProjectItem {
+  id: number;
+  title: string;
+  brief: string;
+  slug: string;
+  is_active: boolean;
+  image: ResponsiveImage;
+  types: string[];
+}
+
+/**
+ * Projects Pagination Data
+ */
+export interface ProjectsPaginationData {
+  current_page: number;
+  data: ProjectItem[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLink[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
+
+/**
+ * Projects API Response
+ */
+export interface ProjectsResponse {
+  bannerSection: BannerSection;
+  projects: ProjectsPaginationData;
+}
+
+/**
+ * Project Detail Item
+ */
+export interface ProjectDetail {
+  id: number;
+  title: string;
+  brief: string;
+  text: string;
+  is_active: boolean;
+  slug: string;
+  category_name: string;
+  year_creation: string;
+  client_name: string;
+  service_id: number;
+  meta_title: string;
+  meta_description: string;
+  image: ResponsiveImage;
+  logo: ResponsiveImage;
+  project_types: any[];
+  project_information: any[];
+  project_technologies: any[];
+  projects_sections: any[];
+}
+
+/**
+ * Project Details API Response
+ */
+export interface ProjectDetailsResponse {
+  project: ProjectDetail;
+}
+

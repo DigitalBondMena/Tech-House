@@ -14,6 +14,7 @@ export class Banner implements AfterViewInit, OnChanges {
   @Input() customClass: string = '';
   @Input() direction: 'left' | 'right' = 'left'; // 'left' for right-to-left, 'right' for left-to-right
   @Input() items: ClientPartner[] = []; // Array of client/partner items
+  @Input() startAnimation?: boolean; // Control when to start animation (optional)
 
   @ViewChildren('iconRef') icons!: QueryList<ElementRef>;
 
@@ -56,6 +57,22 @@ export class Banner implements AfterViewInit, OnChanges {
         this.privateInitAnimation();
       }, 200);
     }
+
+    // If startAnimation changed to true and we haven't started yet, start the animation
+    if (changes['startAnimation']) {
+      if (this.startAnimation === true && !this.animationInitialized) {
+        setTimeout(() => {
+          this.tryInitAnimation();
+        }, 100);
+      } else if (this.startAnimation === false && this.animationInitialized) {
+        // If startAnimation changed to false, stop animation
+        if (this.timeline) {
+          this.timeline.kill();
+          this.timeline = null;
+        }
+        this.animationInitialized = false;
+      }
+    }
   }
 
   ngAfterViewInit() {
@@ -67,9 +84,12 @@ export class Banner implements AfterViewInit, OnChanges {
     // Subscribe to QueryList changes to handle dynamic items
     this.icons.changes.subscribe(() => {
       if (this.items.length > 0 && this.icons.length > 0 && !this.animationInitialized) {
-        setTimeout(() => {
-          this.privateInitAnimation();
-        }, 200);
+        // Only start if startAnimation is not false (i.e., true or undefined)
+        if (this.startAnimation === undefined || this.startAnimation === true) {
+          setTimeout(() => {
+            this.privateInitAnimation();
+          }, 100);
+        }
       }
     });
 
@@ -83,21 +103,63 @@ export class Banner implements AfterViewInit, OnChanges {
       return;
     }
 
-    if (this.items.length > 0 && this.icons.length > 0) {
-      setTimeout(() => {
-        if (!this.animationInitialized && this.icons.length > 0) {
-          this.privateInitAnimation();
-        }
-      }, 200);
-    } else if (this.items.length === 0) {
-      // If no items yet, try again after a delay (for when data loads)
-      setTimeout(() => {
-        this.tryInitAnimation();
-      }, 500);
+    // If startAnimation is explicitly set to false, wait for it to become true
+    // If it's undefined (not provided), start normally
+    if (this.startAnimation === false) {
+      // We're waiting for startAnimation to be true
+      return;
+    }
+
+    // If startAnimation is undefined (not provided), start normally
+    // If startAnimation is true, start immediately
+    if (this.startAnimation === undefined || this.startAnimation === true) {
+      if (this.items.length > 0 && this.icons.length > 0) {
+        setTimeout(() => {
+          if (!this.animationInitialized && this.icons.length > 0) {
+            this.privateInitAnimation();
+          }
+        }, 100);
+      } else if (this.items.length === 0) {
+        // If no items yet, try again after a delay (for when data loads)
+        setTimeout(() => {
+          this.tryInitAnimation();
+        }, 500);
+      }
     }
   }
 
-  private privateInitAnimation() {
+  // Public method to prepare animation (create timeline but don't start)
+  public prepareAnimation(): void {
+    if (!this.isBrowser || this.animationInitialized) {
+      return;
+    }
+
+    // Prepare the animation immediately
+    this.privateInitAnimation(true); // true = paused
+  }
+
+  // Public method to get the timeline (for parent to control)
+  public getTimeline(): gsap.core.Timeline | null {
+    return this.timeline;
+  }
+
+  // Public method to start animation (called by parent when both banners are ready)
+  public startAnimationNow(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    // If animation is already initialized, just play it
+    if (this.timeline && this.timeline.paused()) {
+      this.timeline.play();
+      return;
+    }
+
+    // Otherwise prepare and start
+    this.privateInitAnimation(false); // false = start immediately
+  }
+
+  private privateInitAnimation(paused: boolean = false) {
     // Only run animations in browser, not in SSR
     if (!this.isBrowser) {
       return;
@@ -130,7 +192,8 @@ export class Banner implements AfterViewInit, OnChanges {
     // Reset positions first
     gsap.set(elements, { x: 0, opacity: 1 });
 
-    this.timeline = gsap.timeline({ repeat: -1 });
+    // Create timeline with paused: true, then play it
+    this.timeline = gsap.timeline({ repeat: -1, paused: paused });
 
     // 1) Enter animation
     this.timeline.from(elements, {
@@ -157,6 +220,10 @@ export class Banner implements AfterViewInit, OnChanges {
       ease: 'power3.in'
     }, '>');
 
+    // Play the timeline if not paused
+    if (!paused) {
+      this.timeline.play();
+    }
     this.animationInitialized = true;
   }
 }

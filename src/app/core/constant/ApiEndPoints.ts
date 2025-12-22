@@ -4,6 +4,7 @@ export const API_END_POINTS = {
     ABOUT: '/aboutus',
     SERVICES: '/services',
     PROJECTS: '/projects/all',
+    PROJECT_DETAILS: '/project/{slug}',
     BLOGS: '/blogs',
     BLOG_DETAILS: '/blog/{slug}',
     PRIVACYPOLICY: '/privacy',
@@ -18,6 +19,7 @@ export const API_END_POINTS = {
     //! Service sec
     SERVICESEC: '/titles',
     //! Service sec
+
  
 
 
