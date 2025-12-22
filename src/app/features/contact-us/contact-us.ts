@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { CircleSidebar } from '../../shared/components/circle-sidebar/circle-sidebar';
 
@@ -13,7 +13,6 @@ import { CircleSidebar } from '../../shared/components/circle-sidebar/circle-sid
     HeroSection,
     ContactUsSec,
     CommonModule,
-    NgOptimizedImage,
     CircleSidebar
   ],
   templateUrl: './contact-us.html',

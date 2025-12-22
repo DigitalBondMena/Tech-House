@@ -12,7 +12,7 @@
                         <input pInputText id="fullName" 
                             formControlName="fullName"
                             (keypress)="onNameKeyPress($event)"
-                            [invalid]="fullNameControl?.invalid && fullNameControl?.touched" 
+                            [invalid]="fullNameControl.invalid && fullNameControl.touched" 
                             class="w-full" />
                         <label for="fullName">الاسم الكامل</label>
                     </p-floatlabel>
@@ -26,7 +26,7 @@
                     <p-floatlabel variant="on">
                         <input pInputText id="email" type="email" 
                             formControlName="email"
-                            [invalid]="emailControl?.invalid && emailControl?.touched" 
+                            [invalid]="emailControl.invalid && emailControl.touched" 
                             class="w-full" />
                         <label for="email">البريد الإلكتروني</label>
                     </p-floatlabel>
@@ -64,7 +64,7 @@
                                 formControlName="phone"
                                 [placeholder]="phonePlaceholder()"
                                 (keypress)="onPhoneKeyPress($event)"
-                                [invalid]="phoneControl?.invalid && phoneControl?.touched" 
+                                [invalid]="phoneControl.invalid && phoneControl.touched" 
                                 class="w-full" />
                         </p-inputGroup>
                         <label for="phone">رقم الجوال</label>
@@ -79,7 +79,7 @@
                     <p-floatlabel variant="on" class="flex-1 flex flex-col">
                         <textarea id="message" rows="5" pInputTextarea 
                             formControlName="message"
-                            [invalid]="messageControl?.invalid && messageControl?.touched" 
+                            [invalid]="messageControl.invalid && messageControl.touched" 
                             class="w-full flex-1"></textarea>
                         <label for="message">اكتب رسالتك</label>
                     </p-floatlabel>
