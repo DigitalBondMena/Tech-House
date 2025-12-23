@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FeatureService } from '../../core/services/featureService';
 import { environment } from '../../../environments/environment';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
@@ -15,6 +16,7 @@ export class Jops implements OnInit {
   private featureService = inject(FeatureService);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  router = inject(Router);
 
   jobsData = computed(() => this.featureService.jobsData());
   bannerSection = computed(() => this.jobsData()?.bannerSection ?? null);
@@ -84,5 +86,15 @@ export class Jops implements OnInit {
     const baseUrl = environment.apiUrl.replace('/api', '');
     const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
     return `${baseUrl}/${cleanUrl}`;
+  }
+
+  // Navigate to job details page
+  navigateToJobDetails(job: any, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    if (job?.slug) {
+      this.router.navigate(['/Jop-Det'], { queryParams: { slug: job.slug } });
+    }
   }
 }

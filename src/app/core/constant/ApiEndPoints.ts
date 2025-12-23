@@ -10,7 +10,7 @@ export const API_END_POINTS = {
     PRIVACYPOLICY: '/privacy',
     JOBS: '/jobs',
     JOB_BY_CATEGORY: '/jobs?category_id={category_id}',
-    JOB_DETAILS: '/jobs/{id}',
+    JOB_DETAILS: '/job/{slug}',
     //! SHARED
     //! Contact-us sec
     CONTACT_US: '/contact',
@@ -28,6 +28,7 @@ export const API_END_POINTS = {
 
     //! Submit Form
     SUBMIT_CONTACT_FORM: '/submit-form',
+    SUBMIT_JOB_FORM: '/submit-job',
     
 
 };

@@ -1,0 +1,788 @@
+/* Loading Spinner */
+.loading-spinner {
+  width: 50px !important;
+  height: 50px !important;
+  border: 4px solid #f3f3f3 !important;
+  border-top: 4px solid #ED2924 !important;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) !important;
+  }
+
+  100% {
+    transform: rotate(360deg) !important;
+  }
+}
+
+/* Job Hero Section */
+.job-hero-section {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 80vh !important;
+  height: 80vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.job-hero-content {
+  width: 100% !important;
+  padding: 2rem !important;
+  color: white !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+}
+
+.job-hero-title {
+  font-size: 2.5rem !important;
+  font-weight: bold !important;
+  color: white !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) !important;
+  font-family: "Changa", sans-serif !important;
+}
+
+@media (max-width: 768px) {
+  .job-hero-title {
+    font-size: 2rem !important;
+  }
+}
+
+.job-hero-description {
+  font-size: 1.5rem !important;
+  color: white !important;
+  line-height: 1.8 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2) !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 768px) {
+  .job-hero-description {
+    font-size: 1rem !important;
+  }
+}
+
+.job-hero-actions {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.job-apply-btn {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  color: white !important;
+  padding: 1rem 2.5rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.3s ease !important;
+  font-family: "Cairo", sans-serif !important;
+}
+
+.job-apply-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.apply-arrow {
+  width: 40px !important;
+  height: 40px !important;
+  background-color: white !important;
+  border-radius: 50% !important;
+  transition: transform 0.3s ease !important;
+}
+
+.job-apply-btn:hover .apply-arrow {
+  transform: translateY(4px) !important;
+}
+
+/* Job Info Cards */
+.job-info-cards {
+  display: flex !important;
+  gap: 0.75rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.5rem !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+}
+
+.job-info-card {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 40px !important;
+  padding: 0.75rem 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  color: white !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.job-info-card:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
+.job-info-text {
+  font-family: "Cairo", sans-serif !important;
+}
+
+.job-info-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+}
+
+.job-info-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  stroke: currentColor !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .job-hero-section {
+    min-height: 60vh !important;
+    padding: 2rem 0 !important;
+  }
+
+  .job-info-cards {
+    gap: 0.5rem !important;
+  }
+
+  .job-info-card {
+    padding: 0.625rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .job-apply-btn {
+    padding: 0.875rem 2rem !important;
+    font-size: 1.1rem !important;
+  }
+}
+
+.apply-now-btn {
+  background-color: #ED2924 !important;
+  color: white !important;
+  padding: 1rem 2.5rem !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.3s ease !important;
+  font-family: "Cairo", sans-serif !important;
+}
+
+.apply-now-btn:hover {
+  background-color: #c41e1a !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.apply-arrow {
+  width: 20px !important;
+  height: 20px !important;
+  transition: transform 0.3s ease !important;
+}
+
+.apply-now-btn:hover .apply-arrow {
+  transform: translateY(4px) !important;
+}
+
+/* Content Section */
+.job-content-section {
+  background-color: white !important;
+}
+
+.job-section {
+  margin-bottom: 3rem !important;
+  border-radius: 16px !important;
+  border: 3px solid transparent !important;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(to top, #440000, #ED2924) border-box !important;
+  padding: 2rem !important;
+}
+
+.job-section:last-child {
+  margin-bottom: 0 !important;
+}
+
+.job-section-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.section-icon {
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+}
+
+.job-section-title {
+  font-size: 1.75rem !important;
+  font-weight: bold !important;
+  color: #ED2924 !important;
+  font-family: "Changa", sans-serif !important;
+}
+
+@media (max-width: 768px) {
+  .job-section-title {
+    font-size: 1.5rem !important;
+  }
+}
+
+.job-section-content {
+  color: #440000 !important;
+  line-height: 1.8 !important;
+  font-family: "Cairo", sans-serif !important;
+  direction: rtl !important;
+  text-align: justify !important;
+  overflow-wrap: break-word !important;
+  text-justify: inter-word !important;
+  font-size: 1.1rem !important;
+}
+
+.job-section-content :deep(*),
+.job-section-content * {
+  font-family: "Cairo", sans-serif !important;
+}
+
+.job-section-content :deep(p) {
+  margin-bottom: 1rem !important;
+  line-height: 1.8 !important;
+}
+
+.job-section-content :deep(ul),
+.job-section-content :deep(ol) {
+  margin-right: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.job-section-content :deep(li) {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.8 !important;
+}
+
+.job-section-content :deep(strong),
+.job-section-content :deep(b) {
+  font-weight: 600 !important;
+  color: #440000 !important;
+}
+
+.job-section-content :deep(a) {
+  color: #ED2924 !important;
+  text-decoration: underline !important;
+}
+
+.job-section-content :deep(a:hover) {
+  color: #c41e1a !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .apply-now-btn {
+    padding: 0.875rem 2rem !important;
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Job Application Form Section */
+.job-apply-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.job-apply-title {
+  font-size: 1.75rem !important;
+  font-weight: bold !important;
+  color: #ED2924 !important;
+  font-family: "Changa", sans-serif !important;
+}
+
+@media (max-width: 768px) {
+  .job-apply-title {
+    font-size: 1.5rem !important;
+  }
+
+  .job-apply-form-container {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+.form-column {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+}
+
+.full-width {
+  grid-column: 1 / -1 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* PrimeNG Input Styles - Same as contact-us */
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-inputtextarea {
+  font-family: inherit !important;
+  font-feature-settings: inherit !important;
+  font-size: 1rem !important;
+  color: var(--p-inputtext-color) !important;
+  background: #F5F5F5 !important;
+  padding: 15px !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  appearance: none !important;
+  border-radius: var(--p-inputtext-border-radius) !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Active state (focus) - No background, gray border */
+:host ::ng-deep .p-inputtext:focus,
+:host ::ng-deep .p-inputtextarea:focus,
+:host ::ng-deep .p-inputtext.p-focus,
+:host ::ng-deep .p-inputtextarea.p-focus {
+  background: transparent !important;
+  border: 1px solid #9E9E9E !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Filled state (has value but not focused) - Keep gray background, no border */
+:host ::ng-deep .p-inputtext.p-filled:not(:focus):not(.p-focus):not(.p-invalid),
+:host ::ng-deep .p-inputtextarea.p-filled:not(:focus):not(.p-focus):not(.p-invalid) {
+  background: #F5F5F5 !important;
+  border: none !important;
+}
+
+/* Filled + Focus state - No background, gray border */
+:host ::ng-deep .p-inputtext.p-filled:focus:not(.p-invalid),
+:host ::ng-deep .p-inputtextarea.p-filled:focus:not(.p-invalid),
+:host ::ng-deep .p-inputtext.p-filled.p-focus:not(.p-invalid),
+:host ::ng-deep .p-inputtextarea.p-filled.p-focus:not(.p-invalid) {
+  background: transparent !important;
+  border: 1px solid #9E9E9E !important;
+}
+
+/* Invalid/Error state - Red border when focused */
+:host ::ng-deep .p-inputtext.ng-invalid.ng-touched:focus,
+:host ::ng-deep .p-inputtextarea.ng-invalid.ng-touched:focus,
+:host ::ng-deep .p-inputtext.p-invalid.p-focus,
+:host ::ng-deep .p-inputtextarea.p-invalid.p-focus {
+  background: transparent !important;
+  border: 1px solid #F44336 !important;
+  box-shadow: none !important;
+}
+
+/* Invalid but not focused - Gray background, no border */
+:host ::ng-deep .p-inputtext.ng-invalid.ng-touched:not(:focus):not(.p-focus),
+:host ::ng-deep .p-inputtextarea.ng-invalid.ng-touched:not(:focus):not(.p-focus),
+:host ::ng-deep .p-inputtext.p-invalid:not(.p-focus) {
+  background: #F5F5F5 !important;
+  border: none !important;
+}
+
+/* Phone input (tel) - White background with gray border always */
+:host ::ng-deep input[type="tel"].p-inputtext,
+:host ::ng-deep #phone.p-inputtext {
+  background: #FFFFFF !important;
+  border: 1px solid #F5F5F5 !important;
+  border-bottom-left-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-right-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
+/* Phone input focus state - Keep white background, gray border */
+:host ::ng-deep input[type="tel"].p-inputtext:focus,
+:host ::ng-deep #phone.p-inputtext:focus,
+:host ::ng-deep input[type="tel"].p-inputtext.p-focus,
+:host ::ng-deep #phone.p-inputtext.p-focus {
+  background: #FFFFFF !important;
+  border: 1px solid #9E9E9E !important;
+}
+
+/* Phone input filled state - Keep white background, gray border */
+:host ::ng-deep input[type="tel"].p-inputtext.p-filled,
+:host ::ng-deep #phone.p-inputtext.p-filled {
+  background: #FFFFFF !important;
+  border: 1px solid #9E9E9E !important;
+}
+
+/* Phone input invalid state - White background, red border */
+:host ::ng-deep input[type="tel"].p-inputtext.p-invalid,
+:host ::ng-deep #phone.p-inputtext.p-invalid,
+:host ::ng-deep input[type="tel"].p-inputtext.ng-invalid.ng-touched,
+:host ::ng-deep #phone.p-inputtext.ng-invalid.ng-touched {
+  background: #FFFFFF !important;
+  border: 1px solid #F44336 !important;
+}
+
+/* Input Group Addon */
+:host ::ng-deep .p-inputgroupaddon:first-child,
+:host ::ng-deep .p-inputgroupaddon+.p-inputgroupaddon {
+  border: 1px solid #F5F5F5 !important;
+  border-bottom-right-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  background: #F5F5F5 !important;
+}
+
+:host ::ng-deep .p-select {
+  box-shadow: none !important;
+}
+
+/* Position select dropdown below the input */
+:host ::ng-deep .country-select {
+  position: relative !important;
+}
+
+:host ::ng-deep .country-select .p-select-overlay,
+:host ::ng-deep .p-select-overlay {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: auto !important;
+  margin-top: 4px !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: calc(100vw - 40px) !important;
+  transform: none !important;
+}
+
+.salary-suffix-text {
+  font-family: "Cairo", sans-serif !important;
+  color: #440000 !important;
+  font-weight: 500 !important;
+  padding: 0 0.5rem !important;
+}
+
+:host ::ng-deep .p-inputtext:disabled,
+:host ::ng-deep .p-inputtextarea:disabled {
+  background-color: #F5F5F5 !important;
+  border: none !important;
+  color: #9E9E9E !important;
+  cursor: not-allowed !important;
+}
+
+:host ::ng-deep .p-inputtext:enabled:focus {
+  border: #9E9E9E solid 1px !important;
+}
+
+/* Textarea */
+:host ::ng-deep .p-textarea,
+:host ::ng-deep .p-inputtextarea {
+  font-family: inherit !important;
+  font-feature-settings: inherit !important;
+  font-size: 1rem !important;
+  color: var(--p-textarea-color) !important;
+  background: #F5F5F5 !important;
+  padding: 15px !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  appearance: none !important;
+  border-radius: var(--p-textarea-border-radius) !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+  resize: none !important;
+}
+
+/* Textarea active state (focus) - No background, gray border */
+:host ::ng-deep .p-textarea:focus,
+:host ::ng-deep .p-inputtextarea:focus,
+:host ::ng-deep .p-textarea.p-focus,
+:host ::ng-deep .p-inputtextarea.p-focus {
+  background: transparent !important;
+  border: 1px solid #9E9E9E !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Textarea filled state (has value but not focused) - Keep gray background, no border */
+:host ::ng-deep .p-textarea.p-filled:not(:focus):not(.p-focus):not(.p-invalid),
+:host ::ng-deep .p-inputtextarea.p-filled:not(:focus):not(.p-focus):not(.p-invalid) {
+  background: #F5F5F5 !important;
+  border: none !important;
+}
+
+/* Textarea filled + focus state - No background, gray border */
+:host ::ng-deep .p-textarea.p-filled:focus:not(.p-invalid),
+:host ::ng-deep .p-inputtextarea.p-filled:focus:not(.p-invalid),
+:host ::ng-deep .p-textarea.p-filled.p-focus:not(.p-invalid),
+:host ::ng-deep .p-inputtextarea.p-filled.p-focus:not(.p-invalid) {
+  background: transparent !important;
+  border: 1px solid #9E9E9E !important;
+}
+
+/* Textarea invalid state - Red border when focused */
+:host ::ng-deep .p-textarea.ng-invalid.ng-touched:focus,
+:host ::ng-deep .p-inputtextarea.ng-invalid.ng-touched:focus,
+:host ::ng-deep .p-textarea.p-invalid.p-focus,
+:host ::ng-deep .p-inputtextarea.p-invalid.p-focus {
+  background: transparent !important;
+  border: 1px solid #F44336 !important;
+  box-shadow: none !important;
+}
+
+/* Textarea invalid but not focused - Gray background, no border */
+:host ::ng-deep .p-textarea.ng-invalid.ng-touched:not(:focus):not(.p-focus),
+:host ::ng-deep .p-inputtextarea.ng-invalid.ng-touched:not(:focus):not(.p-focus),
+:host ::ng-deep .p-textarea.p-invalid:not(.p-focus) {
+  background: #F5F5F5 !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-inputgroupaddon:first-child,
+:host ::ng-deep .p-inputgroupaddon+.p-inputgroupaddon {
+  border: 1px solid #F5F5F5 !important;
+  border-bottom-right-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+:host ::ng-deep .p-select {
+  box-shadow: none !important;
+}
+
+/* Position select dropdown below the input */
+:host ::ng-deep .country-select {
+  position: relative !important;
+}
+
+:host ::ng-deep .country-select .p-select-overlay,
+:host ::ng-deep .p-select-overlay {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: auto !important;
+  margin-top: 4px !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: calc(100vw - 40px) !important;
+  transform: none !important;
+}
+
+:host ::ng-deep .p-textarea:enabled:focus {
+  border: 1px solid #9E9E9E !important;
+}
+
+/* File Upload */
+.file-uploads-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+@media (max-width: 768px) {
+  .file-uploads-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.file-upload-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+}
+
+.file-upload-label {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #440000 !important;
+  font-family: "Cairo", sans-serif !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.file-upload-area {
+  position: relative !important;
+  border: 2px dashed #e5e5e5 !important;
+  border-radius: 8px !important;
+  padding: 2rem !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  background-color: #fafafa !important;
+}
+
+.file-upload-area:hover {
+  border-color: #ED2924 !important;
+  background-color: #fff5f5 !important;
+}
+
+.file-upload-area.has-file {
+  border-color: #ED2924 !important;
+  background-color: #fff5f5 !important;
+}
+
+.file-input {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+}
+
+.file-upload-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.upload-icon {
+  width: 48px !important;
+  height: 48px !important;
+  color: #ED2924 !important;
+}
+
+.file-placeholder {
+  color: #666 !important;
+  font-family: "Cairo", sans-serif !important;
+  font-size: 0.9rem !important;
+}
+
+.file-name {
+  color: #440000 !important;
+  font-family: "Cairo", sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  word-break: break-all !important;
+}
+
+/* Alerts */
+.alert {
+  padding: 1rem !important;
+  border-radius: 8px !important;
+  margin-bottom: 1.5rem !important;
+  font-family: "Cairo", sans-serif !important;
+  font-size: 0.95rem !important;
+}
+
+.alert-success {
+  background-color: #d4edda !important;
+  color: #155724 !important;
+  border: 1px solid #c3e6cb !important;
+}
+
+.alert-error {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+  border: 1px solid #f5c6cb !important;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  margin-top: 2rem !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px solid #e5e5e5 !important;
+}
+
+.back-link {
+  color: #440000 !important;
+  text-decoration: none !important;
+  font-family: "Cairo", sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+}
+
+.back-link:hover {
+  color: #ED2924 !important;
+}
+
+.submit-btn {
+  background-color: #ED2924 !important;
+  color: white !important;
+  padding: 1rem 2.5rem !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  font-family: "Cairo", sans-serif !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: #c41e1a !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(237, 41, 36, 0.3) !important;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+.submit-arrow {
+  width: 20px !important;
+  height: 20px !important;
+  filter: brightness(0) invert(1) !important;
+}
+
+@media (max-width: 768px) {
+  .form-actions {
+    flex-direction: column-reverse !important;
+  }
+
+  .submit-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .back-link {
+    text-align: center !important;
+    width: 100% !important;
+  }
+}

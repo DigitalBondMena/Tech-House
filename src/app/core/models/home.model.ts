@@ -515,3 +515,52 @@ export interface JobsResponse {
   jobCategories: JobCategory[];
 }
 
+/**
+ * Job Section
+ */
+export interface JobSection {
+  id: number;
+  job_information_id: number;
+  title: string;
+  text: string;
+  order: number;
+  is_active: boolean;
+}
+
+/**
+ * Job Category for Job Details
+ */
+export interface JobCategoryDetail {
+  id: number;
+  title: string;
+}
+
+/**
+ * Job Details
+ */
+export interface JobDetail {
+  id: number;
+  title: string;
+  brief?: string;
+  text: string;
+  working_hours?: string;
+  working_location?: string;
+  working_experience?: string;
+  meta_title?: string;
+  meta_description?: string;
+  published_at?: string | null;
+  faq_schema?: string;
+  is_active: boolean;
+  slug: string;
+  job_category_id: number;
+  job_sections?: JobSection[];
+  job_category?: JobCategoryDetail;
+}
+
+/**
+ * Job Details API Response
+ */
+export interface JobDetailsResponse {
+  job: JobDetail;
+}
+

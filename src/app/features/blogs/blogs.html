@@ -3,7 +3,7 @@
     customClass="h-[80vh]!"
     [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
     [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
-    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[38px]! lg:-bottom-[0px]! -left-[80px]! lg:-left-[0px]!">
+    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[0px]! -left-[0px]! lg:-left-[0px]!">
 </app-hero-section>
 }
 
@@ -17,7 +17,7 @@
                 <div class="blog-image">
                     @if (blog.image) {
                     <img [src]="getResponsiveImage(blog.image)" [alt]="blog.title"
-                        class="w-full h-auto rounded-2xl object-cover">
+                        class="w-full h-[400px] rounded-2xl object-cover">
                     }
                 </div>
                 <!-- Content Side (Right in RTL) -->
