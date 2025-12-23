@@ -2,7 +2,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
-import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse } from '../models/home.model';
+import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse, JobsResponse } from '../models/home.model';
 import { ApiService } from './apiservice';
 
 
@@ -42,6 +42,10 @@ export class FeatureService {
   // 🔹 Project Details Signal
   projectDetailsResponseSignal = signal<ProjectDetailsResponse | null>(null);
   projectDetailsData = computed(() => this.projectDetailsResponseSignal());
+
+  // 🔹 Jobs Signal
+  private jobsResponseSignal = signal<JobsResponse | null>(null);
+  jobsData = computed(() => this.jobsResponseSignal());
 
   // =====================
   // HOME API
@@ -239,5 +243,28 @@ export class FeatureService {
         console.error('Failed to load project details after timeout');
       }
     }, 30000);
+  }
+
+  // =====================
+  // JOBS API
+  // =====================
+  loadJobsData(categoryId?: number): void {
+    let endpoint = API_END_POINTS.JOBS;
+    if (categoryId) {
+      endpoint = API_END_POINTS.JOB_BY_CATEGORY.replace('{category_id}', categoryId.toString());
+    }
+    const result = this.apiService.get<JobsResponse>(endpoint);
+    
+    // Watch the signal and update when data arrives
+    const checkInterval = setInterval(() => {
+      const data = result();
+      if (data) {
+        this.jobsResponseSignal.set(data);
+        clearInterval(checkInterval);
+      }
+    }, 50);
+
+    // Clean up after 30 seconds if no data arrives (timeout)
+    setTimeout(() => clearInterval(checkInterval), 30000);
   }
 }

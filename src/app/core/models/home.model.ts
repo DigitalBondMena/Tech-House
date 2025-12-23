@@ -485,3 +485,33 @@ export interface ProjectDetailsResponse {
   project: ProjectDetail;
 }
 
+/**
+ * Job Item for Jobs Page
+ */
+export interface JobItem {
+  id: number;
+  job_category_id: number;
+  title: string;
+  brief?: string;
+  slug: string;
+  is_active: boolean;
+}
+
+/**
+ * Job Category Item
+ */
+export interface JobCategory {
+  id: number;
+  title: string;
+  jobs_count: number;
+  jobs: JobItem[];
+}
+
+/**
+ * Jobs API Response
+ */
+export interface JobsResponse {
+  bannerSection: BannerSection;
+  jobCategories: JobCategory[];
+}
+
