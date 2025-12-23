@@ -178,7 +178,7 @@ export class ProjectDet {
         setTimeout(() => {
           const contentElement = document.querySelector('.project-main-content');
           if (contentElement) {
-            contentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // contentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 100);
       }

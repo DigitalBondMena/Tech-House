@@ -54,8 +54,8 @@
 /* 2XL screens ≥ 1536px */
 @media (min-width: 1536px) {
   .sidebar {
-    transform: translateY(60%);
-    left: -15%;
+    transform: translateY(85%);
+    left: -12%;
   }
 }
 

@@ -52,7 +52,7 @@
   font-size: 1.125rem;
   font-weight: 600;
   color: #ffffff;
-  
+
 }
 
 /* Project Logo Circle */
@@ -81,9 +81,9 @@
   line-height: 1.8;
   font-family: "Cairo", sans-serif !important;
   direction: rtl !important;
-  text-align: justify !important;
   overflow-wrap: break-word !important;
-  text-justify: inter-word !important;
+  text-align: justify !important;
+  font-weight: 600 !important;
 }
 
 .project-content :deep(*),
@@ -118,6 +118,7 @@
   font-family: "Cairo", sans-serif !important;
   direction: rtl !important;
   text-align: justify !important;
+  font-weight: 400 !important;
 }
 
 .project-content :deep(img),
@@ -148,9 +149,9 @@
   border: none;
   border-bottom: 3px solid transparent;
   color: #666;
-  font-size: 1rem;
-  font-weight: 500;
-  
+  font-size: 1.5rem;
+  font-weight: 700 !important;
+
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -161,9 +162,9 @@
 }
 
 .nav-tab-active {
-  color: #440000!important;
+  color: #440000 !important;
   border-bottom-color: #ED2924;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 /* Project Pillars Box */
@@ -181,7 +182,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: #ED2924;
-  
+
   margin: 0;
 }
 
@@ -261,7 +262,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: #ED2924;
-  
+
 }
 
 /* Loading Spinner */
@@ -275,8 +276,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive Design */
@@ -370,4 +376,3 @@
     grid-template-columns: 1fr;
   }
 }
-

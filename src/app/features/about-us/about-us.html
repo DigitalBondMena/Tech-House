@@ -1,70 +1,58 @@
 @if (bannerSection()) {
-<app-hero-section [title]="bannerSection()?.title || ''" [paragraph]="bannerSection()?.text || ''"
-    customClass="h-[80vh]!" [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
-    [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
-    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[38px]! lg:-bottom-[0px]! -left-[80px]! lg:-left-[0px]!">
-    >
-
+<app-hero-section 
+  [title]="bannerSection()?.title || ''" 
+  [paragraph]="bannerSection()?.text || ''"
+  customClass="h-[80vh]!" 
+  [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
+  [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
+  imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[38px]! lg:-bottom-[0px]! -left-[80px]! lg:-left-[0px]!">
 </app-hero-section>
 }
 
 @if (aboutInformation()) {
 <section class="container mx-auto lg:px-20 py-20">
-    <div class="cards-section grid grid-cols-1 lg:grid-cols-2 gap-12 items-start relative">
-        <!-- Right Side - Our Story Text -->
-        <div class="to-stay-card col-span-1 order-2 lg:order-1">
-            <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6">
-            </app-section-title>
-            <div class="text-[#440000] text-xl font-medium leading-relaxed"
-                [innerHTML]="aboutInformation()?.text || ''">
-            </div>
-        </div>
-
-        <!-- Left Side - Red Card (Project Card) -->
-        @if (aboutSections().length > 0) {
-
-        <div class="cards col-span-1 order-1 lg:order-2">
-            <!-- <div class="sticky-cards-container"> -->
-            @for (section of aboutSections(); track section.order) {
-            <div #cardElement class="card about-card bg-linear-about text-center rounded-3xl p-8 text-white">
-                <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
-                <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
-
-                <app-app-button [btnText]="contactBtnText"
-                    customClass="bg-[#B90000] text-white mx-auto rounded-full px-6 py-3"></app-app-button>
-            </div>
-            }
-            <!-- </div> -->
-
-        </div>
-
-
-
-        }
+  <div class="cards-section grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <!-- Right Side - Our Story Text -->
+    <div class="to-stay-card col-span-1 order-2 lg:order-1">
+      <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6"></app-section-title>
+      <div class="text-[#440000] text-xl font-medium leading-relaxed" [innerHTML]="aboutInformation()?.text || ''"></div>
     </div>
+
+    <!-- Left Side - Cards with GSAP Animation -->
+    <div class="cards col-span-1 order-1 lg:order-2">
+      <div class="timeline-cards  text-center">
+        @for (section of aboutSections(); track trackByOrder($index, section); let i = $index) {
+          <div #cardElement class="timeline-card bg-gradient-to-br from-red-700 to-red-900 text-white p-8 rounded-2xl shadow-xl mb-8">
+            <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
+            <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
+            <app-app-button 
+              [btnText]="contactBtnText"
+              customClass="bg-black/40 text-red-700 hover:bg-gray-100 mx-auto">
+            </app-app-button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
 </section>
-
-
 }
 
-
-
-<section class="py-60 overflow-hidden ">
-    <div class=" mb-10">
-        <app-section-title [title]="partnersTitle" customClass="mb-5">
-        </app-section-title>
-    </div>
-    <div class="w-full">
-        <app-banner [items]="partners()" direction="right"
-            customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[140%] lg:w-[120%] -right-40 ">
-        </app-banner>
-    </div>
-    <div class="w-full">
-        <app-banner [items]="clients()" direction="left"
-            customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[140%] lg:w-[120%] -right-40 bg-[#940000]!">
-        </app-banner>
-    </div>
+@if (partners()?.length) {
+<section class="py-60 overflow-hidden">
+  <div class="mb-10">
+    <app-section-title [title]="partnersTitle" customClass="mb-5"></app-section-title>
+  </div>
+  <div class="w-full">
+    <app-banner [items]="partners()" direction="right"
+      customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[140%] lg:w-[120%] -right-40">
+    </app-banner>
+  </div>
+  <div class="w-full">
+    <app-banner [items]="clients()" direction="left"
+      customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[140%] lg:w-[120%] -right-40 bg-[#940000]!">
+    </app-banner>
+  </div>
 </section>
-
+}
 
 <app-contact-us-sec></app-contact-us-sec>

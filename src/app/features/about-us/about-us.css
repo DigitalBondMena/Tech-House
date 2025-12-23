@@ -1,23 +1,15 @@
-.bg-linear-about {
-    background: linear-gradient(to top, #440000, #ED2924);
-  }
-  
-  .cards-section {
-    position: relative;
-    overflow: visible;
-  }
-  
-  .cards {
-    position: relative;
-    min-height: 400px; /* Minimum height for container */
-  }
-  
-  .card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    will-change: transform;
-    backface-visibility: hidden;
-  }
-  
+.cards-section {
+  position: relative;
+}
+
+.timeline-cards {
+  position: relative;
+  height: 460px;
+}
+
+.timeline-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  will-change: transform;
+}
