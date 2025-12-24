@@ -2,5 +2,6 @@ export const environment = {
   production: true,
   apiUrl: 'https://dashboard.techhouseksa.com/api',
   appName: 'Tech House',
-  version: '1.0.0'
+  version: '1.0.0',
+  googleMapsApiKey: '' // Add your Google Maps API key here
 };

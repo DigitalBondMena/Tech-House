@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, signal, computed, inject } from '@angular/core';
 import { SectionTitle } from '../section-title/section-title';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
@@ -15,6 +15,7 @@ import { AppButton } from '../app-button/app-button';
 import { SuccessPopup } from '../success-popup/success-popup';
 import { API_END_POINTS } from '../../../core/constant/ApiEndPoints';
 import { environment } from '../../../../environments/environment';
+import { GoogleMapsLoaderService } from '../../../core/services/google-maps-loader.service';
 
 @Component({
   selector: 'app-contact-us-sec',
@@ -36,11 +37,21 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './contact-us-sec.html',
   styleUrl: './contact-us-sec.css'
 })
-export class ContactUsSec implements OnInit {
+export class ContactUsSec implements OnInit, AfterViewInit {
   // Contact Us Section Data
   contactTitle = "تواصل معنا";
   contactSubtitle = "نجاحك الرقمي يبدأ بخطوة معنا، بداية تصنع الفرق.";
   BtnText = "إرسال";
+
+  // Google Maps Loader Service
+  private mapsLoader = inject(GoogleMapsLoaderService);
+
+  // Map iframe reference
+  @ViewChild('mapContainer', { static: false }) mapContainer?: ElementRef<HTMLDivElement>;
+
+  // Map loading state
+  mapLoaded = signal(false);
+  shouldLoadMap = signal(false);
 
   // Countries List
   countries = COUNTRIES;
@@ -139,6 +150,59 @@ export class ContactUsSec implements OnInit {
     this.selectedCountryModel = COUNTRIES[0];
     this.selectedCountry.set(COUNTRIES[0]);
     this.initializeForm();
+  }
+
+  ngAfterViewInit() {
+    // Load map when component is in view (lazy load)
+    this.loadMapWhenVisible();
+  }
+
+  /**
+   * Load Google Maps when the map container becomes visible
+   * This improves performance by not loading the map until needed
+   */
+  private loadMapWhenVisible(): void {
+    if (!this.mapContainer?.nativeElement) {
+      return;
+    }
+
+    // Use Intersection Observer to detect when map container is visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.mapLoaded()) {
+            this.shouldLoadMap.set(true);
+            // Load map iframe (for embed) - no need for Google Maps JS API for iframe
+            // But if you want to use Google Maps JS API, uncomment the line below:
+            // this.loadMap();
+            this.mapLoaded.set(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: '50px', // Start loading 50px before element is visible
+        threshold: 0.1
+      }
+    );
+
+    observer.observe(this.mapContainer.nativeElement);
+  }
+
+  /**
+   * Load Google Maps JavaScript API (if you want to use interactive maps)
+   * This is called when you need the Google Maps JS API
+   */
+  loadMap(): void {
+    this.mapsLoader.load().then(() => {
+      // Google Maps API is now loaded
+      // You can initialize your map here
+      console.log('Google Maps API loaded successfully');
+      // Example: Initialize map
+      // const map = new google.maps.Map(this.mapContainer?.nativeElement, { ... });
+    }).catch((error) => {
+      console.error('Failed to load Google Maps:', error);
+    });
   }
   
   private initializeForm() {
