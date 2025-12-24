@@ -3,6 +3,7 @@ import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { filter, Subscription } from 'rxjs';
 import { hasActiveRequests, setAutoHideSpinner } from '../../core/interceptors/loading-interceptor';
+import { FeatureService } from '../../core/services/featureService';
 import { Footer } from '../../shared/components/footer/footer';
 import { Navbar } from '../../shared/components/navbar/navbar';
 
@@ -15,6 +16,7 @@ import { Navbar } from '../../shared/components/navbar/navbar';
 export class MainLayout implements OnInit, OnDestroy {
   private router = inject(Router);
   private spinner = inject(NgxSpinnerService);
+  private featureService = inject(FeatureService);
   private routerSubscription?: Subscription;
   private isInitialLoad = true;
   private checkInterval?: ReturnType<typeof setInterval>;
@@ -57,25 +59,72 @@ export class MainLayout implements OnInit, OnDestroy {
   }
 
   private waitForInitialLoad() {
-    // Wait for HTTP requests to complete
-    // Check every 100ms until no active requests
+    // Wait for:
+    // 1. HTTP requests to complete
+    // 2. Home data to be loaded (if on home page)
+    // 3. Hero section to be ready (if on home page)
+    // 4. Hero image to be loaded
+    
+    let heroImageLoaded = false;
+    let heroImageCheckStarted = false;
     
     this.checkInterval = setInterval(() => {
       const noActiveRequests = !hasActiveRequests();
+      const currentUrl = this.router.url;
+      const isHomePage = currentUrl.includes('/Home') || currentUrl === '/' || currentUrl === '';
       
-      if (noActiveRequests) {
-        // All requests completed - show content and hide spinner at the same time
+      // Check if home data and hero section are loaded (only for home page)
+      let heroReady = true;
+      if (isHomePage) {
+        const homeData = this.featureService.homeData();
+        const heroSection = homeData?.heroSection;
+        heroReady = !!heroSection;
+        
+        // Check if hero image is loaded (only once)
+        if (heroReady && heroSection?.image && !heroImageCheckStarted) {
+          heroImageCheckStarted = true;
+          const heroImage = heroSection.image.desktop || heroSection.image.tablet || heroSection.image.mobile;
+          if (heroImage) {
+            // Check if image is loaded
+            const img = new Image();
+            img.onload = () => {
+              heroImageLoaded = true;
+            };
+            img.onerror = () => {
+              // If image fails to load, still proceed after a delay
+              setTimeout(() => {
+                heroImageLoaded = true;
+              }, 1000);
+            };
+            img.src = heroImage;
+            
+            // If image is already cached, it might be loaded immediately
+            if (img.complete && img.naturalWidth > 0) {
+              heroImageLoaded = true;
+            }
+          } else {
+            // No image to load
+            heroImageLoaded = true;
+          }
+        }
+        
+        // Hero is ready only if data exists and image is loaded (or no image)
+        heroReady = heroReady && (heroImageLoaded || !heroImageCheckStarted);
+      }
+      
+      if (noActiveRequests && heroReady) {
+        // All requests completed and hero is ready - show content and hide spinner
         clearInterval(this.checkInterval);
         this.isContentReady.set(true);
         
-        // Small delay to ensure smooth transition (50ms)
+        // Small delay to ensure smooth transition (100ms)
         setTimeout(() => {
           this.spinner.hide();
           // Re-enable auto-hide for future requests
           setAutoHideSpinner(true);
-        }, 50);
+        }, 100);
       }
-    }, 100);
+    }, 150);
     
     // Fallback: show content after maximum wait time (10 seconds)
     setTimeout(() => {
@@ -85,7 +134,7 @@ export class MainLayout implements OnInit, OnDestroy {
       this.isContentReady.set(true);
       this.spinner.hide();
       setAutoHideSpinner(true);
-    }, 10000);
+    }, 5000);
   }
 
   ngOnDestroy() {
