@@ -1,10 +1,10 @@
-import { Component, AfterViewInit, ElementRef, ViewChildren, QueryList, Input } from '@angular/core';
-import { SectionTitle } from '../../../shared/components/section-title/section-title';
-import { AppButton } from '../../../shared/components/app-button/app-button';
-import { Project } from '../../../core/models/home.model';
-import { NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Input, PLATFORM_ID, QueryList, ViewChildren, inject } from '@angular/core';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/all';
+import { Project } from '../../../core/models/home.model';
+import { AppButton } from '../../../shared/components/app-button/app-button';
+import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
 @Component({
   selector: 'app-home-projects',
@@ -20,6 +20,9 @@ export class HomeProjects implements AfterViewInit {
 
   //! button data
   btnText = "مشاريع اكثر";
+
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
@@ -41,6 +44,11 @@ export class HomeProjects implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // Only run in browser, not in SSR
+    if (!this.isBrowser) {
+      return;
+    }
+
     // Initial setup - make sure the middle card is on top (only on large screens)
     if (window.innerWidth >= 1024) {
       this.updateCardStates();
@@ -49,6 +57,11 @@ export class HomeProjects implements AfterViewInit {
 
   // Handle card click
   onCardClick(clickedIndex: number) {
+    // Only run in browser, not in SSR
+    if (!this.isBrowser) {
+      return;
+    }
+
     // Only apply animations on large screens
     if (window.innerWidth < 1024) return;
 

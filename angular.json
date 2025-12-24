@@ -23,6 +23,8 @@
               }
             ],
             "styles": [
+              "node_modules/ngx-spinner/animations/timer.css",
+
               "src/styles.css"
             ],
             "server": "src/main.server.ts",

@@ -1,4 +1,5 @@
-
-    <app-navbar class="flex justify-center items-center"></app-navbar>
-    <router-outlet class="overflow-hidden"></router-outlet>
-    <app-footer></app-footer>
+    @if (isContentReady()) {
+        <app-navbar class="flex justify-center items-center"></app-navbar>
+        <router-outlet class="overflow-hidden"></router-outlet>
+        <app-footer></app-footer>
+    }

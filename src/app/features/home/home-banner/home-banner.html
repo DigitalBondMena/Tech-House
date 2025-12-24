@@ -1,149 +1,56 @@
 <div class="banner-wrapper overflow-hidden relative">
   <div class="banner-background"></div>
   <div class="banner-container">
-    <div class="banner-track" #scrollContainer>
-      <!-- Repeat scroll_title content for seamless scrolling - multiple duplicates for infinite loop -->
+    <div class="banner-track">
+      <!-- Multiple copies to ensure no gaps - seamless infinite loop -->
       @if (scrollTitle) {
         <!-- First set - visible on all screens -->
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <!-- Additional items for desktop (hidden on mobile) -->
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <!-- Second set (duplicate for seamless loop) -->
-        <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <!-- Third set (additional duplicate for more seamless loop) -->
-        <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <!-- Fourth set (more duplicates to prevent gaps) -->
-        <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <!-- Fifth set (even more duplicates to ensure no gaps) -->
+        <!-- Second set - duplicate for seamless loop -->
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
+        </div>
+        <div class="banner-item">
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
+        </div>
+        <div class="banner-item">
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
+        </div>
+        <div class="banner-item">
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
+        </div>
+        <!-- Third set - additional duplicate for more seamless loop (hidden on mobile) -->
+        <div class="banner-item hidden md:inline">
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
         <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
-        </div>
-        <div class="banner-item hidden md:inline">
-          <span class="font-bold text-3xl  xl:text-6xl ">{{ scrollTitle }}</span>
+          <span class="banner-text font-bold text-3xl! xl:text-6xl!">{{ scrollTitle }}</span>
         </div>
       }
     </div>
