@@ -12,6 +12,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { Country } from './models/country.model';
 import { COUNTRIES } from './models/countries';
 import { AppButton } from '../app-button/app-button';
+import { SuccessPopup } from '../success-popup/success-popup';
 import { API_END_POINTS } from '../../../core/constant/ApiEndPoints';
 import { environment } from '../../../../environments/environment';
 
@@ -29,7 +30,8 @@ import { environment } from '../../../../environments/environment';
     InputGroupAddonModule,
     SelectModule,
     FloatLabelModule,
-    AppButton
+    AppButton,
+    SuccessPopup
   ],
   templateUrl: './contact-us-sec.html',
   styleUrl: './contact-us-sec.css'
@@ -128,6 +130,7 @@ export class ContactUsSec implements OnInit {
   isSubmitting = signal(false);
   submitSuccess = signal(false);
   submitError = signal<string | null>(null);
+  showSuccessPopup = signal(false);
 
   constructor(private fb: FormBuilder) {}
 
@@ -286,10 +289,8 @@ export class ContactUsSec implements OnInit {
           this.submitSuccess.set(true);
           // Reset form after successful submission
           this.contactForm.reset();
-          // Clear success message after 5 seconds
-          setTimeout(() => {
-            this.submitSuccess.set(false);
-          }, 5000);
+          // Show success popup
+          this.showSuccessPopup.set(true);
         },
         error: (error) => {
           this.isSubmitting.set(false);
@@ -381,5 +382,9 @@ export class ContactUsSec implements OnInit {
       if (control.errors['required']) return 'الرسالة مطلوبة';
     }
     return null;
+  }
+
+  onClosePopup(): void {
+    this.showSuccessPopup.set(false);
   }
 }

@@ -18,6 +18,7 @@ import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-
 import { COUNTRIES } from "../../shared/components/contact-us-sec/models/countries";
 import { Country } from "../../shared/components/contact-us-sec/models/country.model";
 import { SectionTitle } from "../../shared/components/section-title/section-title";
+import { SuccessPopup } from "../../shared/components/success-popup/success-popup";
 
 @Component({
   selector: 'app-jop-det',
@@ -34,7 +35,8 @@ import { SectionTitle } from "../../shared/components/section-title/section-titl
     InputGroupModule,
     InputGroupAddonModule,
     SelectModule,
-    FloatLabelModule
+    FloatLabelModule,
+    SuccessPopup
   ],
   templateUrl: './jop-det.html',
   styleUrl: './jop-det.css',
@@ -424,6 +426,7 @@ export class JopDet {
   isSubmitting = signal(false);
   submitSuccess = signal(false);
   submitError = signal<string | null>(null);
+  showSuccessPopup = signal(false);
 
   private initializeForm() {
     // Custom validator for name (only letters, no numbers or symbols)
@@ -576,6 +579,7 @@ export class JopDet {
   onSubmitApplication(): void {
     if (this.jobApplicationForm.valid && this.job()) {
       const formData = new FormData();
+      formData.append('name', this.jobApplicationForm.value.fullName);
       formData.append('email', this.jobApplicationForm.value.email);
       formData.append('phone', this.jobApplicationForm.value.phone);
       formData.append('message', this.jobApplicationForm.value.message || '');
@@ -595,14 +599,15 @@ export class JopDet {
       this.submitSuccess.set(false);
       this.submitError.set(null);
 
-      this.http.post(`${this.apiUrl}${API_END_POINTS.SUBMIT_JOB_FORM}`, formData).subscribe({
+      // Use the correct API domain for job form submission
+      const jobApiUrl = 'https://api.techhouseksa.com/api';
+      this.http.post(`${jobApiUrl}${API_END_POINTS.SUBMIT_JOB_FORM}`, formData).subscribe({
         next: (response) => {
           this.isSubmitting.set(false);
           this.submitSuccess.set(true);
           this.jobApplicationForm.reset();
-          setTimeout(() => {
-            this.submitSuccess.set(false);
-          }, 5000);
+          // Show success popup
+          this.showSuccessPopup.set(true);
         },
         error: (error) => {
           this.isSubmitting.set(false);
@@ -829,5 +834,9 @@ export class JopDet {
       if (control.errors?.['required']) return 'الرسالة مطلوبة';
     }
     return null;
+  }
+
+  onClosePopup(): void {
+    this.showSuccessPopup.set(false);
   }
 }

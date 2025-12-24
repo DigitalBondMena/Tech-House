@@ -1,0 +1,33 @@
+@if (isVisible) {
+<div class="popup-overlay" (click)="onClose()">
+  <div class="popup-container" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button class="close-button" (click)="onClose()" aria-label="إغلاق">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Logo -->
+    <div class="popup-logo">
+      <div class="">
+      <img src="/images/logo/logo.webp" alt="logo" class="w-full h-full object-cover">
+      </div>
+     
+    </div>
+
+    <!-- Content -->
+    <div class="popup-content">
+      <h2 class="popup-title">{{ title }}</h2>
+      <p class="popup-message">{{ message }}</p>
+    </div>
+
+    <!-- Action Button -->
+    <button class="ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center transition duration-300 hover:bg-[#c41e1a]" (click)="onGoToHome()">
+      <span>{{ buttonText }}</span>
+      <img src="/images/icons/arrow-left.png" alt="arrow-left" class="h-7 w-7 p-1 ms-5  bg-white rounded-full">
+    </button>
+  </div>
+</div>
+}
+

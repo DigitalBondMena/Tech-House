@@ -88,13 +88,6 @@
                     }
                 </div>
 
-                <!-- Success Message -->
-                @if (submitSuccess()) {
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                        <p class="font-semibold">تم إرسال الرسالة بنجاح!</p>
-                        <p class="text-sm">شكراً لتواصلك معنا، سنرد عليك في أقرب وقت ممكن.</p>
-                    </div>
-                }
 
                 <!-- Error Message -->
                 @if (submitError()) {
@@ -131,3 +124,12 @@
         </div>
     </div>
 </section>
+
+<!-- Success Popup -->
+<app-success-popup 
+    [isVisible]="showSuccessPopup()"
+    title="شكرا لتواصلك معنا!"
+    message="نشكركم على تواصلكم مع بيت التكنولوجيا، سيراجع فريقنا رسالتكم ويتواصل معكم في أقرب وقت ممكن."
+    buttonText="العودة إلى الصفحة الرئيسية"
+    (close)="onClosePopup()">
+</app-success-popup>
