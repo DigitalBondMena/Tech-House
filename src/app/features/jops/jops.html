@@ -1,1 +1,86 @@
-<p>jops works!</p>
+<!-- Hero Section - Custom (Not using shared hero component) -->
+@if (bannerSection()) {
+<section class="jobs-hero-section">
+    <div class="hero-background" [style.background-image]="bannerSection()?.image ? 'url(' + getResponsiveImage(bannerSection()?.image) + ')' : ''">
+        <div class="hero-pattern"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="text-center">
+                    <h1 class="hero-title">{{ bannerSection()?.title || 'انضم إلى فريقنا' }}</h1>
+                    @if (bannerSection()?.text) {
+                        <p class="hero-text">{{ bannerSection()?.text }}</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+}
+
+<!-- Categories Section -->
+<section class="categories-section container mx-auto lg:px-20 py-12 md:py-20" >
+    <div class="section-header mb-8">
+        <h2 class="section-title">
+       <img src="/images/title/title.png" alt="title">
+            كن جزءًا من عائلة بيت التكنولوجيا
+        </h2>
+    </div>
+    
+    <!-- Categories Filter -->
+    <div class="categories-filter flex flex-wrap gap-4 mb-12">
+        <!-- "الكل" (All) Option -->
+        <button 
+            class="category-btn"
+            [class.active]="selectedCategoryIndex() === 0"
+            (click)="selectCategory(null, 0)">
+            الكل
+            <span class="category-count">({{ totalJobsCount() }})</span>
+        </button>
+
+        <!-- Category Options from API -->
+        @if (jobCategories().length > 0) {
+            @for (category of jobCategories(); track category.id; let i = $index) {
+                <button 
+                    class="category-btn"
+                    [class.active]="selectedCategoryIndex() === i + 1"
+                    (click)="selectCategory(category.id, i + 1)">
+                    {{ category.title }}
+                    <span class="category-count">({{ category.jobs_count }})</span>
+                </button>
+            }
+        }
+    </div>
+</section>
+
+<!-- Jobs Grid Section -->
+<section class="jobs-grid-section container mx-auto lg:px-20 pb-20" >
+    @if (displayedJobs().length > 0) {
+        <div class="jobs-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            @for (job of displayedJobs(); track job.id) {
+                <div class="job-card">
+                    <!-- Job Title -->
+                    <h3 class="job-title">{{ job.title }}</h3>
+                    
+                    <!-- Job Brief -->
+                    @if (job.brief) {
+                        <p class="job-description">{{ job.brief }}</p>
+                    }
+                    
+                    <!-- Join Now Button -->
+                    <button class="join-btn flex items-start justify-start gap-2" (click)="navigateToJobDetails(job)">
+                        انضم الآن 
+                        <img src="/images/icons/arrow-left.png" alt="arrow-left" class="w-7 h-7 ms-2">
+                    </button>
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="text-center py-12">
+            <p class="text-xl text-gray-500">لا توجد وظائف متاحة حالياً</p>
+        </div>
+    }
+</section>
+
+<app-contact-us-sec></app-contact-us-sec>
+

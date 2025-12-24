@@ -1,5 +1,6 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AppButton } from '../app-button/app-button';
 import { HomeBanner } from '../../../features/home/home-banner/home-banner';
 import { gsap } from 'gsap';
@@ -20,14 +21,21 @@ export class HeroSection implements AfterViewInit, OnChanges {
   @Input() subtitleAboveTitle: boolean = false;
   @Input() imageClass: string = ''; // Custom classes for the image
   @Input() customClass: string = ''; // Custom classes for the hero section
+  @Input() jobInfo?: Array<{ label: string; icon: string }>; // Job info cards
+  @Input() btnClass: string = ''; // Custom classes for the button
 
   @ViewChild('subtitleElement', { static: false }) subtitleElement!: ElementRef<HTMLSpanElement>;
   @ViewChild('subtitleContainer', { static: false }) subtitleContainer!: ElementRef<HTMLDivElement>;
 
   private typingAnimation: gsap.core.Timeline | null = null;
+  private sanitizer = inject(DomSanitizer);
 
   // !btn data
   btnText = "بتكار يصنع كفائتنا";
+
+  sanitizeIcon(icon: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(icon);
+  }
 
   ngAfterViewInit() {
     if (this.subtitle && this.subtitleAboveTitle) {

@@ -9,6 +9,7 @@ export const routes: Routes = [
             {
                 path: 'Home', loadComponent: () => import('./features/home/home').then(m => m.Home
                 )
+                
             },
             {
                 path: 'About-Us', loadComponent: () => import('./features/about-us/about-us').then(m => m.AboutUs
@@ -48,6 +49,10 @@ export const routes: Routes = [
             },
             {
                 path: 'Blog-Det', loadComponent: () => import('./features/blog-det/blog-det').then(m => m.BlogDet
+                )
+            },
+            {
+                path: 'Jop-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             { path: '**', redirectTo: 'Home', pathMatch: 'full' },
