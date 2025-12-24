@@ -1,9 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
+import { RouterModule } from '@angular/router';
 import { ResponsiveImage } from '../../../core/models/home.model';
+import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
 
 @Component({
   selector: 'app-footer',

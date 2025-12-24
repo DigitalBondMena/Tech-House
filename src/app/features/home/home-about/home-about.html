@@ -20,8 +20,9 @@
 
       <div class="flex items-center justify-start text-[#440000] mt-10">
 
-        @if (counters(); as countersData) {
-        @for (counter of countersData.slice(0, 3); track $index; let i = $index) {
+        <!-- @if (counters(); as countersData) { -->
+        <!-- @for (counter of countersData.slice(0, 3); track $index; let i = $index) { -->
+        @for (counter of counters()!.slice(0, 3); track $index; let i = $index) {
 
         <span #counterElement class="md:w-[140px] w-[100px] h-[100px] md:h-[140px] lg:w-[180px] lg:h-[100px] xl:w-[120px] xl:h-[120px] 2xl:w-[140px] 2xl:h-[140px] rounded-full bg-[#FEF8F8]
                          border border-[#B90000]
@@ -38,7 +39,7 @@
         </span>
 
         }
-        }
+        
       </div>
     </div>
 

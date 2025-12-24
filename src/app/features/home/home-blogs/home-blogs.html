@@ -1,7 +1,7 @@
 <section class="container mx-auto px-5 lg:px-20 py-20 text-[#440000]">
     <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-10">
     </app-section-title>
-    @if (getDisplayBlogs().length > 0) {
+    <!-- @if (getDisplayBlogs().length > 0) { -->
         <div class="flex flex-col lg:flex-row justify-center mt-4 gap-6 items-start">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
                 <div class="cursor-pointer transition-all duration-800 blog-card" (click)="setActive(i + 1)"
@@ -51,7 +51,7 @@
                 </div>
             }
         </div>
-    }
+    <!-- } -->
     <div class="flex justify-center ">
         <app-app-button [btnText]="btnText"
             customClass="mt-20! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">

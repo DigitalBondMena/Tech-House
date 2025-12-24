@@ -1,7 +1,7 @@
 <section class="container mx-auto px-5 lg:px-20 py-20 ">
     <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-20 ">
     </app-section-title>
-    @if (projects.length > 0) {
+    <!-- @if (projects.length > 0) { -->
         <!-- Desktop: Cards with animations stacked -->
         <div class="hidden lg:flex flex-col gap-10 relative h-[80vh] pt-30 lg:mx-30 my-10">
             @for (project of projects.slice(0, 3); track project.slug; let i = $index) {
@@ -48,7 +48,7 @@
                 </div>
             }
         </div>
-    }
+    <!-- } -->
 
     <div class="flex justify-center ">
         <app-app-button [btnText]="btnText"

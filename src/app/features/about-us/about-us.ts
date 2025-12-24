@@ -11,8 +11,10 @@ import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { SectionTitle } from '../../shared/components/section-title/section-title';
 
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+// Register GSAP plugins only in browser
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 @Component({
   selector: 'app-about-us',

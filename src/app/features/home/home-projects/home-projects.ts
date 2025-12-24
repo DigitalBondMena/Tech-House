@@ -39,8 +39,10 @@ export class HomeProjects implements AfterViewInit {
   @ViewChildren('projectCard') projectCards!: QueryList<ElementRef>;
 
   constructor() {
-    // Register GSAP plugins
-    gsap.registerPlugin(Flip);
+    // Register GSAP plugins only in browser
+    if (this.isBrowser && typeof window !== 'undefined') {
+      gsap.registerPlugin(Flip);
+    }
   }
 
   ngAfterViewInit() {

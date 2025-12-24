@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
 
 @Component({

@@ -1,4 +1,5 @@
-import { Component, input, AfterViewInit, ViewChild, ElementRef, effect } from '@angular/core';
+import { Component, input, AfterViewInit, ViewChild, ElementRef, effect, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { CTASection } from '../../../core/models/home.model';
 
@@ -16,52 +17,171 @@ export class HomeBooking implements AfterViewInit {
   //! button data
   btnText = "احجز موعدك";
 
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
+
   @ViewChild('videoElement', { static: false }) videoElement?: ElementRef<HTMLVideoElement>;
 
   constructor() {
-    // Watch for video URL changes
-    effect(() => {
-      const videoUrl = this.ctasection()?.video;
-      if (videoUrl && this.videoElement?.nativeElement) {
-        this.playVideo();
-      }
-    });
+    // Watch for video URL changes (only in browser)
+    if (this.isBrowser) {
+      effect(() => {
+        const videoUrl = this.ctasection()?.video;
+        if (videoUrl) {
+          // Wait a bit for the video element to be available
+          setTimeout(() => {
+            this.playVideo();
+          }, 200);
+        }
+      });
+    }
   }
 
   ngAfterViewInit(): void {
+    // Only run in browser environment
+    if (!this.isBrowser) {
+      return;
+    }
+
     if (this.ctasection()?.video) {
-      // Small delay to ensure video element is ready
+      // Wait for video element to be ready
       setTimeout(() => {
-        this.playVideo();
+        this.initializeVideo();
       }, 100);
     }
   }
 
-  private playVideo(): void {
-    const video = this.videoElement?.nativeElement;
-    if (!video) return;
+  onVideoLoaded(): void {
+    if (this.isBrowser) {
+      this.playVideo();
+    }
+  }
 
-    // Ensure video plays
+  onVideoError(event: Event): void {
+    console.error('Video error:', event);
+    const video = event.target as HTMLVideoElement;
+    if (video) {
+      console.error('Video error details:', {
+        error: video.error,
+        networkState: video.networkState,
+        readyState: video.readyState,
+        src: video.src
+      });
+    }
+  }
+
+  private initializeVideo(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const video = this.videoElement?.nativeElement;
+    if (!video) {
+      // Retry if video element is not ready yet
+      if (this.ctasection()?.video) {
+        setTimeout(() => {
+          this.initializeVideo();
+        }, 200);
+      }
+      return;
+    }
+
+    const videoUrl = this.ctasection()?.video;
+    if (!videoUrl) {
+      return;
+    }
+
+    // Ensure video properties are set BEFORE setting src
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('muted', '');
     
+    // Set source if not already set
+    if (!video.src || video.src !== videoUrl) {
+      video.src = videoUrl;
+    }
+
+    // Add event listeners
+    video.addEventListener('loadedmetadata', () => {
+      console.log('Video metadata loaded');
+      this.playVideo();
+    }, { once: true });
+
+    video.addEventListener('canplay', () => {
+      console.log('Video can play');
+      this.playVideo();
+    }, { once: true });
+
+    video.addEventListener('loadeddata', () => {
+      console.log('Video data loaded');
+      this.playVideo();
+    }, { once: true });
+
+    // Load the video
+    video.load();
+    
+    // Fallback: try to play after a delay
+    setTimeout(() => {
+      this.playVideo();
+    }, 2000);
+  }
+
+  private playVideo(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const video = this.videoElement?.nativeElement;
+    if (!video || typeof video.play !== 'function') {
+      return;
+    }
+
+    // Ensure video is still muted (required for autoplay)
+    video.muted = true;
+
     const playPromise = video.play();
     
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Video is playing
-          console.log('Video is playing');
+          console.log('✅ Video is playing successfully');
         })
         .catch((error) => {
-          // Auto-play was prevented
-          console.warn('Video autoplay prevented:', error);
+          console.warn('⚠️ Video autoplay prevented:', error);
           // Try to play again on user interaction
-          document.addEventListener('click', () => {
-            video.play().catch(() => {});
-          }, { once: true });
+          this.setupUserInteractionPlay(video);
         });
+    } else {
+      // Fallback for older browsers
+      this.setupUserInteractionPlay(video);
     }
+  }
+
+  private setupUserInteractionPlay(video: HTMLVideoElement): void {
+    if (!this.isBrowser || typeof document === 'undefined') {
+      return;
+    }
+
+    const playOnInteraction = () => {
+      if (video && typeof video.play === 'function') {
+        video.play()
+          .then(() => {
+            console.log('✅ Video started after user interaction');
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('touchstart', playOnInteraction);
+            document.removeEventListener('scroll', playOnInteraction);
+          })
+          .catch((err) => {
+            console.warn('Failed to play video on interaction:', err);
+          });
+      }
+    };
+    
+    document.addEventListener('click', playOnInteraction, { once: true });
+    document.addEventListener('touchstart', playOnInteraction, { once: true });
+    document.addEventListener('scroll', playOnInteraction, { once: true });
   }
 }

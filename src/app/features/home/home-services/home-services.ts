@@ -1,12 +1,15 @@
-import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewInit, Input } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewInit, Input, inject, PLATFORM_ID } from '@angular/core';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { Service } from '../../../core/models/home.model';
-import { NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// Only register plugin in browser
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 @Component({
   selector: 'app-home-services',
@@ -17,6 +20,9 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class HomeServices implements AfterViewInit {
   @Input() services: Service[] = [];
+
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   //! section title data
   servicesTitle = "خدماتنا";
@@ -54,6 +60,11 @@ export class HomeServices implements AfterViewInit {
   @ViewChildren('imgEl') images!: QueryList<ElementRef>;
 
   ngAfterViewInit() {
+    // Only run animations in browser environment
+    if (!this.isBrowser) {
+      return;
+    }
+
     // Use setTimeout to ensure DOM is fully ready
     setTimeout(() => {
       // Animate right side titles (appearing from left to right)
@@ -104,11 +115,18 @@ export class HomeServices implements AfterViewInit {
       }
 
       // Refresh ScrollTrigger after all animations are set up
-      ScrollTrigger.refresh();
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
     }, 100);
   }
 
   private animateTitle(titleElement: HTMLElement, bgElement: HTMLElement, direction: 'left' | 'right') {
+    // Only run in browser
+    if (!this.isBrowser || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      return;
+    }
+
     // Set initial state
     gsap.set(bgElement, {
       x: direction === 'right' ? '-100%' : '100%',
@@ -137,20 +155,23 @@ export class HomeServices implements AfterViewInit {
     });
 
     // Animate the text (slight delay after background starts)
-    tl.fromTo(
-      titleElement.querySelector('.service-title'),
-      { 
-        opacity: 0,
-        x: direction === 'right' ? -50 : 50
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1.2,
-        ease: 'power3.out'
-      },
-      '-=0.5' // Slight overlap with the background animation
-    );
+    const titleText = titleElement.querySelector('.service-title');
+    if (titleText) {
+      tl.fromTo(
+        titleText,
+        { 
+          opacity: 0,
+          x: direction === 'right' ? -50 : 50
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.2,
+          ease: 'power3.out'
+        },
+        '-=0.5' // Slight overlap with the background animation
+      );
+    }
   }
 
 

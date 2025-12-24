@@ -115,16 +115,12 @@
             </form>
         </div>
         <!-- Left Side - Map -->
-        <div #mapContainer class="h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center"> 
-            @if (shouldLoadMap()) {
-                <iframe class="w-full h-full"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.51106927429!2d46.81072890000001!3d24.743660499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f009227301b49%3A0x929a26476d34696f!2sAbdullah%20Al%20Ihsai%2C%20An%20Nasim%20Al%20Gharbi%2C%20Riyadh%2014231%2C%20Saudi%20Arabia!5e0!3m2!1sen!2seg!4v1765791765738!5m2!1sen!2seg"
-                    width="600" height="600" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            } @else {
-                <div class="text-gray-500">جاري تحميل الخريطة...</div>
-            }
+        <div class="h-full rounded-2xl overflow-hidden"> 
+            <iframe class="w-full h-full"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.51106927429!2d46.81072890000001!3d24.743660499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f009227301b49%3A0x929a26476d34696f!2sAbdullah%20Al%20Ihsai%2C%20An%20Nasim%20Al%20Gharbi%2C%20Riyadh%2014231%2C%20Saudi%20Arabia!5e0!3m2!1sen!2seg!4v1765791765738!5m2!1sen!2seg"
+                width="600" height="600" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </div>
 </section>
