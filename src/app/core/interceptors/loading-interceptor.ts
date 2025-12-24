@@ -6,20 +6,6 @@ import { finalize } from 'rxjs';
 // Counter to track active requests
 let activeRequests = 0;
 
-// Flag to control if interceptor should auto-hide spinner
-// This will be controlled by MainLayout for initial load
-let shouldAutoHide = true;
-
-// Export function to check if there are active requests
-export function hasActiveRequests(): boolean {
-  return activeRequests > 0;
-}
-
-// Export function to set auto-hide behavior
-export function setAutoHideSpinner(value: boolean) {
-  shouldAutoHide = value;
-}
-
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   const spinner = inject(NgxSpinnerService);
   
@@ -34,8 +20,8 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
       // Decrement counter
       activeRequests--;
       
-      // Hide spinner only when all requests are complete AND auto-hide is enabled
-      if (activeRequests === 0 && shouldAutoHide) {
+      // Hide spinner only when all requests are complete
+      if (activeRequests === 0) {
         spinner.hide();
       }
       
