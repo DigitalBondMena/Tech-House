@@ -1,21 +1,24 @@
 <nav
-  [class]="isScrolled() ? 'fixed  top-0 container mx-auto lg:px-20 z-50 mt-4 mb-2 transition-all duration-400 ' : 'fixed top-0 container mx-auto lg:px-20 z-50! mt-12 mb-2 transition-all duration-400' ">
+  [class]="isScrolled() ? 'fixed  top-0 container mx-auto px-5 lg:px-20 z-50 mt-4 mb-2 transition-all duration-400 ' : 'fixed top-0 container mx-auto px-5 lg:px-20 z-50! mt-12 mb-2 transition-all duration-400' ">
   <div class="  p-6 rounded-full bg-white border border-[#ED2924]">
     <div class="relative flex  items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center md:hidden">
         <!-- Mobile menu button-->
-        <button type="button" command="--toggle" commandfor="mobile-menu"
-          class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
+        <button type="button" (click)="toggleMobileMenu()"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-[#440000] hover:bg-gray-100 focus:outline-2 focus:outline-[#ED2924]">
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
-            aria-hidden="true" class="size-6 in-aria-expanded:hidden">
-            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
-            aria-hidden="true" class="size-6 not-in-aria-expanded:hidden">
-            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          @if (!isMobileMenuOpen()) {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              aria-hidden="true" class="size-6">
+              <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              aria-hidden="true" class="size-6">
+              <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          }
         </button>
       </div>
       <div class="flex  items-center  justify-evenly lg:justify-between w-full  ">
@@ -59,25 +62,24 @@
     </div>
   </div>
   <!--! mobile -->
-  <div id="mobile-menu" hidden class="block sm:hidden">
-    <div class="space-y-1 px-2 pt-2 pb-3">
-      <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-      <a routerLink="/Home"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">الرئيسية</a>
-      <a routerLink="/About-Us"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">من
-        نحن</a>
-      <a routerLink="/Services"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">الخدمات</a>
-      <a routerLink="/Projects"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">المشاريع</a>
-      <a routerLink="/Jops"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">الوظائف</a>
-      <a routerLink="/Blogs"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">المقالات</a>
-      <a routerLink="/Contact-Us"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">تواصل
-        معنا</a>
+  @if (isMobileMenuOpen()) {
+    <div class="block md:hidden mt-4 bg-white rounded-2xl border border-[#ED2924] shadow-lg">
+      <div class="space-y-1 px-4 pt-4 pb-4">
+        <a routerLink="/Home" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">الرئيسية</a>
+        <a routerLink="/About-Us" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">من نحن</a>
+        <a routerLink="/Services" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">الخدمات</a>
+        <a routerLink="/Projects" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">المشاريع</a>
+        <a routerLink="/Jops" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">الوظائف</a>
+        <a routerLink="/Blogs" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">المقالات</a>
+        <a routerLink="/Contact-Us" (click)="closeMobileMenu()"
+          class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">تواصل معنا</a>
+      </div>
     </div>
-  </div>
+  }
 </nav>

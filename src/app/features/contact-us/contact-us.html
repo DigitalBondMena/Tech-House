@@ -12,7 +12,7 @@
 @if (contactUsData()) {
 <section class="overflow-hidden" dir="rtl">
     <app-circle-sidebar class="hidden xl:block"></app-circle-sidebar>
-    <div class="container mx-auto lg:px-20 py-40 bg-white relative ">
+    <div class="container mx-auto px-5 lg:px-20 py-40 bg-white relative ">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <!-- Left Side - Image -->
             <div class="col-span-1">
@@ -68,7 +68,7 @@
                     }
                 </div>
                 @if (counters() && counters()!.length > 0) {
-                <section #countersSection class="container mx-auto  py-12 bg-white" dir="rtl">
+                <section #countersSection class="container mx-auto px-5 py-12 bg-white" dir="rtl">
                     <div class="grid  grid-cols-3 gap-6">
                         @for (counter of counters()!.slice(0, 3); track $index; let i = $index) {
                         <div class="bg-counter rounded-2xl p-3 lg:p-6  text-center text-white">

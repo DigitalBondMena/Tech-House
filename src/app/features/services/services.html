@@ -13,7 +13,7 @@
 }
 
 @if (services().length > 0) {
-<section class="container mx-auto lg:px-20 py-12 md:py-20">
+<section class="container mx-auto px-5 lg:px-20 py-12 md:py-20">
     @for (service of services(); track service.title; let i = $index) {
     <div class="service-card mb-16 md:mb-20 last:mb-0">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">

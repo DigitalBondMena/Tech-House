@@ -2,7 +2,4 @@
   transition: transform 0.3s ease;
 }
 
-.timeline-card:hover {
-  transform: scale(1.05);
-}
 

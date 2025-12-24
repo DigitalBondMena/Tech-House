@@ -3,7 +3,7 @@
     </app-section-title>
 
 
-    <div class="grid grid-cols-1 lg:grid-cols-5 container mx-auto lg:px-20 gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-5 container mx-auto px-5 lg:px-20 gap-10">
 
 
         <!-- Right Column -->
@@ -19,8 +19,8 @@
 
             @if (services.length > 1) {
                 <!-- First Title (service 1) - Right side -->
-                <div class="title h-[350px] flex items-center justify-end text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleRight1>
-                    <h3 class="service-title  px-4 relative z-20">{{ services[1]?.title }}</h3>
+                <div class="title h-[350px] flex items-center justify-end text-2xl lg:text-4xl font-bold text-[#940000] relative z-0" #titleRight1>
+                    <h3 class="service-title   px-4 relative z-20">{{ services[1]?.title }}</h3>
                     <div class="absolute inset-0  left-[-100%] z-10" #titleBgRight1></div>
                 </div>
             }
@@ -36,8 +36,8 @@
 
             @if (services.length > 3) {
                 <!-- Second Title (service 3) - Right side -->
-                <div class="title h-[350px] flex items-center justify-end text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleRight2>
-                    <h3 class="service-title  px-4 relative z-20">{{ services[3]?.title }}</h3>
+                <div class="title h-[350px] flex items-center justify-end text-2xl lg:text-4xl font-bold text-[#940000] relative z-0" #titleRight2>
+                    <h3 class="service-title   px-4 relative z-20">{{ services[3]?.title }}</h3>
                     <div class="absolute inset-0  left-[-100%] z-10" #titleBgRight2></div>
                 </div>
             }
@@ -74,8 +74,8 @@
         <div class="col-span-1 lg:col-span-2 flex flex-col-reverse lg:flex-col items-center lg:items-start relative">
             @if (services.length > 0) {
                 <!-- First Title (service 0) - Left side -->
-                <div class="title h-[350px] flex items-center justify-start text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleLeft1>
-                    <h3 class="service-title  px-4 relative z-20">{{ services[0]?.title }}</h3>
+                <div class="title h-[350px] flex items-center justify-start text-2xl lg:text-4xl font-bold text-[#940000] relative z-0" #titleLeft1>
+                    <h3 class="service-title   px-4 relative z-20">{{ services[0]?.title }}</h3>
                     <div class="absolute inset-0  right-[-100%] z-10" #titleBgLeft1></div>
                 </div>
             }
@@ -91,8 +91,8 @@
 
             @if (services.length > 2) {
                 <!-- Second Title (service 2) - Left side -->
-                <div class="title h-[350px] flex items-center justify-start text-lg lg:text-4xl font-bold text-[#940000] relative z-0" #titleLeft2>
-                    <h3 class="service-title  px-4 relative z-20">{{ services[2]?.title }}</h3>
+                <div class="title h-[350px] flex items-center justify-start text-2xl lg:text-4xl font-bold text-[#940000] relative z-0" #titleLeft2>
+                    <h3 class="service-title   px-4 relative z-20">{{ services[2]?.title }}</h3>
                     <div class="absolute inset-0  right-[-100%] z-10" #titleBgLeft2></div>
                 </div>
             }

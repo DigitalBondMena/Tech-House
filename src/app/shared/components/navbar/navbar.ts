@@ -9,10 +9,19 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Navbar {
   isScrolled = signal(false);
+  isMobileMenuOpen = signal(false);
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.scrollY;
     this.isScrolled.set(scrollPosition > 100);
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update(value => !value);
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen.set(false);
   }
 }

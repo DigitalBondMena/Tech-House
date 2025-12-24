@@ -41,12 +41,17 @@ export class HomeProjects implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Initial setup - make sure the middle card is on top
-    this.updateCardStates();
+    // Initial setup - make sure the middle card is on top (only on large screens)
+    if (window.innerWidth >= 1024) {
+      this.updateCardStates();
+    }
   }
 
   // Handle card click
   onCardClick(clickedIndex: number) {
+    // Only apply animations on large screens
+    if (window.innerWidth < 1024) return;
+
     if (clickedIndex === this.activeCardIndex) return; // Don't do anything if clicking the active card
 
     // Get all card elements

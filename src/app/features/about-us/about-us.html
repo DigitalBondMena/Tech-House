@@ -9,7 +9,7 @@
 }
 
 @if (aboutInformation()) {
-<section class="container mx-auto lg:px-20 py-20 pb-5">
+<section class="container mx-auto px-5 lg:px-20 py-20 pb-5">
   <div class="cards-section   flex flex-col  gap-12 items-start">
     <!-- Right Side - Our Story Text -->
     <div class=" ">
@@ -43,12 +43,12 @@
   </div>
   <div class="w-full">
     <app-banner [items]="partners()" direction="right"
-      customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[140%] lg:w-[120%] -right-40">
+      customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[150%] lg:w-[120%] -right-40">
     </app-banner>
   </div>
   <div class="w-full">
     <app-banner [items]="clients()" direction="left"
-      customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[140%] lg:w-[120%] -right-40 bg-[#940000]!">
+      customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[150%] lg:w-[120%] -right-40 bg-[#940000]!">
     </app-banner>
   </div>
 </section>

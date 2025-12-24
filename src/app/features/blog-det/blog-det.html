@@ -4,7 +4,7 @@
       [style.background-image]="'url(' + heroImage() + ')'"
     >
       <div class="blog-hero-overlay"></div>
-      <div class="container h-full mx-auto lg:px-20 relative z-10">
+      <div class="container h-full mx-auto px-5 lg:px-20 relative z-10">
         <div
           class="blog-hero-content h-full flex items-center justify-center text-center"
           dir="rtl"
@@ -14,7 +14,7 @@
     }
     
     @if (hasBlog()) {
-    <section class="container mx-auto lg:px-20 py-12 md:py-20">
+    <section class="container mx-auto px-5 lg:px-20 py-12 md:py-20">
       <!-- العنوان الأساسي للمقالة -->
       <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-[#940000] mb-8 md:mb-12 " dir="rtl">
         {{ blog()?.title }}

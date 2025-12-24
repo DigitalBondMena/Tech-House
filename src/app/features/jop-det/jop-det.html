@@ -1,6 +1,6 @@
 <!-- Loading State -->
 @if (isLoading()) {
-<section class="container mx-auto lg:px-20 py-20">
+<section class="container mx-auto px-5 lg:px-20 py-20">
     <div class="flex flex-col items-center justify-center min-h-[60vh]">
         <div class="loading-spinner mb-6"></div>
         <p class="text-xl text-[#440000]">جاري تحميل بيانات الوظيفة...</p>
@@ -10,7 +10,7 @@
 
 <!-- Error State -->
 @else if (hasError() && !hasJob()) {
-<section class="container mx-auto lg:px-20 py-20">
+<section class="container mx-auto px-5 lg:px-20 py-20">
     <div class="flex flex-col items-center justify-center min-h-[60vh] text-center">
         <div class="mb-6">
             <svg class="w-24 h-24 text-[#ED2924] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@
 <!-- Hero Section with Job Title -->
 <section class="bg-linear">
     <div class="job-hero-section bg-hero overflow-hidden">
-        <div class="container h-full mx-auto lg:px-20 relative">
+        <div class="container h-full mx-auto px-5 lg:px-20 relative">
             <div class="job-hero-content pb-20!">
                 <!-- Job Title -->
                 <h1 class="job-hero-title">
@@ -74,7 +74,7 @@
 
 <!-- Main Content Sections -->
 @if (hasJob()) {
-<section class="job-content-section container mx-auto lg:px-20 py-12 md:py-20">
+<section class="job-content-section container mx-auto px-5 lg:px-20 py-12 md:py-20">
     @if (jobSections().length > 0) {
     @for (section of jobSections(); track section.id || $index) {
     <div class="job-section">
@@ -108,7 +108,7 @@
 
 <!-- Job Application Form -->
 @if (hasJob()) {
-<section id="apply-form" class="container mx-auto lg:px-20 py-20">
+<section id="apply-form" class="container mx-auto px-5 lg:px-20 py-20">
     <div class="flex flex-col gap-8">
         <!-- Form Header -->
         <div class="flex items-center gap-3 mb-4">
