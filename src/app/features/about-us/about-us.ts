@@ -1,15 +1,15 @@
-import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef, inject, effect, signal, PLATFORM_ID, computed } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnInit, PLATFORM_ID, QueryList, ViewChildren, computed, inject } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { HeroSection } from '../../shared/components/hero-section/hero-section';
-import { SectionTitle } from '../../shared/components/section-title/section-title';
+import { environment } from '../../../environments/environment';
+import { FeatureService } from '../../core/services/featureService';
+import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { AppButton } from '../../shared/components/app-button/app-button';
 import { Banner } from '../../shared/components/banner/banner';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
-import { FeatureService } from '../../core/services/featureService';
-import { SharedFeatureService } from '../../core/services/sharedFeatureService';
-import { environment } from '../../../environments/environment';
+import { HeroSection } from '../../shared/components/hero-section/hero-section';
+import { SectionTitle } from '../../shared/components/section-title/section-title';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -56,66 +56,48 @@ export class AboutUs implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (!this.isBrowser) return;
-    
-    // Initialize animation when cards are available
-    if (this.cards.length > 0) {
-      this.initializeScrollAnimation();
+    if (this.isBrowser) {
+      // Wait for cards to be rendered
+      setTimeout(() => {
+        this.animateCards();
+      }, 100);
     }
-    
-    // Handle dynamic cards
-    this.cards.changes.subscribe(() => {
-      if (this.cards.length > 0) {
-        this.initializeScrollAnimation();
-      }
-    });
   }
 
-  private initializeScrollAnimation(): void {
-    if (!this.isBrowser) return;
+  private animateCards(): void {
+    if (!this.cards || this.cards.length === 0) return;
 
-    const cards = this.cards.toArray();
-    
-    cards.forEach((card, index) => {
+    this.cards.forEach((card, index) => {
       const element = card.nativeElement;
       
       // Set initial state
       gsap.set(element, {
-        y: 100,
+        scale: 0.8,
         opacity: 0,
-        scale: 0.95,
-        translateY:0,
+        y: 50
       });
 
-      // Create animation
+      // Animate on scroll
       gsap.to(element, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        delay: index * 0.15, // Stagger effect
         scrollTrigger: {
           trigger: element,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-          onEnter: () => {
-            gsap.to(element, {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              translateY:-20,
-              duration: 0.8,
-              delay: index * 0.15,
-              ease: "power2.out"
-            });
-          },
-          onLeaveBack: () => {
-            gsap.to(element, {
-              y: 100,
-              opacity: 0,
-              scale: 0.95,
-              duration: 0.5
-            });
-          }
+          start: 'top 80%',
+          end: 'top 50%',
+          toggleActions: 'play none none none'
         }
       });
     });
   }
+
+
+
+
 
   trackByOrder(index: number, item: any): number {
     return item.order;

@@ -1,8 +1,7 @@
-import { Component, Input, AfterViewInit, OnChanges, SimpleChanges, ViewChildren, ElementRef, QueryList, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { gsap } from 'gsap';
 import { ClientPartner } from '../../../core/models/home.model';
-import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-banner',
@@ -16,10 +15,10 @@ export class Banner implements AfterViewInit, OnChanges {
   @Input() items: ClientPartner[] = []; // Array of client/partner items
   @Input() startAnimation?: boolean; // Control when to start animation (optional)
 
-  @ViewChildren('iconRef') icons!: QueryList<ElementRef>;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   private animationInitialized = false;
-  private timeline: gsap.core.Timeline | null = null;
+  private timeline: gsap.core.Tween | gsap.core.Timeline | null = null;
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
@@ -37,10 +36,10 @@ export class Banner implements AfterViewInit, OnChanges {
     return image.desktop || '/images/placeholder.png';
   }
 
-  // Get items to display (duplicate for seamless loop)
+  // Get items to display (duplicate for seamless infinite loop)
   getDisplayItems(): ClientPartner[] {
     if (this.items.length === 0) return [];
-    // Duplicate items multiple times for seamless scrolling
+    // Duplicate items enough times for seamless infinite scrolling (at least 2 sets)
     return [...this.items, ...this.items, ...this.items];
   }
 
@@ -81,18 +80,6 @@ export class Banner implements AfterViewInit, OnChanges {
       return;
     }
 
-    // Subscribe to QueryList changes to handle dynamic items
-    this.icons.changes.subscribe(() => {
-      if (this.items.length > 0 && this.icons.length > 0 && !this.animationInitialized) {
-        // Only start if startAnimation is not false (i.e., true or undefined)
-        if (this.startAnimation === undefined || this.startAnimation === true) {
-          setTimeout(() => {
-            this.privateInitAnimation();
-          }, 100);
-        }
-      }
-    });
-
     // Try to initialize animation
     this.tryInitAnimation();
   }
@@ -113,9 +100,9 @@ export class Banner implements AfterViewInit, OnChanges {
     // If startAnimation is undefined (not provided), start normally
     // If startAnimation is true, start immediately
     if (this.startAnimation === undefined || this.startAnimation === true) {
-      if (this.items.length > 0 && this.icons.length > 0) {
+      if (this.items.length > 0 && this.scrollContainer) {
         setTimeout(() => {
-          if (!this.animationInitialized && this.icons.length > 0) {
+          if (!this.animationInitialized && this.scrollContainer) {
             this.privateInitAnimation();
           }
         }, 100);
@@ -139,7 +126,7 @@ export class Banner implements AfterViewInit, OnChanges {
   }
 
   // Public method to get the timeline (for parent to control)
-  public getTimeline(): gsap.core.Timeline | null {
+  public getTimeline(): gsap.core.Tween | gsap.core.Timeline | null {
     return this.timeline;
   }
 
@@ -171,59 +158,61 @@ export class Banner implements AfterViewInit, OnChanges {
       this.timeline = null;
     }
 
-    if (this.icons.length === 0) {
+    if (!this.scrollContainer || !this.scrollContainer.nativeElement) {
       this.animationInitialized = false;
       return;
     }
 
-    const elements = this.icons.toArray().map(el => el.nativeElement).filter(el => el);
-    if (elements.length === 0) {
-      this.animationInitialized = false;
-      return;
-    }
+    const container = this.scrollContainer.nativeElement;
+    
+    // Wait a bit for DOM to calculate scrollWidth properly
+    setTimeout(() => {
+      const containerWidth = container.scrollWidth;
+      
+      if (containerWidth === 0) {
+        this.animationInitialized = false;
+        return;
+      }
 
-    // Kill any existing tweens on these elements
-    gsap.killTweensOf(elements);
+      // Calculate the width of one set of items (original items)
+      // Since we duplicated items 3 times, one set is containerWidth / 3
+      const singleSetWidth = containerWidth / 3;
 
-    const isRightToLeft = this.direction === 'left'; // Default direction is right-to-left when direction is 'left'
-    const startX = isRightToLeft ? 200 : -200;
-    const endX = isRightToLeft ? -1000 : 1000;
+      // Kill any existing tweens on the container
+      gsap.killTweensOf(container);
 
-    // Reset positions first
-    gsap.set(elements, { x: 0, opacity: 1 });
+      const isRightToLeft = this.direction === 'left'; // Default direction is right-to-left when direction is 'left'
 
-    // Create timeline with paused: true, then play it
-    this.timeline = gsap.timeline({ repeat: -1, paused: paused });
+      // Reset position to start
+      gsap.set(container, { x: 0 });
 
-    // 1) Enter animation
-    this.timeline.from(elements, {
-      x: startX,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: 'power3.out'
-    });
+      // Create infinite scroll animation with seamless loop
+      // Calculate duration based on distance to maintain consistent speed (pixels per second)
+      // Speed = 60 pixels per second (faster - adjust this value to change speed - higher = faster)
+      const pixelsPerSecond = 60;
+      const duration = Math.abs(singleSetWidth) / pixelsPerSecond;
 
-    // 2) Continuous movement
-    this.timeline.to(elements, {
-      x: endX,
-      duration: 5,
-      ease: 'none',
-    }, '>');
-
-    // 3) Exit animation
-    this.timeline.to(elements, {
-      x: isRightToLeft ? (endX - 200) : (endX + 200),
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power3.in'
-    }, '>');
-
-    // Play the timeline if not paused
-    if (!paused) {
-      this.timeline.play();
-    }
-    this.animationInitialized = true;
+      const targetX = isRightToLeft ? -singleSetWidth : singleSetWidth;
+      
+      // Create seamless infinite scroll using fromTo for proper seamless loop
+      // fromTo ensures that when repeat happens, it starts from 0 again seamlessly
+      // Since items are duplicated (3 sets), when we move by singleSetWidth and repeat from 0,
+      // the duplicated items will be in the same position, creating a seamless loop
+      const tween = gsap.fromTo(container,
+        { x: 0 },
+        {
+          x: targetX,
+          duration: duration,
+          ease: 'none',
+          repeat: -1,
+          paused: paused,
+          immediateRender: false
+        }
+      );
+      
+      this.timeline = tween;
+      
+      this.animationInitialized = true;
+    }, 50);
   }
 }

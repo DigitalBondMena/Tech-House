@@ -1,15 +1,8 @@
-.cards-section {
-  position: relative;
-}
-
-.timeline-cards {
-  position: relative;
-  height: 460px;
-}
-
 .timeline-card {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  will-change: transform;
+  transition: transform 0.3s ease;
 }
+
+.timeline-card:hover {
+  transform: scale(1.05);
+}
+

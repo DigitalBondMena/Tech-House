@@ -41,22 +41,8 @@
 
 .banner-track {
     display: flex;
-    animation: slide 20s linear infinite;
     white-space: nowrap;
     will-change: transform;
-
-}
-
-@keyframes slide {
-    0% {
-        transform: translateX(100%);
-    }
-
-    100% {
-        transform: translateX(calc(-100% + 25vw));
-
-    }
-
 }
 
 .banner-item {
@@ -80,10 +66,6 @@
 
 
 
-/* Pause animation on hover */
-.banner-wrapper:hover .banner-track {
-    animation-play-state: running;
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -103,9 +85,6 @@
         font-size: 18px;
     }
 
-    .banner-track {
-        animation-duration: 10s;
-    }
 }
 
 @media (max-width: 480px) {
@@ -118,7 +97,4 @@
         font-size: 13px;
     }
 
-    .banner-track {
-        animation-duration: 10s;
-    }
 }

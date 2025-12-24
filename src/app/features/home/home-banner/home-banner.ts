@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-home-banner',

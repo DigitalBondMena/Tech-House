@@ -9,17 +9,17 @@
 }
 
 @if (aboutInformation()) {
-<section class="container mx-auto lg:px-20 py-20">
-  <div class="cards-section grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+<section class="container mx-auto lg:px-20 py-20 pb-5">
+  <div class="cards-section   flex flex-col  gap-12 items-start">
     <!-- Right Side - Our Story Text -->
-    <div class="to-stay-card col-span-1 order-2 lg:order-1">
+    <div class=" ">
       <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6"></app-section-title>
       <div class="text-[#440000] text-xl font-medium leading-relaxed" [innerHTML]="aboutInformation()?.text || ''"></div>
     </div>
 
     <!-- Left Side - Cards with GSAP Animation -->
-    <div class="cards col-span-1 order-1 lg:order-2">
-      <div class="timeline-cards  text-center">
+    <div class="  ">
+      <div class="text-center flex flex-col md:flex-row items-center justify-center gap-4">
         @for (section of aboutSections(); track trackByOrder($index, section); let i = $index) {
           <div #cardElement class="timeline-card bg-gradient-to-br from-red-700 to-red-900 text-white p-8 rounded-2xl shadow-xl mb-8">
             <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
@@ -37,8 +37,8 @@
 }
 
 @if (partners()?.length) {
-<section class="py-60 overflow-hidden">
-  <div class="mb-10">
+<section class="py-60 pt-30 overflow-hidden">
+  <div class="mb-20">
     <app-section-title [title]="partnersTitle" customClass="mb-5"></app-section-title>
   </div>
   <div class="w-full">
