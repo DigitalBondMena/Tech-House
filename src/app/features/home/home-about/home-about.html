@@ -1,8 +1,6 @@
 <section #aboutSection class="container mx-auto px-5 lg:px-20 py-20">
-  @if (aboutData) {
-
   <div class="flex justify-between items-center ">
-    <app-section-title [title]="aboutData.title"></app-section-title>
+    <app-section-title [title]="aboutData?.title || ''"></app-section-title>
 
     <span class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer">
       معرفة المزيد
@@ -15,7 +13,7 @@
     <!-- TEXT + COUNTERS -->
     <div>
       <p class="text-xl font-semibold mt-6 text-[#440000] max-w-xl">
-        {{ aboutData.text }}
+        {{ aboutData?.text || '' }}
       </p>
 
       <div class="flex items-center justify-start text-[#440000] mt-10">
@@ -45,11 +43,8 @@
 
     <!-- IMAGE -->
     <div class="ms-auto">
-      @if (getResponsiveImage()) {
-        <img [ngSrc]="getResponsiveImage()" [alt]="aboutData.title" width="800" height="600" class=" w-[500px] object-cover" />
-      }
+      <img [ngSrc]="getResponsiveImage() || '/images/placeholder.png'" [alt]="aboutData?.title || ''" width="800" height="600" class="w-[500px] object-cover" />
     </div>
 
   </div>
-  }
 </section>

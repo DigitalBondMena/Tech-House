@@ -10,9 +10,7 @@
                      [class]="i === 0 ? '-rotate-4 -translate-y-20 bg-gray-200' : i === 1 ? 'active-card bg-white shadow-lg' : 'rotate-4 translate-y-20 bg-gray-100'"
                      (click)="onCardClick(i)">
                     <div class="w-1/4 p-5 xl:p-10">
-                        @if (getResponsiveImage(project.image)) {
-                            <img [ngSrc]="getResponsiveImage(project.image)" [alt]="project.title" width="300" height="300" class="w-[300px] h-[300px] xl:w-[200px] xl:h-[200px]">
-                        }
+                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.png'" [alt]="project.title || ''" width="300" height="300" class="w-[300px] h-[300px] xl:w-[200px] xl:h-[200px]">
                     </div>
                     <div class="h-full w-3/4 p-5 xl:p-10">
                         <h2 class="text-xl text-[#636363] font-medium mb-6">{{ project.category_name }}</h2>
@@ -32,9 +30,7 @@
             @for (project of projects.slice(0, 3); track project.slug; let i = $index) {
                 <div class="project-card-mobile flex flex-col md:flex-row justify-between items-center rounded-3xl p-6 bg-white shadow-lg">
                     <div class="w-full md:w-1/4 p-4 flex justify-center">
-                        @if (getResponsiveImage(project.image)) {
-                            <img [ngSrc]="getResponsiveImage(project.image)" [alt]="project.title" width="300" height="300" class="w-full max-w-[200px] md:max-w-[250px] h-auto">
-                        }
+                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.png'" [alt]="project.title || ''" width="300" height="300" class="w-full max-w-[200px] md:max-w-[250px] h-auto">
                     </div>
                     <div class="w-full md:w-3/4 p-4">
                         <h2 class="text-lg md:text-xl text-[#636363] font-medium mb-4">{{ project.category_name }}</h2>

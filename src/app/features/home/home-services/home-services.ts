@@ -1,10 +1,10 @@
-import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewInit, Input, inject, PLATFORM_ID } from '@angular/core';
-import { SectionTitle } from '../../../shared/components/section-title/section-title';
-import { AppButton } from '../../../shared/components/app-button/app-button';
-import { Service } from '../../../core/models/home.model';
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Input, PLATFORM_ID, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { Service } from '../../../core/models/home.model';
+import { AppButton } from '../../../shared/components/app-button/app-button';
+import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
 // Only register plugin in browser
 if (typeof window !== 'undefined') {

@@ -1,7 +1,7 @@
-import { Component, input, AfterViewInit, ViewChild, ElementRef, effect, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { AppButton } from '../../../shared/components/app-button/app-button';
+import { AfterViewInit, Component, effect, ElementRef, inject, input, PLATFORM_ID, ViewChild } from '@angular/core';
 import { CTASection } from '../../../core/models/home.model';
+import { AppButton } from '../../../shared/components/app-button/app-button';
 
 
 @Component({

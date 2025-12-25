@@ -10,25 +10,21 @@
                             {{ i === 1 ? 'w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 z-10' : 'w-14 h-14 md:w-18 md:h-18 lg:w-20 lg:h-20' }}
                             {{ i === 0 ? '-mr-4 md:-mr-6 lg:-mr-8 z-20' : '' }}
                             {{ i === 2 ? '-ml-4 md:-ml-6 lg:-ml-8 z-20' : '' }}">
-                            @if (getResponsiveImage(testimonial.image)) {
-                                <img [ngSrc]="getResponsiveImage(testimonial.image)" [alt]="testimonial.name" width="128" height="128" class="w-full h-full object-cover object-center">
-                            }
+                            <img [ngSrc]="getResponsiveImage(testimonial.image) || '/images/placeholder.png'" [alt]="testimonial.name || ''" width="128" height="128" class="w-full h-full object-cover object-center">
                         </div>
                     }
                 </div>
-                @if (testimonials.length > 1) {
-                    @let centerTestimonial = testimonials[1];
-                    <p class="text-white text-lg md:text-xl lg:text-2xl font-semibold mx-auto max-w-3xl px-4">{{ centerTestimonial.text }}</p>
-                    <div class="flex items-center justify-center my-5 gap-1">
-                        <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
-                        <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
-                        <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
-                        <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
-                        <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
-                    </div>
-                    <span class="block text-2xl md:text-3xl lg:text-4xl mt-10 text-white font-semibold">{{ centerTestimonial.name }}</span>
-                    <span class="block text-base md:text-lg lg:text-xl mt-2 text-white font-semibold">{{ centerTestimonial.title }}</span>
-                }
+                @let centerTestimonial = testimonials[1] || testimonials[0] || null;
+                <p class="text-white text-lg md:text-xl lg:text-2xl font-semibold mx-auto max-w-3xl px-4">{{ centerTestimonial?.text || '' }}</p>
+                <div class="flex items-center justify-center my-5 gap-1">
+                    <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
+                    <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
+                    <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
+                    <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
+                    <img ngSrc="/images/icons/star.png" alt="star" width="20" height="20" class="w-4 h-4 md:w-5 md:h-5">
+                </div>
+                <span class="block text-2xl md:text-3xl lg:text-4xl mt-10 text-white font-semibold">{{ centerTestimonial?.name || '' }}</span>
+                <span class="block text-base md:text-lg lg:text-xl mt-2 text-white font-semibold">{{ centerTestimonial?.title || '' }}</span>
             <!-- } -->
         </div>
     </div>
