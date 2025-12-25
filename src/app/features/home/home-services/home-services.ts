@@ -1,7 +1,8 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, PLATFORM_ID, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, QueryList, SimpleChanges, ViewChild, ViewChildren, computed, inject, signal } from '@angular/core';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { SkeletonModule } from 'primeng/skeleton';
 import { Service } from '../../../core/models/home.model';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
@@ -13,13 +14,23 @@ if (typeof window !== 'undefined') {
 
 @Component({
   selector: 'app-home-services',
-  imports: [SectionTitle, AppButton, NgOptimizedImage],
+  imports: [SectionTitle, AppButton, NgOptimizedImage, SkeletonModule],
   templateUrl: './home-services.html',
   styleUrl: './home-services.css',
   standalone: true
 })
-export class HomeServices implements AfterViewInit {
+export class HomeServices implements AfterViewInit, OnChanges {
   @Input() services: Service[] = [];
+
+  // 🔹 Loading state as signal
+  private isLoadingSignal = signal(true);
+  isLoading = computed(() => this.isLoadingSignal());
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['services']) {
+      this.isLoadingSignal.set(!this.services || this.services.length === 0);
+    }
+  }
 
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);

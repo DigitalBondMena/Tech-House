@@ -1,18 +1,29 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { SectionTitle } from '../../../shared/components/section-title/section-title';
-import { AppButton } from '../../../shared/components/app-button/app-button';
-import { Blog } from '../../../core/models/home.model';
 import { NgOptimizedImage } from '@angular/common';
+import { Component, Input, OnChanges, SimpleChanges, computed, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
+import { Blog } from '../../../core/models/home.model';
+import { AppButton } from '../../../shared/components/app-button/app-button';
+import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
 @Component({
   selector: 'app-home-blogs',
-  imports: [SectionTitle, AppButton, NgOptimizedImage],
+  imports: [SectionTitle, AppButton, NgOptimizedImage, SkeletonModule],
   templateUrl: './home-blogs.html',
   styleUrl: './home-blogs.css'
 })
-export class HomeBlogs {
+export class HomeBlogs implements OnChanges {
   @Input() blogs: Blog[] = [];
+
+  // 🔹 Loading state as signal
+  private isLoadingSignal = signal(true);
+  isLoading = computed(() => this.isLoadingSignal());
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['blogs']) {
+      this.isLoadingSignal.set(!this.blogs || this.blogs.length === 0);
+    }
+  }
 
   //! section title data
   projectsTitle = " المقالات";

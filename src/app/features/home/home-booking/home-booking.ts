@@ -1,18 +1,22 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, effect, ElementRef, inject, input, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, input, PLATFORM_ID, ViewChild } from '@angular/core';
+import { SkeletonModule } from 'primeng/skeleton';
 import { CTASection } from '../../../core/models/home.model';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 
 
 @Component({
   selector: 'app-home-booking',
-  imports: [AppButton],
+  imports: [AppButton, SkeletonModule],
   templateUrl: './home-booking.html',
   styleUrl: './home-booking.css'
 })
 export class HomeBooking implements AfterViewInit {
   //! Input for CTA Section data
   ctasection = input<CTASection | null>(null);
+
+  // 🔹 Loading state
+  isLoading = computed(() => !this.ctasection());
 
   //! button data
   btnText = "احجز موعدك";

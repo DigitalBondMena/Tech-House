@@ -1,19 +1,30 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, PLATFORM_ID, QueryList, ViewChildren, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, QueryList, SimpleChanges, ViewChildren, computed, inject, signal } from '@angular/core';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/all';
+import { SkeletonModule } from 'primeng/skeleton';
 import { Project } from '../../../core/models/home.model';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
 @Component({
   selector: 'app-home-projects',
-  imports: [SectionTitle, AppButton, NgOptimizedImage],
+  imports: [SectionTitle, AppButton, NgOptimizedImage, SkeletonModule],
   templateUrl: './home-projects.html',
   styleUrl: './home-projects.css'
 })
-export class HomeProjects implements AfterViewInit {
+export class HomeProjects implements AfterViewInit, OnChanges {
   @Input() projects: Project[] = [];
+
+  // 🔹 Loading state as signal
+  private isLoadingSignal = signal(true);
+  isLoading = computed(() => this.isLoadingSignal());
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['projects']) {
+      this.isLoadingSignal.set(!this.projects || this.projects.length === 0);
+    }
+  }
 
   //! section title data
   projectsTitle = "مشاريعنا";

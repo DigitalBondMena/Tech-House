@@ -2,6 +2,8 @@ import {
   Component,
   Input,
   AfterViewInit,
+  OnChanges,
+  SimpleChanges,
   inject,
   computed,
   effect,
@@ -9,22 +11,24 @@ import {
   ChangeDetectorRef,
   ViewChild,
   ElementRef,
-  OnDestroy
+  OnDestroy,
+  signal
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { AboutHome } from '../../../core/models/home.model';
 import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
 import { NgOptimizedImage } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-home-about',
   standalone: true,
-  imports: [SectionTitle, NgOptimizedImage],
+  imports: [SectionTitle, NgOptimizedImage, SkeletonModule],
   templateUrl: './home-about.html',
   styleUrl: './home-about.css'
 })
-export class HomeAbout implements AfterViewInit, OnDestroy {
+export class HomeAbout implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input() aboutData: AboutHome | null = null;
 
@@ -38,6 +42,10 @@ export class HomeAbout implements AfterViewInit, OnDestroy {
   // 🔹 counters from API (signal)
   counters = computed(() => this.sharedFeatureService.counters());
 
+  // 🔹 Loading state as signal
+  private isLoadingSignal = signal(true);
+  isLoading = computed(() => this.isLoadingSignal());
+
   // 🔹 animated values - initialize with default values
   animatedCounters: number[] = [0, 0, 0];
 
@@ -47,6 +55,13 @@ export class HomeAbout implements AfterViewInit, OnDestroy {
 
   constructor() {
     this.sharedFeatureService.loadCounters();
+
+    // Track counters changes via effect
+    effect(() => {
+      const counters = this.counters();
+      // Update loading state when counters change
+      this.updateLoadingState();
+    });
 
     // ✅ يبدأ العداد لما:
     // 1️⃣ الـ view يبقى جاهز
@@ -70,9 +85,24 @@ export class HomeAbout implements AfterViewInit, OnDestroy {
     });
   }
 
+  private updateLoadingState(): void {
+    const hasAboutData = !!this.aboutData?.title;
+    const hasCounters = this.counters() && this.counters()!.length > 0;
+    this.isLoadingSignal.set(!hasAboutData || !hasCounters);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['aboutData']) {
+      this.updateLoadingState();
+    }
+  }
+
   ngAfterViewInit(): void {
     // ✅ تأكيد أن الـ DOM اترسم
     this.viewReady = true;
+    
+    // Update loading state after view init
+    this.updateLoadingState();
     
     // Setup Intersection Observer if counters are already loaded
     const counters = this.counters();

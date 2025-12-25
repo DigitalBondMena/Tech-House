@@ -59,7 +59,7 @@
                     @if (image.startsWith('http://') || image.startsWith('https://')) {
                     <img [src]="image" alt="Hero Image" class="hero-image" [ngClass]="imageClass || ' w-full h-auto'" />
                     } @else {
-                    <img [ngSrc]="image" alt="Hero Image" width="1920" height="1080" priority class="hero-image" [ngClass]="imageClass || ' w-full h-auto'" />
+                    <img [ngSrc]="image" alt="Hero Image" width="1000" height="1000" priority class="hero-image" [ngClass]="imageClass || ' w-full h-auto'" />
                     }
                     }
                 </div>

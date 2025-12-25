@@ -1,13 +1,32 @@
-<section class="container mx-auto px-5 lg:px-20 py-20 text-[#440000]">
-    <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-10">
+<section class="container mx-auto px-5 lg:px-20 py-20 text-[#440000] min-h-[600px]">
+  <!-- Skeleton Loader -->
+  @if (isLoading()) {
+    <div class="flex justify-start mb-10 min-h-[60px]">
+      <p-skeleton width="200px" height="40px" styleClass="rounded-lg"></p-skeleton>
+    </div>
+
+    <div class="flex flex-col lg:flex-row justify-center mt-4 gap-6 items-start min-h-[500px]">
+      @for (i of [1,2,3]; track i) {
+        <div class="w-full lg:w-1/4 min-h-[500px]">
+          <p-skeleton width="100%" height="40vh" styleClass="rounded-3xl mb-4"></p-skeleton>
+          <p-skeleton width="60%" height="24px" styleClass="rounded-lg mb-2"></p-skeleton>
+          <p-skeleton width="100%" height="60px" styleClass="rounded-lg"></p-skeleton>
+        </div>
+      }
+    </div>
+
+    <div class="flex justify-center mt-20">
+      <p-skeleton width="200px" height="50px" styleClass="rounded-full"></p-skeleton>
+    </div>
+  } @else {
+    <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-10 min-h-[60px]">
     </app-section-title>
-    <!-- @if (getDisplayBlogs().length > 0) { -->
-        <div class="flex flex-col lg:flex-row justify-center mt-4 gap-6 items-start">
+        <div class="flex flex-col lg:flex-row justify-center mt-4 gap-6 items-start min-h-[500px]">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
-                <div class="cursor-pointer transition-all duration-800 blog-card" (click)="setActive(i + 1)"
+                <div class="cursor-pointer transition-all duration-800 blog-card min-h-[500px]" (click)="setActive(i + 1)"
                     [class]="activeCard === (i + 1) ? (i === 0 ? 'w-full lg:w-1/2 pt-0' : i === 1 ? 'w-1/2' : 'w-1/2 pt-0') : 'w-full lg:w-1/4  pt-6'">
-                    <div class="relative blog-image-container">
-                        <img [ngSrc]="getResponsiveImage(blog.image) || '/images/placeholder.png'" [alt]="blog.title || ''" width="800" height="600" class="rounded-3xl w-full object-cover transition-all duration-800"
+                    <div class="relative blog-image-container min-h-[40vh]">
+                        <img [ngSrc]="getResponsiveImage(blog.image) || '/images/placeholder.png'" [alt]="blog.title || ''" width="800" height="600" class="rounded-3xl w-full h-[40vh] object-cover transition-all duration-800"
                             [class]="activeCard === (i + 1) ? 'h-[50vh]' : 'h-[40vh]'">
                         <div class="blog-hover-overlay" [hidden]="activeCard !== (i + 1)">
                             <img ngSrc="/images/blog-hover.png" 
@@ -18,27 +37,27 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col">
-                        <div [class]="activeCard === (i + 1) ? 'order-1  ' : ''">
-                            <span class="block transition-all duration-400"
+                    <div class="flex flex-col min-h-[150px]">
+                        <div [class]="activeCard === (i + 1) ? 'order-1  ' : ''" class="min-h-[80px]">
+                            <span class="block transition-all duration-400 min-h-[24px]"
                                 [class]="activeCard === (i + 1) ? 'opacity-0 translate-50 transition-all duration-800' : 'opacity-100 translate-y-0'">
-                                {{ blog.publish_at_ar }}
+                                {{ blog.publish_at_ar || '' }}
                             </span>
 
-                            <h3 class="mt-4 transition-all duration-400"
+                            <h3 class="mt-4 transition-all duration-400 min-h-[60px]"
                                 [class]="activeCard === (i + 1) ? 'opacity-0 translate-50 text-2xl font-bold transition-all duration-800' : 'opacity-100 translate-y-0 text-xl font-semibold'">
-                                {{ blog.title }}
+                                {{ blog.title || '' }}
                             </h3>
                         </div>
-                        <div [class]="activeCard === (i + 1) ? '' : 'order-1'">
-                            <span class="block transition-all"
+                        <div [class]="activeCard === (i + 1) ? '' : 'order-1'" class="min-h-[80px]">
+                            <span class="block transition-all min-h-[24px]"
                                 [class]="activeCard === (i + 1) ? 'opacity-100 translate-x-0 transition-all duration-800' : 'opacity-0 translate-x-50'">
-                                {{ blog.publish_at_ar }}
+                                {{ blog.publish_at_ar || '' }}
                             </span>
 
-                            <h3 class="mt-4 transition-all"
+                            <h3 class="mt-4 transition-all min-h-[60px]"
                                 [class]="activeCard === (i + 1) ? 'opacity-100 translate-x-0 text-2xl font-bold transition-all duration-800' : 'opacity-0 translate-x-50 text-xl font-semibold'">
-                                {{ blog.title }}
+                                {{ blog.title || '' }}
                             </h3>
                         </div>
                     </div>
@@ -51,4 +70,5 @@
             customClass="mt-20! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
         </app-app-button>
     </div>
+  }
 </section>
