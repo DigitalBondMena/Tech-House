@@ -31,7 +31,7 @@
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
             <!-- <a href="#" aria-current="page" class="rounded-md bg-gray-950/50 px-3 py-2 text-sm font-medium text-white">Dashboard</a> -->
-            <a routerLink="/Home" routerLinkActive="border-b border-[#ED2924]! bg-gray-100"
+            <a routerLink="/" routerLinkActive="border-b border-[#ED2924]! bg-gray-100"
               class=" px-3 py-2 text-sm xl:text-lg font-semibold  text-[#440000] border-b border-transparent hover:border-b hover:border-[#ED2924] transition-all duration-300   ">
               الرئيسية </a>
             <a routerLink="/About-Us" routerLinkActive="border-b border-[#ED2924]! bg-gray-100   "
@@ -65,7 +65,7 @@
   @if (isMobileMenuOpen()) {
     <div class="block md:hidden mt-4 bg-white rounded-2xl border border-[#ED2924] shadow-lg">
       <div class="space-y-1 px-4 pt-4 pb-4">
-        <a routerLink="/Home" (click)="closeMobileMenu()"
+        <a routerLink="/" (click)="closeMobileMenu()"
           class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">الرئيسية</a>
         <a routerLink="/About-Us" (click)="closeMobileMenu()"
           class="block rounded-md px-3 py-2 text-base font-medium text-[#440000] hover:bg-gray-100 transition-colors">من نحن</a>

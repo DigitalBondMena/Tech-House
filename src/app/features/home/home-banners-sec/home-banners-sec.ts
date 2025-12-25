@@ -1,8 +1,8 @@
-import { Component, OnInit, AfterViewInit, ViewChild, inject, computed, signal, effect, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { SectionTitle } from '../../../shared/components/section-title/section-title';
-import { Banner } from '../../../shared/components/banner/banner';
+import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
+import { Banner } from '../../../shared/components/banner/banner';
+import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
 @Component({
   selector: 'app-home-banners-sec',
@@ -62,49 +62,20 @@ export class HomeBannersSec implements OnInit, AfterViewInit {
   private startAnimationsTogether(): void {
     if (this.animationStarted) return;
     
-    // First, prepare both animations (create timelines but keep them paused)
-    if (this.partnersBanner) {
-      this.partnersBanner.prepareAnimation();
-    }
-    if (this.clientsBanner) {
-      this.clientsBanner.prepareAnimation();
-    }
+    const isBrowser = isPlatformBrowser(this.platformId);
+    if (!isBrowser) return;
     
-    // Wait a tiny bit for timelines to be created, then start both at the exact same time
+    // Wait for DOM to be ready, then initialize animations directly (not paused)
     setTimeout(() => {
-      // Check if we're in browser environment before using requestAnimationFrame
-      if (isPlatformBrowser(this.platformId)) {
-        // Use requestAnimationFrame to ensure both start at the exact same frame
-        requestAnimationFrame(() => {
-          // Get both timelines
-          const partnersTimeline = this.partnersBanner?.getTimeline();
-          const clientsTimeline = this.clientsBanner?.getTimeline();
-          
-          // Start both timelines at the exact same moment - call play() in sequence without delay
-          // This ensures they start in the same JavaScript execution cycle
-          if (partnersTimeline && partnersTimeline.paused()) {
-            partnersTimeline.play();
-          }
-          if (clientsTimeline && clientsTimeline.paused()) {
-            clientsTimeline.play();
-          }
-          
-          this.animationStarted = true;
-        });
-      } else {
-        // Fallback for server-side: start animations directly without requestAnimationFrame
-        const partnersTimeline = this.partnersBanner?.getTimeline();
-        const clientsTimeline = this.clientsBanner?.getTimeline();
-        
-        if (partnersTimeline && partnersTimeline.paused()) {
-          partnersTimeline.play();
-        }
-        if (clientsTimeline && clientsTimeline.paused()) {
-          clientsTimeline.play();
-        }
-        
-        this.animationStarted = true;
+      // Start animations directly without pausing first
+      if (this.partnersBanner && this.partners().length > 0) {
+        this.partnersBanner.startAnimationNow();
       }
-    }, 10); // Very small delay to ensure timelines are ready
+      if (this.clientsBanner && this.clients().length > 0) {
+        this.clientsBanner.startAnimationNow();
+      }
+      
+      this.animationStarted = true;
+    }, 300); // Give time for DOM to be ready and images to load
   }
 }

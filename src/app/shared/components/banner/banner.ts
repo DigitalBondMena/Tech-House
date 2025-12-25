@@ -1,5 +1,5 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, SimpleChanges, ViewChild, inject, NgZone } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, PLATFORM_ID, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { gsap } from 'gsap';
 import { ClientPartner } from '../../../core/models/home.model';
 
@@ -232,7 +232,11 @@ export class Banner implements AfterViewInit, OnChanges {
     );
     
     this.timeline = tween;
-    
     this.animationInitialized = true;
+    
+    // If not paused, ensure animation is playing
+    if (!paused && this.timeline) {
+      this.timeline.play();
+    }
   }
 }

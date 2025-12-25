@@ -1,14 +1,13 @@
 import { Routes } from '@angular/router';
-import { MainLayout } from './layouts/main-layout/main-layout';
 import { Home } from './features/home/home';
+import { MainLayout } from './layouts/main-layout/main-layout';
 
 export const routes: Routes = [
     {
         path: '', component: MainLayout,
         children: [
-            { path: '', redirectTo: 'Home', pathMatch: 'full' },
             {
-             path:'Home', component: Home
+             path: '', component: Home
             },
             {
                 path: 'About-Us', loadComponent: () => import('./features/about-us/about-us').then(m => m.AboutUs
@@ -54,7 +53,7 @@ export const routes: Routes = [
                 path: 'Jop-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
-            { path: '**', redirectTo: 'Home', pathMatch: 'full' },
+            { path: '**', redirectTo: '', pathMatch: 'full' },
         ]
     }
 ];

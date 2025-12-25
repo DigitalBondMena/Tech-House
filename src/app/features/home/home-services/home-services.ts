@@ -1,5 +1,5 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, OnDestroy, PLATFORM_ID, QueryList, SimpleChanges, ViewChild, ViewChildren, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, OnDestroy, PLATFORM_ID, QueryList, SimpleChanges, ViewChild, ViewChildren, computed, effect, inject, signal } from '@angular/core';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -124,12 +124,52 @@ export class HomeServices implements AfterViewInit, OnChanges, OnDestroy {
   
   // Image elements
   @ViewChildren('imgEl') images!: QueryList<ElementRef>;
+  
+  private animationsInitialized = false;
+
+  constructor() {
+    // Watch for loading state changes and initialize animations when data is loaded
+    if (this.isBrowser) {
+      effect(() => {
+        const loading = this.isLoading();
+        if (!loading && !this.animationsInitialized) {
+          // Wait for DOM to be ready
+          setTimeout(() => {
+            this.initAnimations();
+          }, 100);
+        }
+      });
+    }
+  }
 
   ngAfterViewInit() {
-    // Only run animations in browser environment
+    // Try to initialize animations if data is already loaded
     if (!this.isBrowser) {
       return;
     }
+    
+    if (!this.isLoading() && !this.animationsInitialized) {
+      setTimeout(() => {
+        this.initAnimations();
+      }, 200);
+    }
+  }
+
+  private initAnimations(): void {
+    if (!this.isBrowser || this.animationsInitialized) {
+      return;
+    }
+
+    // Kill any existing ScrollTriggers for this component to avoid duplicates
+    ScrollTrigger.getAll().forEach(trigger => {
+      const triggerElement = trigger.trigger;
+      if (triggerElement && triggerElement instanceof Element) {
+        const parent = triggerElement.closest('app-home-services');
+        if (parent) {
+          trigger.kill();
+        }
+      }
+    });
 
     // Use setTimeout to ensure DOM is fully ready
     setTimeout(() => {
@@ -184,6 +224,8 @@ export class HomeServices implements AfterViewInit, OnChanges, OnDestroy {
       if (typeof ScrollTrigger !== 'undefined') {
         ScrollTrigger.refresh();
       }
+      
+      this.animationsInitialized = true;
     }, 100);
   }
 

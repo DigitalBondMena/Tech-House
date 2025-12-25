@@ -12,7 +12,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   // Increment counter and show spinner if this is the first request
   activeRequests++;
   if (activeRequests === 1) {
-    spinner.show();
+    // spinner.show();
   }
   
   return next(req).pipe(
@@ -22,7 +22,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
       
       // Hide spinner only when all requests are complete
       if (activeRequests === 0) {
-        spinner.hide();
+        // spinner.hide();
       }
       
       // Safety check: reset counter if it goes negative
