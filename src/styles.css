@@ -32,7 +32,7 @@ h2 {
 
 /* ! reusable hero background */
 .bg-hero {
-    background-image: url('../public/images/hero/hero.webp');
+    /* background-image: url('/images/hero/hero.webp'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

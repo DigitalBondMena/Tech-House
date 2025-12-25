@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from "@angular/common";
-import { Component, computed, effect, inject, signal, ViewEncapsulation } from "@angular/core";  
+import { Component, computed, effect, inject, signal, ViewEncapsulation, NgZone } from "@angular/core";  
 import { CommonModule } from "@angular/common";
 import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
 import { FeatureService } from "../../core/services/featureService";
@@ -22,6 +22,7 @@ export class BlogDet {
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
+  private ngZone = inject(NgZone);
 
   isBrowser = isPlatformBrowser(this.platformId);
 
@@ -220,30 +221,39 @@ export class BlogDet {
       this.activeSectionIndex.set(i);
       // التمرير إلى العنوان المقابل في المحتوى
       if (this.isBrowser) {
-        // استخدام setTimeout مع delay أكبر لضمان تحديث DOM
-        setTimeout(() => {
-          const sectionId = `section-${i}`;
-          // محاولة متعددة للعثور على العنصر
-          let attempts = 0;
-          const findAndScroll = () => {
-            const targetElement = document.getElementById(sectionId);
-            if (targetElement) {
-              // حساب الموضع مع offset
-              const elementPosition = targetElement.getBoundingClientRect().top;
-              const offsetPosition = elementPosition + window.pageYOffset - 120; // 120px offset من الأعلى
-              
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-              });
-            } else if (attempts < 5) {
-              // إعادة المحاولة إذا لم يتم العثور على العنصر
-              attempts++;
-              setTimeout(findAndScroll, 100);
-            }
-          };
-          findAndScroll();
-        }, 200);
+        // Run scroll logic outside Angular's change detection to reduce reflow
+        this.ngZone.runOutsideAngular(() => {
+          // استخدام requestAnimationFrame لضمان تحديث DOM
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              const sectionId = `section-${i}`;
+              // محاولة متعددة للعثور على العنصر
+              let attempts = 0;
+              const findAndScroll = () => {
+                const targetElement = document.getElementById(sectionId);
+                if (targetElement) {
+                  // حساب الموضع مع offset في requestAnimationFrame - خارج Angular zone لتقليل reflow
+                  requestAnimationFrame(() => {
+                    // Cache values to avoid multiple reads
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const scrollY = window.pageYOffset;
+                    const offsetPosition = elementPosition + scrollY - 120; // 120px offset من الأعلى
+                    
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  });
+                } else if (attempts < 5) {
+                  // إعادة المحاولة إذا لم يتم العثور على العنصر
+                  attempts++;
+                  setTimeout(findAndScroll, 100);
+                }
+              };
+              findAndScroll();
+            }, 200);
+          });
+        });
       }
     }
   }

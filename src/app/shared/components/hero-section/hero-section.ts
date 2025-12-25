@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges, inject, NgZone } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppButton } from '../app-button/app-button';
@@ -29,6 +29,7 @@ export class HeroSection implements AfterViewInit, OnChanges {
 
   private typingAnimation: gsap.core.Timeline | null = null;
   private sanitizer = inject(DomSanitizer);
+  private ngZone = inject(NgZone);
 
   // !btn data
   btnText = "بتكار يصنع كفائتنا";
@@ -61,30 +62,49 @@ export class HeroSection implements AfterViewInit, OnChanges {
     const element = this.subtitleElement.nativeElement;
     const container = this.subtitleContainer.nativeElement;
     
-    // Create a temporary element to measure text widths
-    const tempElement = document.createElement('span');
-    tempElement.style.visibility = 'hidden';
-    tempElement.style.position = 'absolute';
-    tempElement.style.whiteSpace = 'nowrap';
-    tempElement.style.fontSize = window.getComputedStyle(element).fontSize;
-    tempElement.style.fontFamily = window.getComputedStyle(element).fontFamily;
-    tempElement.style.fontWeight = window.getComputedStyle(element).fontWeight;
-    document.body.appendChild(tempElement);
+    // Run measurements outside Angular's change detection to reduce reflow
+    this.ngZone.runOutsideAngular(() => {
+      requestAnimationFrame(() => {
+        // Create a temporary element to measure text widths
+        const tempElement = document.createElement('span');
+        tempElement.style.visibility = 'hidden';
+        tempElement.style.position = 'absolute';
+        tempElement.style.whiteSpace = 'nowrap';
+        tempElement.style.fontSize = window.getComputedStyle(element).fontSize;
+        tempElement.style.fontFamily = window.getComputedStyle(element).fontFamily;
+        tempElement.style.fontWeight = window.getComputedStyle(element).fontWeight;
+        document.body.appendChild(tempElement);
 
-    // Pre-calculate widths for each character position
-    const widths: number[] = [];
-    for (let i = 0; i <= text.length; i++) {
-      tempElement.textContent = text.substring(0, i);
-      widths.push(tempElement.offsetWidth);
-    }
-    document.body.removeChild(tempElement);
+        // Pre-calculate widths for each character position
+        const widths: number[] = [];
+        for (let i = 0; i <= text.length; i++) {
+          tempElement.textContent = text.substring(0, i);
+          widths.push(tempElement.offsetWidth);
+        }
+        document.body.removeChild(tempElement);
 
-    // Get container padding to add to width
-    const containerStyle = window.getComputedStyle(container);
-    const paddingLeft = parseFloat(containerStyle.paddingLeft) || 0;
-    const paddingRight = parseFloat(containerStyle.paddingRight) || 0;
-    const totalPadding = paddingLeft + paddingRight;
+        // Get container padding to add to width
+        const containerStyle = window.getComputedStyle(container);
+        const paddingLeft = parseFloat(containerStyle.paddingLeft) || 0;
+        const paddingRight = parseFloat(containerStyle.paddingRight) || 0;
+        const totalPadding = paddingLeft + paddingRight;
 
+        // Run animation setup back inside Angular zone
+        this.ngZone.run(() => {
+          this.setupAnimation(element, container, widths, totalPadding);
+        });
+      });
+    });
+  }
+
+  private setupAnimation(
+    element: HTMLElement,
+    container: HTMLElement,
+    widths: number[],
+    totalPadding: number
+  ) {
+    const text = this.subtitle!;
+    
     // Clear the element
     element.textContent = '';
 

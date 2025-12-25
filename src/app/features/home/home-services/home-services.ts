@@ -1,9 +1,10 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, QueryList, SimpleChanges, ViewChild, ViewChildren, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, OnDestroy, PLATFORM_ID, QueryList, SimpleChanges, ViewChild, ViewChildren, computed, inject, signal } from '@angular/core';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Service } from '../../../core/models/home.model';
+import { debounce } from '../../../core/utils/performance.utils';
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
@@ -19,7 +20,7 @@ if (typeof window !== 'undefined') {
   styleUrl: './home-services.css',
   standalone: true
 })
-export class HomeServices implements AfterViewInit, OnChanges {
+export class HomeServices implements AfterViewInit, OnChanges, OnDestroy {
   @Input() services: Service[] = [];
 
   // 🔹 Loading state as signal
@@ -33,7 +34,12 @@ export class HomeServices implements AfterViewInit, OnChanges {
   }
 
   private platformId = inject(PLATFORM_ID);
+  private ngZone = inject(NgZone);
   private isBrowser = isPlatformBrowser(this.platformId);
+  
+  // Cache window width to avoid repeated reads
+  private cachedWindowWidth = signal<number | null>(null);
+  private resizeHandler?: () => void;
 
   //! section title data
   servicesTitle = "خدماتنا";
@@ -41,11 +47,60 @@ export class HomeServices implements AfterViewInit, OnChanges {
   //! button data
   btnText = "خدمات اكثر";
 
+  private getWindowWidth(): number {
+    if (!this.isBrowser) return 1024; // Default desktop width for SSR
+    
+    // Cache width to avoid repeated reads
+    const cached = this.cachedWindowWidth();
+    if (cached !== null) {
+      return cached;
+    }
+    
+    // Read once and cache - Run outside Angular zone to reduce reflow
+    this.ngZone.runOutsideAngular(() => {
+      requestAnimationFrame(() => {
+        const width = window.innerWidth;
+        this.ngZone.run(() => {
+          this.cachedWindowWidth.set(width);
+        });
+      });
+    });
+    
+    // Setup resize listener with debounce (only once)
+    if (typeof window !== 'undefined' && !this.resizeHandler) {
+      // Create debounced resize handler
+      this.resizeHandler = debounce(() => {
+        this.ngZone.runOutsideAngular(() => {
+          requestAnimationFrame(() => {
+            const width = window.innerWidth;
+            this.ngZone.run(() => {
+              this.cachedWindowWidth.set(width);
+            });
+          });
+        });
+      }, 200);
+      
+      // Add passive resize listener
+      window.addEventListener('resize', this.resizeHandler, { passive: true });
+    }
+    
+    // Return cached or current width
+    return this.cachedWindowWidth() ?? window.innerWidth;
+  }
+
+  ngOnDestroy(): void {
+    // Clean up resize listener
+    if (this.isBrowser && this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+      this.resizeHandler = undefined;
+    }
+  }
+
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
     if (!image) return '/images/placeholder.png';
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
+    if (this.isBrowser) {
+      const width = this.getWindowWidth();
       if (width < 768) {
         return image.mobile || image.desktop || '/images/placeholder.png';
       } else if (width < 1024) {

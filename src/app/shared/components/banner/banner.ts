@@ -1,5 +1,5 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, SimpleChanges, ViewChild, inject, NgZone } from '@angular/core';
 import { gsap } from 'gsap';
 import { ClientPartner } from '../../../core/models/home.model';
 
@@ -20,6 +20,7 @@ export class Banner implements AfterViewInit, OnChanges {
   private animationInitialized = false;
   private timeline: gsap.core.Tween | gsap.core.Timeline | null = null;
   private platformId = inject(PLATFORM_ID);
+  private ngZone = inject(NgZone);
   private isBrowser = isPlatformBrowser(this.platformId);
 
   // Helper method to get responsive image
@@ -165,54 +166,73 @@ export class Banner implements AfterViewInit, OnChanges {
 
     const container = this.scrollContainer.nativeElement;
     
-    // Wait a bit for DOM to calculate scrollWidth properly
-    setTimeout(() => {
-      const containerWidth = container.scrollWidth;
-      
-      if (containerWidth === 0) {
-        this.animationInitialized = false;
-        return;
+    // Run measurements outside Angular's change detection to reduce reflow
+    this.ngZone.runOutsideAngular(() => {
+      // Use requestAnimationFrame to ensure DOM is ready and reduce reflow
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          // Measure container width in RAF to avoid force reflow
+          requestAnimationFrame(() => {
+            const containerWidth = container.scrollWidth;
+            
+            if (containerWidth === 0) {
+              this.animationInitialized = false;
+              return;
+            }
+
+            // Calculate the width of one set of items (original items)
+            // Since we duplicated items 3 times, one set is containerWidth / 3
+            const singleSetWidth = containerWidth / 3;
+            
+            // Run animation setup back inside Angular zone
+            this.ngZone.run(() => {
+              this.setupAnimation(container, singleSetWidth, paused);
+            });
+          });
+        }, 100); // Reduced delay since we're using RAF
+      });
+    });
+  }
+
+  private setupAnimation(container: HTMLElement, singleSetWidth: number, paused: boolean = false): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    // Kill any existing tweens on the container
+    gsap.killTweensOf(container);
+
+    const isRightToLeft = this.direction === 'left'; // Default direction is right-to-left when direction is 'left'
+
+    // Reset position to start
+    gsap.set(container, { x: 0 });
+
+    // Create infinite scroll animation with seamless loop
+    // Calculate duration based on distance to maintain consistent speed (pixels per second)
+    // Speed = 60 pixels per second (faster - adjust this value to change speed - higher = faster)
+    const pixelsPerSecond = 60;
+    const duration = Math.abs(singleSetWidth) / pixelsPerSecond;
+
+    const targetX = isRightToLeft ? -singleSetWidth : singleSetWidth;
+    
+    // Create seamless infinite scroll using fromTo for proper seamless loop
+    // fromTo ensures that when repeat happens, it starts from 0 again seamlessly
+    // Since items are duplicated (3 sets), when we move by singleSetWidth and repeat from 0,
+    // the duplicated items will be in the same position, creating a seamless loop
+    const tween = gsap.fromTo(container,
+      { x: 0 },
+      {
+        x: targetX,
+        duration: duration,
+        ease: 'none',
+        repeat: -1,
+        paused: paused,
+        immediateRender: false
       }
-
-      // Calculate the width of one set of items (original items)
-      // Since we duplicated items 3 times, one set is containerWidth / 3
-      const singleSetWidth = containerWidth / 3;
-
-      // Kill any existing tweens on the container
-      gsap.killTweensOf(container);
-
-      const isRightToLeft = this.direction === 'left'; // Default direction is right-to-left when direction is 'left'
-
-      // Reset position to start
-      gsap.set(container, { x: 0 });
-
-      // Create infinite scroll animation with seamless loop
-      // Calculate duration based on distance to maintain consistent speed (pixels per second)
-      // Speed = 60 pixels per second (faster - adjust this value to change speed - higher = faster)
-      const pixelsPerSecond = 60;
-      const duration = Math.abs(singleSetWidth) / pixelsPerSecond;
-
-      const targetX = isRightToLeft ? -singleSetWidth : singleSetWidth;
-      
-      // Create seamless infinite scroll using fromTo for proper seamless loop
-      // fromTo ensures that when repeat happens, it starts from 0 again seamlessly
-      // Since items are duplicated (3 sets), when we move by singleSetWidth and repeat from 0,
-      // the duplicated items will be in the same position, creating a seamless loop
-      const tween = gsap.fromTo(container,
-        { x: 0 },
-        {
-          x: targetX,
-          duration: duration,
-          ease: 'none',
-          repeat: -1,
-          paused: paused,
-          immediateRender: false
-        }
-      );
-      
-      this.timeline = tween;
-      
-      this.animationInitialized = true;
-    }, 50);
+    );
+    
+    this.timeline = tween;
+    
+    this.animationInitialized = true;
   }
 }

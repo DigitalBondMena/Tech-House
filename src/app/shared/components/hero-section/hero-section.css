@@ -77,6 +77,30 @@
   stroke: currentColor;
 }
 
+/* Hero Background Image for LCP Optimization */
+.hero-background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-background-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+}
+
+/* Ensure content is above background image */
+.hero-background-container .container {
+  position: relative;
+  z-index: 10;
+}
+
 /* Hero Image Responsive Styles */
 
 /* Responsive */

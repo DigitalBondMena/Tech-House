@@ -34,6 +34,9 @@ export class HomeProjects implements AfterViewInit, OnChanges {
 
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  
+  // Cache window width to avoid repeated reads
+  private cachedWindowWidth = signal<number | null>(null);
 
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
@@ -56,6 +59,21 @@ export class HomeProjects implements AfterViewInit, OnChanges {
     }
   }
 
+  private getWindowWidth(): number {
+    if (!this.isBrowser) return 1024; // Default desktop width for SSR
+    
+    // Cache width to avoid repeated reads
+    const cached = this.cachedWindowWidth();
+    if (cached !== null) {
+      return cached;
+    }
+    
+    // Read once and cache
+    const width = window.innerWidth;
+    this.cachedWindowWidth.set(width);
+    return width;
+  }
+
   ngAfterViewInit() {
     // Only run in browser, not in SSR
     if (!this.isBrowser) {
@@ -63,7 +81,7 @@ export class HomeProjects implements AfterViewInit, OnChanges {
     }
 
     // Initial setup - make sure the middle card is on top (only on large screens)
-    if (window.innerWidth >= 1024) {
+    if (this.getWindowWidth() >= 1024) {
       this.updateCardStates();
     }
   }
@@ -76,7 +94,7 @@ export class HomeProjects implements AfterViewInit, OnChanges {
     }
 
     // Only apply animations on large screens
-    if (window.innerWidth < 1024) return;
+    if (this.getWindowWidth() < 1024) return;
 
     if (clickedIndex === this.activeCardIndex) return; // Don't do anything if clicking the active card
 

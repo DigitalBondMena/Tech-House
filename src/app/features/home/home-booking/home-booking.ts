@@ -1,8 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, computed, effect, ElementRef, inject, input, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, input, OnDestroy, PLATFORM_ID, ViewChild } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CTASection } from '../../../core/models/home.model';
 import { AppButton } from '../../../shared/components/app-button/app-button';
+import { rafThrottle } from '../../../core/utils/performance.utils';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { AppButton } from '../../../shared/components/app-button/app-button';
   templateUrl: './home-booking.html',
   styleUrl: './home-booking.css'
 })
-export class HomeBooking implements AfterViewInit {
+export class HomeBooking implements AfterViewInit, OnDestroy {
   //! Input for CTA Section data
   ctasection = input<CTASection | null>(null);
 
@@ -23,6 +24,8 @@ export class HomeBooking implements AfterViewInit {
 
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private throttledScrollHandler?: () => void;
+  private scrollHandlerTarget?: HTMLVideoElement;
 
   @ViewChild('videoElement', { static: false }) videoElement?: ElementRef<HTMLVideoElement>;
 
@@ -174,18 +177,35 @@ export class HomeBooking implements AfterViewInit {
         video.play()
           .then(() => {
             console.log('✅ Video started after user interaction');
-            document.removeEventListener('click', playOnInteraction);
-            document.removeEventListener('touchstart', playOnInteraction);
-            document.removeEventListener('scroll', playOnInteraction);
+            this.cleanupInteractionListeners();
           })
           .catch((err) => {
             console.warn('Failed to play video on interaction:', err);
           });
       }
     };
+
+    // Store video reference for cleanup
+    this.scrollHandlerTarget = video;
+
+    // Use throttled scroll handler for better performance
+    this.throttledScrollHandler = rafThrottle(playOnInteraction);
     
     document.addEventListener('click', playOnInteraction, { once: true });
     document.addEventListener('touchstart', playOnInteraction, { once: true });
-    document.addEventListener('scroll', playOnInteraction, { once: true });
+    // Use throttled handler for scroll with passive listener
+    window.addEventListener('scroll', this.throttledScrollHandler, { once: true, passive: true });
+  }
+
+  private cleanupInteractionListeners(): void {
+    if (this.throttledScrollHandler) {
+      window.removeEventListener('scroll', this.throttledScrollHandler);
+      this.throttledScrollHandler = undefined;
+    }
+    this.scrollHandlerTarget = undefined;
+  }
+
+  ngOnDestroy(): void {
+    this.cleanupInteractionListeners();
   }
 }
