@@ -1,9 +1,8 @@
-import { Component, OnInit, AfterViewInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { FeatureService } from '../../core/services/featureService';
 import { environment } from '../../../environments/environment';
+import { FeatureService } from '../../core/services/featureService';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 
 @Component({

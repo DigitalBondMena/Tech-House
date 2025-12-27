@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, computed, effect, inject, OnInit, AfterViewInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
