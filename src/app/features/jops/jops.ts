@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, OnInit, AfterViewInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-
   templateUrl: './jops.html',
   styleUrl: './jops.css'
 })
-export class Jops implements OnInit {
+export class Jops implements OnInit, AfterViewInit {
   private featureService = inject(FeatureService);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
@@ -54,12 +54,14 @@ export class Jops implements OnInit {
   });
 
   ngOnInit(): void {
-    // Load jobs data initially
-    this.featureService.loadJobsData();
-
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+  }
+
+  ngAfterViewInit(): void {
+    // Load jobs data when view initializes
+    this.featureService.loadJobsData();
   }
 
   selectCategory(categoryId: number | null, index: number): void {

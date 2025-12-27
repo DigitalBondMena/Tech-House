@@ -54,7 +54,7 @@ export class HomeAbout implements AfterViewInit, OnDestroy, OnChanges {
   private intersectionObserver?: IntersectionObserver;
 
   constructor() {
-    this.sharedFeatureService.loadCounters();
+    // API call moved to ngAfterViewInit
 
     // Track counters changes via effect
     effect(() => {
@@ -97,6 +97,9 @@ export class HomeAbout implements AfterViewInit, OnDestroy, OnChanges {
   ngAfterViewInit(): void {
     // ✅ تأكيد أن الـ DOM اترسم
     this.viewReady = true;
+    
+    // Load counters data when view initializes
+    this.sharedFeatureService.loadCounters();
     
     // Update loading state after view init
     this.updateLoadingState();

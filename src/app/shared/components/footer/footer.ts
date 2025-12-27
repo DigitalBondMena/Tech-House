@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ResponsiveImage } from '../../../core/models/home.model';
@@ -11,7 +11,7 @@ import { SharedFeatureService } from '../../../core/services/sharedFeatureServic
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })
-export class Footer implements OnInit {
+export class Footer implements OnInit, AfterViewInit {
   private sharedFeatureService = inject(SharedFeatureService);
   private sanitizer = inject(DomSanitizer);
 
@@ -22,7 +22,11 @@ export class Footer implements OnInit {
   servicesSection = this.sharedFeatureService.servicesSection;
 
   ngOnInit(): void {
-    // Load contact us data when component initializes
+    // Data loading moved to ngAfterViewInit
+  }
+
+  ngAfterViewInit(): void {
+    // Load contact us data when view initializes
     this.sharedFeatureService.loadContactUsData();
     // Load services section data for footer
     this.sharedFeatureService.loadServicesSection();

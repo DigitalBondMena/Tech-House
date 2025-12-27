@@ -46,9 +46,7 @@ export class AboutUs implements OnInit, AfterViewInit {
   clients = this.sharedFeatureService.clients;
 
   constructor() {
-    // Load data
-    this.featureService.loadAboutData();
-    this.sharedFeatureService.loadPartnersClients();
+    // Constructor should not load data - moved to ngAfterViewInit
   }
 
   ngOnInit(): void {
@@ -58,6 +56,10 @@ export class AboutUs implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    // Load data when view initializes
+    this.featureService.loadAboutData();
+    this.sharedFeatureService.loadPartnersClients();
+
     if (this.isBrowser) {
       // Wait for cards to be rendered
       setTimeout(() => {

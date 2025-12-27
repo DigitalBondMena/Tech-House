@@ -1,15 +1,8 @@
 <section class="bg-linear">
     <div class="hero-background-container overflow-hidden relative" [ngClass]="customClass">
         <!-- Background Image for LCP Optimization -->
-        <img
-            src="/images/hero/hero.webp"
-            [alt]="title || 'ابتكارات تسويقية رقمية تصنع الفرق لشركتك'"
-            class="hero-background-image"
-            width="1920"
-            height="1080"
-            fetchpriority="high"
-            loading="eager"
-        />
+        <img src="/images/hero/hero.webp" [alt]="title || 'ابتكارات تسويقية رقمية تصنع الفرق لشركتك'"
+            class="hero-background-image" width="1920" height="1080" fetchpriority="high" loading="eager" />
         <div class="container h-full mx-auto px-5 lg:px-20 relative z-10">
             <div class="hero-content relative h-full w-full flex  items-center justify-between " dir="rtl"
                 [class.image-left]="imagePosition==='left'" [class.image-center]="imagePosition==='center'"
@@ -18,15 +11,16 @@
                 <div>
                     <!-- Subtitle >> above >> main title -->
                     @if (subtitle && subtitleAboveTitle) {
-                        <div class="subtitle-container text-2xl text-center text-white bg-white/20 px-8 py-6 rounded-xl mb-10  font-bold" #subtitleContainer>
-                          <span class="subtitle-wrapper border-l-2 border-white my-1 p-1">
+                    <div class="subtitle-container text-2xl text-center text-white bg-white/20 px-8 py-6 rounded-xl mb-10  font-bold"
+                        #subtitleContainer>
+                        <span class="subtitle-wrapper border-l-2 border-white my-1 p-1">
                             <span class="subtitle-animated " #subtitleElement></span>
                             <!-- <span class="typing-indicator border-l-2 border-white"> </span> -->
-                          </span>
-                        </div>
-                      }
-                      
-                    
+                        </span>
+                    </div>
+                    }
+
+
 
                     <!-- Title -->
                     @if (title) {
@@ -46,7 +40,8 @@
                     }
 
                     @if (btn) {
-                    <app-app-button [btnText]="btnText" [customClass]="btnClass || 'px-7 py-4 bg-black/60 text-white rounded-full flex items-center justify-center transition duration-300'">
+                    <app-app-button [btnText]="btnText"
+                        [customClass]="btnClass || 'px-7 py-4 bg-black/60 text-white rounded-full flex items-center justify-center transition duration-300'">
                     </app-app-button>
 
 
@@ -69,7 +64,8 @@
                     @if (image.startsWith('http://') || image.startsWith('https://')) {
                     <img [src]="image" alt="Hero Image" class="hero-image" [ngClass]="imageClass || ' w-full h-auto'" />
                     } @else {
-                    <img [ngSrc]="image" alt="Hero Image" width="1000" height="1000" priority class="hero-image" [ngClass]="imageClass || ' w-full h-auto'" />
+                    <img [ngSrc]="image" alt="Hero Image" width="1000" height="1000" priority class="hero-image"
+                        [ngClass]="imageClass || ' w-full h-auto'" />
                     }
                     }
                 </div>

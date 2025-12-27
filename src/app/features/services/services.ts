@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, computed, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './services.html',
   styleUrl: './services.css'
 })
-export class Services implements OnInit {
+export class Services implements OnInit, AfterViewInit {
   private featureService = inject(FeatureService);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
@@ -26,11 +26,14 @@ export class Services implements OnInit {
   });
 
   ngOnInit(): void {
-    this.featureService.loadServicesData();
-
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+  }
+
+  ngAfterViewInit(): void {
+    // Load services data when view initializes
+    this.featureService.loadServicesData();
   }
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {

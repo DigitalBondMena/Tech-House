@@ -56,18 +56,18 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
   arrowPosition = signal(0);
 
   ngOnInit(): void {
-    // Load service titles
-    this.sharedFeatureService.loadServicesSection();
-    
-    // Load projects initially
-    this.loadProjects(1);
-
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   }
 
   ngAfterViewInit(): void {
+    // Load service titles
+    this.sharedFeatureService.loadServicesSection();
+    
+    // Load projects initially
+    this.loadProjects(1);
+
     if (this.isBrowser && this.selectedIndex() === null) {
       setTimeout(() => {
         this.selectService(null, 0);

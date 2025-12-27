@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, computed, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, AfterViewInit, PLATFORM_ID } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
@@ -21,7 +21,7 @@ import { HomeServices } from './home-services/home-services';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home implements OnInit {
+export class Home implements OnInit, AfterViewInit {
   private featureService = inject(FeatureService);
   private sharedFeatureService = inject(SharedFeatureService);
   private platformId = inject(PLATFORM_ID);
@@ -94,8 +94,10 @@ export class Home implements OnInit {
       // Prevent scroll during page load - more robust method
       this.disableScroll();
     }
-    
-    // Load home data when component initializes
+  }
+
+  ngAfterViewInit(): void {
+    // Load home data when view initializes
     this.featureService.loadHomeData();
     
     // Load counters data (needed for home-about section)

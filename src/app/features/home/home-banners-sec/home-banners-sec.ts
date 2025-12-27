@@ -46,11 +46,13 @@ export class HomeBannersSec implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // Load partners/clients data
-    this.sharedFeatureService.loadPartnersClients();
+    // Data loading moved to ngAfterViewInit
   }
 
   ngAfterViewInit(): void {
+    // Load partners/clients data when view initializes
+    this.sharedFeatureService.loadPartnersClients();
+
     // Check if data is already loaded
     if (this.partners().length > 0 && this.clients().length > 0 && !this.animationStarted) {
       setTimeout(() => {

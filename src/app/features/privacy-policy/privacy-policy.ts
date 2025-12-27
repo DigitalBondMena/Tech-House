@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, computed } from '@angular/core';
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { CommonModule } from '@angular/common';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
@@ -10,7 +10,7 @@ import { PrivacyPolicyData, ResponsiveImage } from '../../core/models/home.model
   templateUrl: './privacy-policy.html',
   styleUrl: './privacy-policy.css'
 })
-export class PrivacyPolicy implements OnInit {
+export class PrivacyPolicy implements OnInit, AfterViewInit {
   private sharedFeatureService = inject(SharedFeatureService);
 
   // 🔹 Privacy Policy Data from API
@@ -62,12 +62,14 @@ export class PrivacyPolicy implements OnInit {
   }
 
   ngOnInit(): void {
-    // Load privacy policy data when component initializes
-    this.sharedFeatureService.loadPrivacyPolicy();
-    
     // Scroll to top when page loads
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+  }
+
+  ngAfterViewInit(): void {
+    // Load privacy policy data when view initializes
+    this.sharedFeatureService.loadPrivacyPolicy();
   }
 }

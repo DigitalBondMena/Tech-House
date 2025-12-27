@@ -60,7 +60,17 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Load data when component initializes
+    // Scroll to top when contact page loads
+    if (this.isBrowser) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+    this.viewReady = true;
+
+    // Load data when view initializes
     this.sharedFeatureService.loadContactHero();
     this.sharedFeatureService.loadContactUsData();
     this.sharedFeatureService.loadCounters();
@@ -71,16 +81,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
       console.log('Contact Us Data:', this.contactUsData());
       console.log('Contact Us Data Image:', this.contactUsData()?.image);
     }, 1000);
-    
-    // Scroll to top when contact page loads
-    if (this.isBrowser) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  }
-
-  ngAfterViewInit(): void {
-    if (!this.isBrowser) return;
-    this.viewReady = true;
 
     // Setup Intersection Observer if counters are already loaded
     const counters = this.counters();

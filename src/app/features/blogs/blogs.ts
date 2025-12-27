@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, OnInit, AfterViewInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
   templateUrl: './blogs.html',
   styleUrl: './blogs.css'
 })
-export class Blogs implements OnInit {
+export class Blogs implements OnInit, AfterViewInit {
   private featureService = inject(FeatureService);
   private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
@@ -38,11 +38,14 @@ export class Blogs implements OnInit {
   first = computed(() => (this.currentPage() - 1) * this.rows());
 
   ngOnInit(): void {
-    this.loadBlogs(1);
-
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+  }
+
+  ngAfterViewInit(): void {
+    // Load blogs data when view initializes
+    this.loadBlogs(1);
   }
 
   loadBlogs(page: number): void {
