@@ -52,19 +52,14 @@ export class BlogDet {
   });
 
   fullContent = computed(() => {
-    // جعل computed يعتمد على activeSectionIndex للتحديث
     const activeIndex = this.activeSectionIndex();
     let html = this.blog()?.text ?? '';
     
-    // إضافة IDs و classes للعناوين h2 للـ scroll
     if (html) {
       const sections = this.sections();
-      // نستخدم regex للعثور على جميع h2 وإضافة IDs
       html = html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (match, attributes, content) => {
-        // تنظيف المحتوى من HTML tags للمقارنة
         const cleanContent = content.replace(/<[^>]*>/g, '').trim();
         
-        // البحث عن القسم المقابل
         const sectionIndex = sections.findIndex(s => {
           const cleanTitle = s.title.trim();
           return cleanContent === cleanTitle || cleanContent.includes(cleanTitle) || cleanTitle.includes(cleanContent);
@@ -72,7 +67,6 @@ export class BlogDet {
         
         const finalIndex = sectionIndex >= 0 ? sectionIndex : -1;
         
-        // إضافة class للعنوان النشط
         let classAttr = '';
         if (finalIndex === activeIndex && finalIndex >= 0) {
           classAttr = ' class="section-heading-active"';
@@ -80,7 +74,6 @@ export class BlogDet {
           classAttr = ' class="section-heading"';
         }
         
-        // إضافة أو استبدال id
         let newAttributes = attributes;
         if (finalIndex >= 0) {
           if (newAttributes.includes('id=')) {
@@ -90,7 +83,6 @@ export class BlogDet {
           }
         }
         
-        // إضافة class
         if (!newAttributes.includes('class=')) {
           newAttributes = `${newAttributes}${classAttr}`;
         } else {
@@ -102,29 +94,21 @@ export class BlogDet {
         return `<h2${newAttributes}>${content}</h2>`;
       });
       
-      // إزالة أو تعديل inline styles التي تمنع justify و font-family
-      // إزالة font-family من inline styles لأن CSS rules ستطبقها
       html = html.replace(/style\s*=\s*"([^"]*)"/gi, (match, styles) => {
-        // إزالة font-family من inline styles
         let cleanedStyles = styles.replace(/font-family\s*:\s*[^;]+;?\s*/gi, '');
-        // تنظيف الفواصل الزائدة
         cleanedStyles = cleanedStyles.replace(/;\s*;/g, ';').replace(/^\s*;\s*|\s*;\s*$/g, '');
         return `style="${cleanedStyles}"`;
       });
       
-      // استبدال text-align في inline styles (مع أو بدون مسافات)
       html = html.replace(/style\s*=\s*"([^"]*)text-align\s*:\s*(left|right|center)([^"]*)"/gi, 
         (match, before, align, after) => {
-          // إزالة text-align القديم وإضافة justify
           const cleanedBefore = before.replace(/text-align\s*:\s*(left|right|center)\s*;?\s*/gi, '');
           const cleanedAfter = after.replace(/text-align\s*:\s*(left|right|center)\s*;?\s*/gi, '');
           return `style="${cleanedBefore}text-align: justify;${cleanedAfter}"`;
         });
       
-      // استبدال text-align في style attributes (حالة عامة)
       html = html.replace(/text-align\s*:\s*(left|right|center)\s*;?/gi, 'text-align: justify;');
       
-      // إضافة text-align: justify إذا لم يكن موجوداً في style attributes
       html = html.replace(/style\s*=\s*"([^"]*)"/gi, (match, styles) => {
         if (!styles.includes('text-align')) {
           return `style="${styles}; text-align: justify;"`;
@@ -153,12 +137,10 @@ export class BlogDet {
       }
     });
 
-    // تحديث المحتوى عند تغيير العنوان النشط
     effect(() => {
       const activeIndex = this.activeSectionIndex();
       const sections = this.sections();
       if (activeIndex >= 0 && sections.length > 0 && this.isBrowser) {
-        // تحديث classes للعناوين بعد render
         setTimeout(() => {
           sections.forEach((section, index) => {
             const element = document.getElementById(`section-${index}`);
@@ -180,7 +162,6 @@ export class BlogDet {
   // ===== LOGIC =====
   extractSections(html: string) {
     const result: any[] = [];
-    // استخراج فقط عناوين h2
     const regex = /<h2[^>]*>(.*?)<\/h2>/gi;
     let match;
 
@@ -193,13 +174,11 @@ export class BlogDet {
     }
 
     if (matches.length === 0) {
-      // إذا لم يوجد h2، اعرض المحتوى كله
       this.sections.set([]);
       this.activeSectionIndex.set(-1);
       return;
     }
 
-    // استخراج المحتوى لكل قسم من h2 إلى h2 التالي
     for (let i = 0; i < matches.length; i++) {
       const start = matches[i].index;
       const end = matches[i + 1]?.index ?? html.length;
@@ -219,25 +198,20 @@ export class BlogDet {
   navigateToSection(i: number) {
     if (i >= 0 && i < this.sections().length) {
       this.activeSectionIndex.set(i);
-      // التمرير إلى العنوان المقابل في المحتوى
       if (this.isBrowser) {
-        // Run scroll logic outside Angular's change detection to reduce reflow
         this.ngZone.runOutsideAngular(() => {
-          // استخدام requestAnimationFrame لضمان تحديث DOM
           requestAnimationFrame(() => {
             setTimeout(() => {
               const sectionId = `section-${i}`;
-              // محاولة متعددة للعثور على العنصر
               let attempts = 0;
               const findAndScroll = () => {
                 const targetElement = document.getElementById(sectionId);
                 if (targetElement) {
-                  // حساب الموضع مع offset في requestAnimationFrame - خارج Angular zone لتقليل reflow
                   requestAnimationFrame(() => {
                     // Cache values to avoid multiple reads
                     const elementPosition = targetElement.getBoundingClientRect().top;
                     const scrollY = window.pageYOffset;
-                    const offsetPosition = elementPosition + scrollY - 120; // 120px offset من الأعلى
+                    const offsetPosition = elementPosition + scrollY - 120;
                     
                     window.scrollTo({
                       top: offsetPosition,
@@ -245,7 +219,6 @@ export class BlogDet {
                     });
                   });
                 } else if (attempts < 5) {
-                  // إعادة المحاولة إذا لم يتم العثور على العنصر
                   attempts++;
                   setTimeout(findAndScroll, 100);
                 }

@@ -122,7 +122,7 @@ export class ContactUsSec implements OnInit {
 
   // HTTP Client
   private http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
+  // private readonly baseUrl = environment.apiUrl;
   // Contact form uses different API domain
   private readonly contactApiUrl = 'https://api.techhouseksa.com/api';
 

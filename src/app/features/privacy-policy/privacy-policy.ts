@@ -17,7 +17,6 @@ export class PrivacyPolicy implements OnInit {
   privacyPolicyData = computed(() => this.sharedFeatureService.privacyPolicyData());
 
   // 🔹 Computed properties for hero section
-  // استخدام bannerSection إذا كان موجوداً، وإلا استخدام البيانات المباشرة
   heroTitle = computed(() => {
     const data = this.privacyPolicyData();
     return data?.bannerSection?.title || data?.title || '';

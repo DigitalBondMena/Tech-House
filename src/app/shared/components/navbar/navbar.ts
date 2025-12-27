@@ -1,6 +1,6 @@
-import { Component, HostListener, OnDestroy, OnInit, PLATFORM_ID, signal, inject, NgZone } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { rafThrottle } from '../../../core/utils/performance.utils';
 
 @Component({

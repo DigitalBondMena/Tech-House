@@ -63,9 +63,6 @@ export class HomeAbout implements AfterViewInit, OnDestroy, OnChanges {
       this.updateLoadingState();
     });
 
-    // ✅ يبدأ العداد لما:
-    // 1️⃣ الـ view يبقى جاهز
-    // 2️⃣ الداتا توصل
     effect(() => {
       const counters = this.counters();
 

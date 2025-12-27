@@ -68,7 +68,6 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // Set initial arrow position if "الكل" is selected
     if (this.isBrowser && this.selectedIndex() === null) {
       setTimeout(() => {
         this.selectService(null, 0);

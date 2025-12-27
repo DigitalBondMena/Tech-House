@@ -85,7 +85,6 @@ export class SharedFeatureService {
   // CONTACT HERO API
   // =====================
   loadContactHero(): void {
-    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
     if (this.contactHeroResponseSignal() || this.contactHeroLoading) {
       return;
     }
@@ -94,22 +93,18 @@ export class SharedFeatureService {
     
     this.http.get<ContactHeroResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_HERO}`).subscribe({
       next: (data) => {
-        // التحقق من structure البيانات
         let heroData: ContactHero | null = null;
         
-        // الطريقة 1: إذا كان data.bannerSection موجود (الأولوية)
-        if (data.bannerSection) {
+      if (data.bannerSection) {
           heroData = {
             title: data.bannerSection.title || '',
             paragraph: data.bannerSection.text,
             image: data.bannerSection.image
           };
         }
-        // الطريقة 2: إذا كان data.contactHero موجود
         else if (data.contactHero) {
           heroData = data.contactHero;
         }
-        // الطريقة 3: إذا كانت البيانات مباشرة في data
         else if (data.title || data.image) {
           heroData = {
             title: data.title || '',
@@ -117,7 +112,6 @@ export class SharedFeatureService {
             image: data.image
           };
         }
-        // الطريقة 4: إذا كان data.data موجود
         else if (data.data) {
           if (data.data.bannerSection) {
             heroData = {
@@ -158,7 +152,6 @@ export class SharedFeatureService {
   // CONTACT US API (for Footer)
   // =====================
   loadContactUsData(): void {
-    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
     if (this.contactUsResponseSignal() || this.contactUsLoading) {
       return;
     }
@@ -167,11 +160,9 @@ export class SharedFeatureService {
     
     this.http.get<ContactUsResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_US}`).subscribe({
       next: (data) => {
-        // التحقق من structure البيانات
         const contactUs = data.contactUs || data;
         
         if (contactUs) {
-          // استخراج الحقول المطلوبة فقط
           const contactData: ContactUsData = {
             footer_text: contactUs.footer_text,
             working_hours: contactUs.working_hours,
@@ -179,23 +170,16 @@ export class SharedFeatureService {
             phone: contactUs.phone,
             whatsapp_number: contactUs.whatsapp_number,
             address: contactUs.address,
-            
-            // إضافة image من contact API
             image: contactUs.image,
-            
             logo: contactUs.logo,
             copyright: contactUs.copyright,
             privacyPolicyUrl: contactUs.privacyPolicyUrl,
-            
-            // إضافة image من contact API
             contactInfo: {
               email: contactUs.email,
               phone: contactUs.phone,
               address: contactUs.address
             },
-            
-            // استخراج social media data
-            social: contactUs.social ? {
+              social: contactUs.social ? {
               map_url: contactUs.social.map_url,
               facebook_url: contactUs.social.facebook_url,
               instagram_url: contactUs.social.instagram_url,
@@ -224,7 +208,6 @@ export class SharedFeatureService {
   // SERVICES SECTION API (for Footer)
   // =====================
   loadServicesSection(): void {
-    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
     if (this.servicesSectionSignal() || this.servicesSectionLoading) {
       return;
     }
@@ -233,38 +216,29 @@ export class SharedFeatureService {
     
     this.http.get<ServicesSectionResponse | any>(`${this.baseUrl}${API_END_POINTS.SERVICESEC}`).subscribe({
       next: (data) => {
-        // محاولة استخراج البيانات بطرق مختلفة
         let services: ServiceTitle[] = [];
         
-        // الطريقة 1: إذا كان data.serviceTitles موجود
         if (Array.isArray(data.serviceTitles)) {
           services = data.serviceTitles;
         }
-        // الطريقة 2: إذا كان data.services موجود
         else if (Array.isArray(data.services)) {
           services = data.services;
         }
-        // الطريقة 3: إذا كان data.titles موجود
         else if (Array.isArray(data.titles)) {
           services = data.titles;
         }
-        // الطريقة 4: إذا كان data نفسه array
         else if (Array.isArray(data)) {
           services = data;
         }
-        // الطريقة 5: إذا كان data.data موجود
         else if (Array.isArray(data.data)) {
           services = data.data;
         }
-        // الطريقة 6: إذا كان data.data.serviceTitles موجود
         else if (Array.isArray(data.data?.serviceTitles)) {
           services = data.data.serviceTitles;
         }
-        // الطريقة 7: إذا كان data.data.services موجود
         else if (Array.isArray(data.data?.services)) {
           services = data.data.services;
         }
-        // الطريقة 8: إذا كان data.data.titles موجود
         else if (Array.isArray(data.data?.titles)) {
           services = data.data.titles;
         }
@@ -288,7 +262,6 @@ export class SharedFeatureService {
   // PARTNERS/CLIENTS API
   // =====================
   loadPartnersClients(): void {
-    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
     if (this.partnersClientsResponseSignal() || this.partnersClientsLoading) {
       return;
     }
@@ -303,7 +276,6 @@ export class SharedFeatureService {
         this.partnersClientsLoading = false;
       },
       error: (err) => {
-        // Only log if it's not a network/CORS error (status 0)
         if (err.status !== 0) {
           console.error('Error loading partners/clients:', err);
         }
@@ -316,7 +288,6 @@ export class SharedFeatureService {
   // PRIVACY POLICY API
   // =====================
   loadPrivacyPolicy(): void {
-    // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
     if (this.privacyPolicyResponseSignal() || this.privacyPolicyLoading) {
       return;
     }
@@ -325,10 +296,8 @@ export class SharedFeatureService {
     
     this.http.get<PrivacyPolicyResponse | any>(`${this.baseUrl}${API_END_POINTS.PRIVACYPOLICY}`).subscribe({
       next: (data) => {
-        // محاولة استخراج البيانات بطرق مختلفة
         let privacyData: PrivacyPolicyData | null = null;
         
-        // الطريقة 1: إذا كان data.bannerSection موجود (الأولوية)
         if (data.bannerSection) {
           privacyData = {
             title: data.bannerSection.title || '',
@@ -339,9 +308,7 @@ export class SharedFeatureService {
             privacyPolicy: data.privacyPolicy
           };
         }
-        // الطريقة 2: إذا كان data.privacyPolicy موجود (كـ object منفصل)
         else if (data.privacyPolicy && (data.privacyPolicy.title || data.privacyPolicy.text)) {
-          // إذا كان privacyPolicy يحتوي على title و text فقط (PrivacyPolicyContent)
           privacyData = {
             title: data.title || '',
             paragraph: data.paragraph,
@@ -350,7 +317,6 @@ export class SharedFeatureService {
             privacyPolicy: data.privacyPolicy
           };
         }
-        // الطريقة 3: إذا كانت البيانات مباشرة في data
         else if (data.title || data.image) {
           privacyData = {
             title: data.title || '',
@@ -359,7 +325,6 @@ export class SharedFeatureService {
             sections: data.sections || []
           };
         }
-        // الطريقة 4: إذا كان data.data موجود
         else if (data.data) {
           if (data.data.bannerSection) {
             privacyData = {
@@ -385,8 +350,7 @@ export class SharedFeatureService {
             };
           }
         }
-        
-        // إذا كان privacyPolicy موجود مباشرة في data
+
         if (!privacyData && data.privacyPolicy) {
           privacyData = {
             title: data.bannerSection?.title || data.title || '',
@@ -404,7 +368,6 @@ export class SharedFeatureService {
         this.privacyPolicyLoading = false;
       },
       error: (err) => {
-        // Only log if it's not a network/CORS error (status 0)
         if (err.status !== 0) {
           console.error('Error loading privacy policy:', err);
         }
