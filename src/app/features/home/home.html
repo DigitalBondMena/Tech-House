@@ -3,14 +3,14 @@
     <!-- Hero Section Skeleton -->
     @if (!heroSection()) {
         <section class="bg-linear min-h-[80vh] lg:min-h-[100vh]">
-            <div class="bg-hero overflow-hidden min-h-[80vh] lg:min-h-[100vh]">
+            <div class="bg-hero overflow-hidden min-h-[80vh] lg:min-h-[100vh aspect-[16/9]">
                 <div class="container h-full mx-auto px-5 lg:px-20 relative">
                     <div class="hero-content relative h-full w-full flex items-center justify-between" dir="rtl">
                         <div class="flex-1 hero-skeleton">
                             <p-skeleton width="60%" height="60px" styleClass="rounded-lg mb-6"></p-skeleton>
                             <p-skeleton width="200px" height="50px" styleClass="rounded-full"></p-skeleton>
                         </div>
-                        <div class="flex justify-center items-center w-full min-h-[500px] hero-skeleton">
+                        <div class="hidden md:flex justify-center items-center w-full min-h-[500px] hero-skeleton">
                             <p-skeleton width="500px" height="300px" styleClass="rounded-lg"></p-skeleton>
                         </div>
                     </div>

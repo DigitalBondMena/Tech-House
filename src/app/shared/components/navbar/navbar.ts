@@ -17,6 +17,7 @@ export class Navbar implements OnInit, OnDestroy {
   private ngZone = inject(NgZone);
   private isBrowser = isPlatformBrowser(this.platformId);
   private throttledScrollHandler?: () => void;
+  private resizeHandler?: () => void;
 
   ngOnInit(): void {
     if (this.isBrowser) {
@@ -25,9 +26,11 @@ export class Navbar implements OnInit, OnDestroy {
         this.ngZone.runOutsideAngular(() => {
           requestAnimationFrame(() => {
             const scrollPosition = window.scrollY;
-            // Only update signal inside Angular zone
+            // Check if screen is medium or larger (md breakpoint = 768px)
+            const isLargeScreen = window.innerWidth >= 768;
+            // Only update signal inside Angular zone and only on large screens
             this.ngZone.run(() => {
-              this.isScrolled.set(scrollPosition > 100);
+              this.isScrolled.set(isLargeScreen && scrollPosition > 100);
             });
           });
         });
@@ -35,12 +38,28 @@ export class Navbar implements OnInit, OnDestroy {
       
       // Use passive event listener for better scroll performance
       window.addEventListener('scroll', this.throttledScrollHandler, { passive: true });
+      
+      // Handle window resize to reset scroll state when switching to small screen
+      this.resizeHandler = () => {
+        this.ngZone.run(() => {
+          const isLargeScreen = window.innerWidth >= 768;
+          if (!isLargeScreen) {
+            this.isScrolled.set(false);
+          }
+        });
+      };
+      window.addEventListener('resize', this.resizeHandler);
     }
   }
 
   ngOnDestroy(): void {
-    if (this.isBrowser && this.throttledScrollHandler) {
-      window.removeEventListener('scroll', this.throttledScrollHandler);
+    if (this.isBrowser) {
+      if (this.throttledScrollHandler) {
+        window.removeEventListener('scroll', this.throttledScrollHandler);
+      }
+      if (this.resizeHandler) {
+        window.removeEventListener('resize', this.resizeHandler);
+      }
     }
   }
 
