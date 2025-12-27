@@ -75,13 +75,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     this.sharedFeatureService.loadContactUsData();
     this.sharedFeatureService.loadCounters();
     
-    // Debug: Check data after loading
-    setTimeout(() => {
-      console.log('Contact Hero:', this.contactHero());
-      console.log('Contact Us Data:', this.contactUsData());
-      console.log('Contact Us Data Image:', this.contactUsData()?.image);
-    }, 1000);
-
     // Setup Intersection Observer if counters are already loaded
     const counters = this.counters();
     if (counters?.length) {
@@ -196,8 +189,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
       return '/images/placeholder.png';
     }
     
-    console.log('getResponsiveImage: Image object:', image);
-    
     let imageUrl = '';
     if (this.isBrowser) {
       const width = window.innerWidth;
@@ -212,8 +203,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
       imageUrl = image.desktop || '';
     }
     
-    console.log('getResponsiveImage: Selected image URL:', imageUrl);
-    
     if (!imageUrl) {
       console.warn('getResponsiveImage: No image URL found, using placeholder');
       return '/images/placeholder.png';
@@ -221,7 +210,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     
     // Add base URL if needed (الصور تأتي كـ URLs كاملة بالفعل، لكن للاحتياط)
     const finalUrl = this.addBaseUrlIfNeeded(imageUrl);
-    console.log('getResponsiveImage: Final URL:', finalUrl);
     return finalUrl;
   }
 }

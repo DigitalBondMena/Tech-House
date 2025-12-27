@@ -131,7 +131,6 @@ export class SharedFeatureService {
         }
         
         if (heroData) {
-          console.log('Contact Hero Data loaded:', heroData);
           this.contactHeroResponseSignal.set(heroData);
         } else {
           console.warn('Contact Hero Data is null or empty:', data);
@@ -189,7 +188,6 @@ export class SharedFeatureService {
             } : undefined
           };
           
-          console.log('Contact Us Data loaded:', contactData);
           this.contactUsResponseSignal.set(contactData);
         }
         this.contactUsLoading = false;

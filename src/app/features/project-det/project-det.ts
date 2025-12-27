@@ -95,21 +95,12 @@ export class ProjectDet {
       const data = this.projectDetailsData();
       const project = this.project();
       
-      console.log('Project details effect triggered:', { 
-        hasData: !!data, 
-        hasProject: !!project, 
-        dataStructure: data ? Object.keys(data) : null,
-        projectData: project ? { id: project.id, title: project.title, slug: project.slug } : null,
-        isLoading: this.isLoading() 
-      });
-      
       if (data !== null) {
         // Data has been loaded (even if null)
         this.isLoading.set(false);
         
         if (data && project) {
           // Data exists and project exists
-          console.log('Project loaded successfully:', project.title);
           this.hasError.set(false);
           this.errorMessage.set('');
         } else if (data && !project) {
@@ -132,7 +123,6 @@ export class ProjectDet {
           }
           
           if (extractedProject) {
-            console.log('Extracted project:', extractedProject);
             // Manually set the project in the signal
             this.featureService.projectDetailsResponseSignal.set({ project: extractedProject } as any);
             this.hasError.set(false);

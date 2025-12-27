@@ -184,10 +184,6 @@ export class FeatureService {
     const encodedSlug = encodeURIComponent(slug);
     const endpoint = API_END_POINTS.PROJECT_DETAILS.replace('{slug}', encodedSlug);
     
-    console.log('Loading project details for slug:', slug);
-    console.log('Encoded slug:', encodedSlug);
-    console.log('Endpoint:', endpoint);
-    
     // Try both response types - sometimes API might return different structure
     const result = this.apiService.get<any>(endpoint);
     
@@ -195,23 +191,16 @@ export class FeatureService {
     const checkInterval = setInterval(() => {
       const data = result();
       if (data) {
-        console.log('Raw API response:', data);
         
         // Check if it's ProjectDetailsResponse (has project property)
         if (data.project) {
-          console.log('Data is ProjectDetailsResponse format');
           this.projectDetailsResponseSignal.set(data as ProjectDetailsResponse);
           clearInterval(checkInterval);
         }
         // Check if it's ProjectsResponse (has projects array) - extract the matching project
         else if (data.projects && Array.isArray(data.projects.data)) {
-          console.log('Data is ProjectsResponse format, searching for project...');
           const projectItem = data.projects.data.find((p: any) => p.slug === slug);
           if (projectItem) {
-            console.log('Found project in list:', projectItem);
-            // Convert ProjectItem to ProjectDetail format
-            // Note: This might not have all fields, so we need to make another API call
-            // For now, let's try to get full details
             this.projectDetailsResponseSignal.set({
               project: projectItem as any
             } as ProjectDetailsResponse);
@@ -225,7 +214,6 @@ export class FeatureService {
         }
         // If data has project at root level (direct project object)
         else if (data.id && data.slug) {
-          console.log('Data is direct project object');
           this.projectDetailsResponseSignal.set({
             project: data
           } as ProjectDetailsResponse);

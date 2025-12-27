@@ -25,8 +25,6 @@ import { SuccessPopup } from "../../shared/components/success-popup/success-popu
   standalone: true,
   imports: [
     CommonModule, 
-    ContactUsSec,
-    SectionTitle,
     AppButton,
     FormsModule, 
     ReactiveFormsModule,

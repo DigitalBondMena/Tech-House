@@ -113,17 +113,14 @@ export class HomeBooking implements AfterViewInit, OnDestroy {
 
     // Add event listeners
     video.addEventListener('loadedmetadata', () => {
-      console.log('Video metadata loaded');
       this.playVideo();
     }, { once: true });
 
     video.addEventListener('canplay', () => {
-      console.log('Video can play');
       this.playVideo();
     }, { once: true });
 
     video.addEventListener('loadeddata', () => {
-      console.log('Video data loaded');
       this.playVideo();
     }, { once: true });
 
@@ -154,7 +151,6 @@ export class HomeBooking implements AfterViewInit, OnDestroy {
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          console.log('✅ Video is playing successfully');
         })
         .catch((error) => {
           console.warn('⚠️ Video autoplay prevented:', error);
@@ -176,7 +172,6 @@ export class HomeBooking implements AfterViewInit, OnDestroy {
       if (video && typeof video.play === 'function') {
         video.play()
           .then(() => {
-            console.log('✅ Video started after user interaction');
             this.cleanupInteractionListeners();
           })
           .catch((err) => {
