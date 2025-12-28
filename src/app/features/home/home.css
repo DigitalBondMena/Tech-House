@@ -19,6 +19,43 @@
   z-index: 1;
   /* Ensure image is visible immediately */
   content-visibility: auto;
+  /* GPU acceleration for better performance */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Optimize image rendering - smooth on desktop */
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* Prevent image from causing layout shifts */
+  display: block;
+}
+
+/* Mobile optimizations - Better performance on small screens */
+@media (max-width: 768px) {
+  .hero-lcp-image {
+    /* Focus on center/top for mobile - better visual focus on important content */
+    object-position: center top;
+    /* Optimize rendering for mobile - auto is best for photos */
+    image-rendering: auto;
+    /* Better performance on mobile - use GPU acceleration */
+    transform: translateZ(0);
+    /* Prevent unnecessary repaints - remove will-change on mobile for better performance */
+    will-change: auto;
+  }
+  
+  .hero-lcp-container {
+    /* CSS containment for better performance - isolates rendering */
+    contain: layout style paint;
+    /* Optimize rendering on mobile - GPU layer */
+    transform: translateZ(0);
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-lcp-image {
+    object-position: center;
+  }
 }
 
 /* Ensure content is above LCP background image */
