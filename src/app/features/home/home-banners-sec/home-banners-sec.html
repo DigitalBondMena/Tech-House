@@ -1,0 +1,23 @@
+<section class="min-h-[400px]">
+    <!-- parteners -->
+    <div class="mb-20 w-full min-h-[200px]">
+        <div class="container mx-auto px-5 lg:px-20 min-h-[60px]">
+            <app-section-title [title]="partenersTitle" class="pb-5 min-h-[60px]">
+            </app-section-title>
+        </div>
+        <div class="w-full min-h-[120px]">
+            <app-banner #partnersBanner [items]="partners()" direction="right" customClass="-rotate-2 relative -right-1 rounded-l-full w-[95%] mt-10" class="min-h-[120px]"></app-banner>
+        </div>
+
+    </div>
+    <!-- clients -->
+    <div class="mb-20 pb-20 w-full min-h-[200px]">
+        <div class="container mx-auto px-5 lg:px-20 min-h-[60px]">
+            <app-section-title [title]="clientsTitle" class="min-h-[60px]">
+            </app-section-title>
+        </div>
+        <div class="w-full overflow-hidden pb-10 min-h-[120px]">
+            <app-banner #clientsBanner [items]="clients()" direction="left" customClass="-rotate-2 relative -left-10 md:-left-50 rounded-r-full w-[95%] mt-10" class="min-h-[120px]"></app-banner>
+        </div>
+    </div>
+</section>

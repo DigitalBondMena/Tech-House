@@ -1,0 +1,10 @@
+.banner-scroll-container {
+  will-change: transform;
+  display: flex;
+  align-items: center;
+}
+
+.banner-item {
+  flex-shrink: 0;
+  will-change: transform;
+}

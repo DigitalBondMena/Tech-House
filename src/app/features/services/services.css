@@ -1,0 +1,38 @@
+.service-card {
+    padding: 2rem 0;
+}
+
+.service-card:not(:last-child) {
+    border-bottom: 1px solid rgba(68, 0, 0, 0.1);
+    padding-bottom: 3rem;
+}
+
+.service-icon-wrapper {
+    position: relative;
+}
+
+.service-icon-wrapper img {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .service-card {
+        padding: 1.5rem 0;
+    }
+    
+    .service-card:not(:last-child) {
+        padding-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-card {
+        padding: 1rem 0;
+    }
+    
+    .service-card:not(:last-child) {
+        padding-bottom: 1.5rem;
+    }
+}
+

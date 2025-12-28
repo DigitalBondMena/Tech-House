@@ -1,0 +1,60 @@
+# HTML pages (Angular / SSR / SPA)
+/
+  Cache-Control: public, max-age=600, s-maxage=3600
+
+/*
+  Cache-Control: public, max-age=600
+
+# Static assets
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+# WebP Images (GIF converted, Hero images, etc.)
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# GIF Images (Hero GIF, etc.)
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+# Hero Images
+/images/hero/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Logos (نادرًا تتغير)
+/images/logo/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static Icons
+/images/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Social Icons
+/images/social-icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Media files (if exists)
+/media/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Video files 
+/frontend/*.mp4
+  Cache-Control: public, max-age=31536000, immutable

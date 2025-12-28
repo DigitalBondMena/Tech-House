@@ -1,0 +1,14 @@
+.bg-clients {
+    background-image: url('/images/k.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    height: 80vh;
+    width: 100%;
+}
+
+
+.bg-client-linear{
+      background: linear-gradient(to top, #440000, #ED2924);
+}

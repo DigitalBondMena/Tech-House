@@ -1,0 +1,20 @@
+/* Contact Us Page Styles */
+
+/* Ensure proper spacing and layout */
+section {
+    position: relative;
+}
+
+/* Counter boxes styling */
+.bg-\[#ED2924\] {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bg-\[#ED2924\]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(237, 41, 36, 0.3);
+}
+
+.bg-counter {
+    background: linear-gradient(to bottom, #440000, #ED2924);
+}

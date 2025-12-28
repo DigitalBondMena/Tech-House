@@ -1,0 +1,57 @@
+@if (bannerSection()) {
+<app-hero-section [title]="bannerSection()?.title || ''" [paragraph]="bannerSection()?.text || ''"
+    customClass="h-[80vh]!" [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
+    [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
+    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[0px]! -left-[0px]! ">
+    >
+
+</app-hero-section>
+}
+
+@if (aboutInformation()) {
+<section class="container mx-auto px-5 lg:px-20 py-20 pb-5">
+  <div class="cards-section   flex flex-col  gap-12 items-start">
+    <!-- Right Side - Our Story Text -->
+    <div class=" ">
+      <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6"></app-section-title>
+      <div class="text-[#440000] text-xl font-medium leading-relaxed" [innerHTML]="aboutInformation()?.text || ''"></div>
+    </div>
+
+    <!-- Left Side - Cards with GSAP Animation -->
+    <div class="  ">
+      <div class="text-center flex flex-col md:flex-row items-center justify-center gap-4">
+        @for (section of aboutSections(); track trackByOrder($index, section); let i = $index) {
+          <div #cardElement class="timeline-card bg-gradient-to-br from-red-700 to-red-900 text-white p-8 rounded-2xl shadow-xl mb-8">
+            <h3 class="text-3xl font-bold mb-6">{{ section.title }}</h3>
+            <div class="text-lg mb-8 leading-relaxed" [innerHTML]="section.text"></div>
+            <app-app-button 
+              [btnText]="contactBtnText"
+              customClass="bg-black/40 text-red-700 hover:bg-gray-100 mx-auto">
+            </app-app-button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+}
+
+@if (partners()?.length) {
+<section class="py-60 pt-30 overflow-hidden">
+  <div class="mb-20">
+    <app-section-title [title]="partnersTitle" customClass="mb-5"></app-section-title>
+  </div>
+  <div class="w-full">
+    <app-banner [items]="partners()" direction="right"
+      customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[150%] lg:w-[120%] -right-40">
+    </app-banner>
+  </div>
+  <div class="w-full">
+    <app-banner [items]="clients()" direction="left"
+      customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[150%] lg:w-[120%] -right-40 bg-[#940000]!">
+    </app-banner>
+  </div>
+</section>
+}
+
+<app-contact-us-sec></app-contact-us-sec>
