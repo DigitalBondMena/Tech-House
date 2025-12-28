@@ -4,13 +4,6 @@
     padding: 16px 0;
     position: relative;
     overflow: hidden;
-    transform: translateY(-110px);
-}
-
-@media (max-width: 768px) {
-    .banner-wrapper {
-        width: 99%;
-    }
 }
 
 .banner-background {
@@ -26,22 +19,22 @@
 .banner-container {
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    display: flex; /* مهم للانزلاق */
 }
 
 .banner-track {
     display: flex;
-    animation: slide 20s linear infinite;
+    width: max-content; /* عشان تتحرك العناصر بالكامل */
+    animation: scroll 15s linear infinite;
     white-space: nowrap;
-    will-change: transform;
 }
 
-@keyframes slide {
+@keyframes scroll {
     0% {
-        transform: translateX(-100%);
+        transform: translateX(0);
     }
     100% {
-        transform: translateX(calc(100% + 25vw));
+        transform: translateX(-50%); /* ينزلق نصف طول track المكرر */
     }
 }
 
@@ -72,7 +65,7 @@
 
 /* Pause animation on hover */
 .banner-wrapper:hover .banner-track {
-    animation-play-state: running;
+    animation-play-state: paused;
 }
 
 /* Responsive */
@@ -107,6 +100,6 @@
     }
 
     .banner-track {
-        animation-duration: 10s;
+        animation-duration: 8s;
     }
 }
