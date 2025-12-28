@@ -1,15 +1,15 @@
 .bg-card {
-    background: linear-gradient(to bottom, #ED2924, #440000);
+  background: linear-gradient(to bottom, #ED2924, #440000);
 }
 
-/* Hero Background Image for LCP Optimization */
-.hero-background-container {
+/* LCP Hero Image - Optimized for Largest Contentful Paint */
+.hero-lcp-container {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
 
-.hero-background-image {
+.hero-lcp-image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -17,29 +17,31 @@
   object-fit: cover;
   object-position: center;
   z-index: 1;
+  /* Ensure image is visible immediately */
+  content-visibility: auto;
 }
 
-/* Ensure content is above background image */
-.hero-background-container .container {
+/* Ensure content is above LCP background image */
+.hero-lcp-container .container {
   position: relative;
   z-index: 10;
 }
 
 /* Hero Skeleton Custom Colors */
 :host ::ng-deep .hero-skeleton .p-skeleton {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.5rem;
 }
 
 :host ::ng-deep .hero-skeleton .p-skeleton::after {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
 }
 
 :host ::ng-deep .hero-banner-skeleton .p-skeleton {
-    background: #B90000 !important;
-    border-radius: 0.5rem;
+  background: #B90000 !important;
+  border-radius: 0.5rem;
 }
 
 :host ::ng-deep .hero-banner-skeleton .p-skeleton::after {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
 }

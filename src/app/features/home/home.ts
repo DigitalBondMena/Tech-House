@@ -3,9 +3,9 @@ import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID
 import { SkeletonModule } from 'primeng/skeleton';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
+import { AppButton } from '../../shared/components/app-button/app-button';
 import { CircleSidebar } from '../../shared/components/circle-sidebar/circle-sidebar';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
-import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { HomeAbout } from './home-about/home-about';
 import { HomeBanner } from './home-banner/home-banner';
 import { HomeBannersSec } from './home-banners-sec/home-banners-sec';
@@ -17,7 +17,7 @@ import { HomeServices } from './home-services/home-services';
 
 @Component({
   selector: 'app-home',
-  imports: [HeroSection ,HomeBanner , HomeAbout,HomeBannersSec , HomeServices, HomeProjects, HomeBooking, HomeClientsReview, HomeBlogs, ContactUsSec , CircleSidebar, SkeletonModule],
+  imports: [HomeBanner, HomeAbout, HomeBannersSec, HomeServices, HomeProjects, HomeBooking, HomeClientsReview, HomeBlogs, ContactUsSec, CircleSidebar, SkeletonModule, AppButton],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -62,9 +62,9 @@ export class Home implements OnInit, AfterViewInit {
   isAllDataLoaded = computed(() => {
     const data = this.homeData();
     const countersData = this.counters();
-    
+
     if (!data) return false;
-    
+
     return !!(
       data.heroSection &&
       data.aboutHome &&
@@ -90,57 +90,57 @@ export class Home implements OnInit, AfterViewInit {
     if (this.isBrowser) {
       // Force scroll to top immediately
       window.scrollTo({ top: 0, behavior: 'instant' });
-      
+
       // Prevent scroll during page load - more robust method
-      this.disableScroll();
+      // this.disableScroll();
     }
   }
 
   ngAfterViewInit(): void {
     // Load home data when view initializes
     this.featureService.loadHomeData();
-    
+
     // Load counters data (needed for home-about section)
     this.sharedFeatureService.loadCounters();
   }
 
   private disableScroll(): void {
     if (!this.isBrowser) return;
-    
+
     // Save current scroll position
     const scrollY = window.scrollY;
-    
+
     // Prevent scroll with multiple methods
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.top = `-${scrollY}px`;
     document.body.style.width = '100%';
-    
+
     this.scrollEnabled = false;
   }
 
   private enableScroll(): void {
     if (!this.isBrowser || this.scrollEnabled) return;
-    
+
     // Get the scroll position that was saved
     const scrollY = document.body.style.top;
-    
+
     // Restore scroll
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
-    
+
     // Force scroll to top
     window.scrollTo({ top: 0, behavior: 'instant' });
-    
+
     // Double check after a small delay
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }, 50);
-    
+
     this.scrollEnabled = true;
   }
 }

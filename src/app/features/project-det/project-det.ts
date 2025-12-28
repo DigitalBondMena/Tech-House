@@ -1,10 +1,11 @@
-import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { Component, computed, effect, inject, PLATFORM_ID, signal, ViewEncapsulation } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FeatureService } from "../../core/services/featureService";
-import { MetaTagsService } from "../../core/services/meta-tags.service";
+import { isPlatformBrowser } from "@angular/common";
+import { Component, computed, effect, inject, signal, ViewEncapsulation } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
+import { FeatureService } from "../../core/services/featureService";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DomSanitizer } from "@angular/platform-browser";
+import { PLATFORM_ID } from "@angular/core";
 
 @Component({
   selector: 'app-project-det',
@@ -17,7 +18,6 @@ import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-
 export class ProjectDet {
 
   private featureService = inject(FeatureService);
-  private metaTagsService = inject(MetaTagsService);
   private route = inject(ActivatedRoute);
   router = inject(Router);
   private sanitizer = inject(DomSanitizer);
@@ -103,15 +103,6 @@ export class ProjectDet {
           // Data exists and project exists
           this.hasError.set(false);
           this.errorMessage.set('');
-          
-          // Update meta tags for SEO
-          this.metaTagsService.updateMetaTagsFromApi(project, {
-            titleField: 'meta_title',
-            descriptionField: 'meta_description',
-            imageField: 'meta_image',
-            type: 'article',
-            url: this.getCurrentPageUrl()
-          });
         } else if (data && !project) {
           // Data loaded but no project - check what we actually got
           console.warn('Data loaded but project is null. Data structure:', data);
@@ -226,13 +217,5 @@ export class ProjectDet {
 
   sanitizeHtml(html: string) {
     return this.sanitizer.bypassSecurityTrustHtml(html);
-  }
-
-  // Helper method to get current page URL
-  private getCurrentPageUrl(): string {
-    if (this.isBrowser) {
-      return window.location.href;
-    }
-    return '';
   }
 }

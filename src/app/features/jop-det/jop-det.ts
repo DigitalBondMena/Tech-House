@@ -13,10 +13,11 @@ import { TextareaModule } from "primeng/textarea";
 import { environment } from "../../../environments/environment";
 import { API_END_POINTS } from "../../core/constant/ApiEndPoints";
 import { FeatureService } from "../../core/services/featureService";
-import { MetaTagsService } from "../../core/services/meta-tags.service";
 import { AppButton } from "../../shared/components/app-button/app-button";
+import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
 import { COUNTRIES } from "../../shared/components/contact-us-sec/models/countries";
 import { Country } from "../../shared/components/contact-us-sec/models/country.model";
+import { SectionTitle } from "../../shared/components/section-title/section-title";
 import { SuccessPopup } from "../../shared/components/success-popup/success-popup";
 
 @Component({
@@ -42,7 +43,6 @@ import { SuccessPopup } from "../../shared/components/success-popup/success-popu
 export class JopDet {
 
   private featureService = inject(FeatureService);
-  private metaTagsService = inject(MetaTagsService);
   private route = inject(ActivatedRoute);
   router = inject(Router);
   private sanitizer = inject(DomSanitizer);
@@ -208,15 +208,6 @@ export class JopDet {
           // Data exists and job exists
           this.hasError.set(false);
           this.errorMessage.set('');
-          
-          // Update meta tags for SEO
-          this.metaTagsService.updateMetaTagsFromApi(job, {
-            titleField: 'meta_title',
-            descriptionField: 'meta_description',
-            imageField: 'meta_image',
-            type: 'article',
-            url: this.getCurrentPageUrl()
-          });
         } else if (data && !job) {
           // Data loaded but no job
           this.hasError.set(true);
@@ -845,13 +836,5 @@ export class JopDet {
 
   onClosePopup(): void {
     this.showSuccessPopup.set(false);
-  }
-
-  // Helper method to get current page URL
-  private getCurrentPageUrl(): string {
-    if (this.isBrowser) {
-      return window.location.href;
-    }
-    return '';
   }
 }
