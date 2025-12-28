@@ -1,5 +1,5 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges, inject, NgZone } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges, inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppButton } from '../app-button/app-button';
 import { HomeBanner } from '../../../features/home/home-banner/home-banner';
@@ -30,6 +30,8 @@ export class HeroSection implements AfterViewInit, OnChanges {
   private typingAnimation: gsap.core.Timeline | null = null;
   private sanitizer = inject(DomSanitizer);
   private ngZone = inject(NgZone);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // !btn data
   btnText = "بتكار يصنع كفائتنا";
@@ -56,15 +58,36 @@ export class HeroSection implements AfterViewInit, OnChanges {
   }
 
   private initTypingAnimation() {
+    // Only run in browser environment
+    if (!this.isBrowser) {
+      return;
+    }
+
     if (!this.subtitleElement || !this.subtitle || !this.subtitleContainer) return;
 
     const text = this.subtitle;
     const element = this.subtitleElement.nativeElement;
     const container = this.subtitleContainer.nativeElement;
     
+    // Safe requestAnimationFrame wrapper: use native RAF in browser
+    // or fallback to setTimeout during SSR/testing
+    const raf = typeof requestAnimationFrame === 'function'
+      ? requestAnimationFrame.bind(globalThis)
+      : (cb: FrameRequestCallback) => setTimeout(() => {
+          const time = (typeof performance !== 'undefined' && (performance as any).now) 
+            ? (performance as any).now() 
+            : Date.now();
+          cb(time);
+        }, 16);
+    
     // Run measurements outside Angular's change detection to reduce reflow
     this.ngZone.runOutsideAngular(() => {
-      requestAnimationFrame(() => {
+      raf(() => {
+        // Check if window and document are available
+        if (typeof window === 'undefined' || typeof document === 'undefined') {
+          return;
+        }
+
         // Create a temporary element to measure text widths
         const tempElement = document.createElement('span');
         tempElement.style.visibility = 'hidden';

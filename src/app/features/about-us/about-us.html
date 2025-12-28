@@ -9,10 +9,10 @@
 }
 
 @if (aboutInformation()) {
-<section class="container mx-auto px-5 lg:px-20 py-20 pb-5">
+<section class="container mx-auto px-5 lg:px-20 py-20 pb-5 section-pattern section-pattern-right">
   <div class="cards-section   flex flex-col  gap-12 items-start">
     <!-- Right Side - Our Story Text -->
-    <div class=" ">
+    <div class="  ">
       <app-section-title [title]="aboutInformation()?.title || ''" customClass="mb-6"></app-section-title>
       <div class="text-[#440000] text-xl font-medium leading-relaxed" [innerHTML]="aboutInformation()?.text || ''"></div>
     </div>
@@ -38,7 +38,7 @@
 
 @if (partners().length) {
 <section class="py-60 pt-30 overflow-hidden">
-  <div class="mb-20">
+  <div class=" container mx-auto px-5 lg:px-20 py-20">
     <app-section-title [title]="partnersTitle" customClass="mb-5"></app-section-title>
   </div>
   <div class="w-full">

@@ -35,7 +35,7 @@
                         [class.active]="selectedIndex() === 0" (click)="selectService(null, 0)">
                         <h4 class="text-base font-semibold text-[#440000] border-b-2 border-transparent transition-all"
                             [class.border-[#ED2924]]="selectedIndex() === 0"
-                            [class.text-[#ED2924]]="selectedIndex() === 0">
+                            [class.text-[#440000]]="selectedIndex() === 0">
                             الكل
                         </h4>
                     </div>
@@ -90,7 +90,7 @@
 
                     <!-- Project Brief -->
                     @if (project.brief) {
-                    <p class="text-base text-[#440000] leading-relaxed">
+                    <p class="project-brief text-base text-[#440000] leading-relaxed">
                         {{ project.brief }}
                     </p>
                     }

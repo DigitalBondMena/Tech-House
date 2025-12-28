@@ -7,7 +7,10 @@
 </app-hero-section>
 }
 
-<section class="container mx-auto px-5 lg:px-20 py-12 md:py-20">
+<section class="container mx-auto px-5 lg:px-20 py-12 md:py-20 section-pattern section-pattern-right">
+    <app-section-title [title]="articlesTitle" customClass=" mb-8 md:mb-10">
+    </app-section-title>
+    
     @if (blogItems().length > 0) {
     <div class="blogs-list">
         @for (blog of blogItems(); track blog.id) {

@@ -265,7 +265,7 @@
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 9999px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -274,10 +274,7 @@
     /* align-self: center; */
 }
 
-.join-btn:hover {
-    background-color: #B90000;
-    transform: scale(1.05);
-}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

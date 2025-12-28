@@ -8,12 +8,11 @@
     [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
     imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[0px]! -left-[0px]! lg:-left-[0px]!"
     customClass="h-[80vh]!">
-   
 </app-hero-section>
 }
 
 @if (services().length > 0) {
-<section class="container mx-auto px-5 lg:px-20 py-12 md:py-20">
+<section class="container mx-auto px-5 lg:px-20 py-12 md:py-20 section-pattern section-pattern-right">
     @for (service of services(); track service.title; let i = $index) {
     <div class="service-card mb-16 md:mb-20 last:mb-0">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -24,9 +23,9 @@
                 
                 <!-- Service Keywords (Buttons) -->
                 @if (service.keywords && service.keywords.length > 0) {
-                <div class="flex flex-wrap gap-3 mb-6">
+                <div class=" flex flex-wrap gap-3 mb-6">
                     @for (keyword of service.keywords; track keyword) {
-                    <span class="bg-[#B90000] text-white px-5 py-2 md:px-6 md:py-2.5 rounded-full text-sm md:text-base font-medium whitespace-nowrap">
+                    <span class="bg-linear-rev text-white px-5 py-2 md:px-6 md:py-2.5 rounded-full text-sm md:text-base font-medium whitespace-nowrap">
                         {{ keyword }}
                     </span>
                     }

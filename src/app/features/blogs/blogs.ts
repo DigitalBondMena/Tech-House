@@ -1,12 +1,12 @@
-import { Component, OnInit, AfterViewInit, computed, inject, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeroSection } from '../../shared/components/hero-section/hero-section';
-import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
-import { FeatureService } from '../../core/services/featureService';
-import { environment } from '../../../environments/environment';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { environment } from '../../../environments/environment';
+import { FeatureService } from '../../core/services/featureService';
+import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
+import { HeroSection } from '../../shared/components/hero-section/hero-section';
+import { SectionTitle } from '../../shared/components/section-title/section-title';
 
 @Component({
   selector: 'app-blogs',
@@ -14,6 +14,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
     CommonModule,
     HeroSection,
     ContactUsSec,
+    SectionTitle,
     PaginatorModule
   ],
   templateUrl: './blogs.html',
@@ -29,6 +30,7 @@ export class Blogs implements OnInit, AfterViewInit {
   bannerSection = computed(() => this.blogsData()?.bannerSection ?? null);
   blogs = computed(() => this.blogsData()?.blogs ?? null);
   blogItems = computed(() => this.blogs()?.data ?? []);
+  articlesTitle = 'المقالات';
   
   // Pagination state
   rows = signal(9);

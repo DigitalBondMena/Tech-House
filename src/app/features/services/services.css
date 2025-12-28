@@ -1,3 +1,6 @@
+.bg-linear-rev {
+    background: linear-gradient(to top, #440000, #ED2924);
+}
 .service-card {
     padding: 2rem 0;
 }
