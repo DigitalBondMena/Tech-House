@@ -1,11 +1,10 @@
-import { isPlatformBrowser } from "@angular/common";
-import { Component, computed, effect, inject, signal, ViewEncapsulation, NgZone } from "@angular/core";  
-import { CommonModule } from "@angular/common";
-import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
-import { FeatureService } from "../../core/services/featureService";
-import { ActivatedRoute, Router } from "@angular/router";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { Component, computed, effect, inject, NgZone, PLATFORM_ID, signal, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { PLATFORM_ID } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FeatureService } from "../../core/services/featureService";
+import { MetaTagsService } from "../../core/services/meta-tags.service";
+import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
 
 @Component({
   selector: 'app-blog-det',
@@ -18,6 +17,7 @@ import { PLATFORM_ID } from "@angular/core";
 export class BlogDet {
 
   private featureService = inject(FeatureService);
+  private metaTagsService = inject(MetaTagsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
@@ -137,6 +137,20 @@ export class BlogDet {
       }
     });
 
+    // Update meta tags when blog data is loaded
+    effect(() => {
+      const blog = this.blog();
+      if (blog) {
+        this.metaTagsService.updateMetaTagsFromApi(blog, {
+          titleField: 'meta_title',
+          descriptionField: 'meta_description',
+          imageField: 'meta_image',
+          type: 'article',
+          url: this.getCurrentPageUrl()
+        });
+      }
+    });
+
     effect(() => {
       const activeIndex = this.activeSectionIndex();
       const sections = this.sections();
@@ -250,5 +264,13 @@ export class BlogDet {
   getResponsiveImageFromObject(img: any): string {
     if (!img) return '/images/placeholder.png';
     return img.desktop ?? img.mobile;
+  }
+
+  // Helper method to get current page URL
+  private getCurrentPageUrl(): string {
+    if (this.isBrowser) {
+      return window.location.href;
+    }
+    return '';
   }
 }

@@ -38,10 +38,6 @@ export const routes: Routes = [
                 )
             },
             {
-                path: 'Lead-Form-Sub', loadComponent: () => import('./features/lead-form-sub/lead-form-sub').then(m => m.LeadFormSub
-                )
-            },
-            {
                 path: 'Project-Det', loadComponent: () => import('./features/project-det/project-det').then(m => m.ProjectDet
                 )
             },
