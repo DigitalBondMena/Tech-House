@@ -1,11 +1,9 @@
-import { isPlatformBrowser } from "@angular/common";
-import { Component, computed, effect, inject, signal, ViewEncapsulation } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
-import { FeatureService } from "../../core/services/featureService";
-import { ActivatedRoute, Router } from "@angular/router";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { Component, computed, effect, inject, PLATFORM_ID, signal, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { PLATFORM_ID } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FeatureService } from "../../core/services/featureService";
+import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
 
 @Component({
   selector: 'app-project-det',
@@ -181,23 +179,23 @@ export class ProjectDet {
   }
 
   getResponsiveImage(images?: any): string {
-    if (!images) return '/images/placeholder.png';
+    if (!images) return '/images/placeholder.webp';
     if (typeof images === 'string') return images;
     if (Array.isArray(images)) {
-      return images[2] ?? images[0] ?? '/images/placeholder.png';
+      return images[2] ?? images[0] ?? '/images/placeholder.webp';
     }
     // ResponsiveImage object
     if (this.isBrowser) {
       const width = window.innerWidth;
       if (width >= 1024) {
-        return images.desktop ?? images.tablet ?? images.mobile ?? '/images/placeholder.png';
+        return images.desktop ?? images.tablet ?? images.mobile ?? '/images/placeholder.webp';
       } else if (width >= 768) {
-        return images.tablet ?? images.desktop ?? images.mobile ?? '/images/placeholder.png';
+        return images.tablet ?? images.desktop ?? images.mobile ?? '/images/placeholder.webp';
       } else {
-        return images.mobile ?? images.tablet ?? images.desktop ?? '/images/placeholder.png';
+        return images.mobile ?? images.tablet ?? images.desktop ?? '/images/placeholder.webp';
       }
     }
-    return images.desktop ?? images.tablet ?? images.mobile ?? '/images/placeholder.png';
+    return images.desktop ?? images.tablet ?? images.mobile ?? '/images/placeholder.webp';
   }
 
   getTechnologyLogo(tech: any): string {
@@ -208,7 +206,7 @@ export class ProjectDet {
     if (tech.image) {
       return this.getResponsiveImage(tech.image);
     }
-    return '/images/placeholder.png';
+    return '/images/placeholder.webp';
   }
 
   getTechnologyName(tech: any): string {

@@ -49,7 +49,7 @@
                      [class]="i === 0 ? '-rotate-4 -translate-y-20 bg-gray-200' : i === 1 ? 'active-card bg-white shadow-lg' : 'rotate-4 translate-y-20 bg-gray-100'"
                      (click)="onCardClick(i)">
                     <div class="w-1/4 p-5 xl:p-10 min-h-[300px] min-w-[200px]">
-                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.png'" [alt]="project.title || ''" width="300" height="300" class="w-[300px] h-[300px] xl:w-[200px] xl:h-[200px] object-cover">
+                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.webp'" [alt]="project.title || ''" width="300" height="300" class="w-[300px] h-[300px] xl:w-[200px] xl:h-[200px] object-cover">
                     </div>
                     <div class="h-full w-3/4 p-5 xl:p-10 min-h-[300px]">
                         <h2 class="text-xl text-[#636363] font-medium mb-6">{{ project.category_name }}</h2>
@@ -57,7 +57,7 @@
                         <p class="mb-12 text-lg font-medium text-[#440000]">{{ project.text }}</p>
                         <span class="underline text-[#ED2924] font-semibold text-xl flex items-center justify-center">عرض تفاصيل
                             المشروع
-                            <img ngSrc="images/icons/arrow-left.png" alt="arrow-left" width="32" height="32" class="mx-1 w-8! ">
+                            <img ngSrc="images/icons/arrow-left.webp" alt="arrow-left" width="32" height="32" class="mx-1 w-8! ">
                         </span>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
             @for (project of projects.slice(0, 3); track project.slug; let i = $index) {
                 <div class="project-card-mobile flex flex-col md:flex-row justify-between items-center rounded-3xl p-6 bg-white shadow-lg min-h-[200px]">
                     <div class="w-full md:w-1/4 p-4 flex justify-center min-h-[200px] min-w-[200px]">
-                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.png'" [alt]="project.title || ''" width="300" height="300" class="w-full max-w-[200px] md:max-w-[250px] h-[200px] object-cover">
+                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.webp'" [alt]="project.title || ''" width="300" height="300" class="w-full max-w-[200px] md:max-w-[250px] h-[200px] object-cover">
                     </div>
                     <div class="w-full md:w-3/4 p-4 min-h-[200px]">
                         <h2 class="text-lg md:text-xl text-[#636363] font-medium mb-4">{{ project.category_name }}</h2>
@@ -77,7 +77,7 @@
                         <p class="mb-6 text-base md:text-lg font-medium text-[#440000] line-clamp-3">{{ project.text }}</p>
                         <span class="underline text-[#ED2924] font-semibold text-lg flex items-center justify-center md:justify-start">عرض تفاصيل
                             المشروع
-                            <img ngSrc="images/icons/arrow-left.png" alt="arrow-left" width="32" height="32" class="mx-1 w-6 h-6">
+                            <img ngSrc="images/icons/arrow-left.webp" alt="arrow-left" width="32" height="32" class="mx-1 w-6 h-6">
                         </span>
                     </div>
                 </div>

@@ -32,7 +32,7 @@
   width: 100%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: slideUp 0.3s ease-out;
-  background-image: url('/images/pop-up/pattern.png');
+  background-image: url('/images/pop-up/pattern.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

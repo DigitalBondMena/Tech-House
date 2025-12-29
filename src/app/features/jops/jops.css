@@ -73,7 +73,7 @@
     height: 100%;
     opacity: 0.2;
     /* Team faces collage - can be replaced with actual image or removed if not available */
-    /* background-image: url('/images/team-faces.png'); */
+    /* background-image: url('/images/team-faces.webp'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -185,7 +185,7 @@
 
 .job-card {
     background-color: #940000;
-    background-image: url('/images/card-pattern.png');
+    background-image: url('/images/card-pattern.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

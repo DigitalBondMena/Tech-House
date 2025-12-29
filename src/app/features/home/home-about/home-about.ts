@@ -1,25 +1,24 @@
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import {
-  Component,
-  Input,
   AfterViewInit,
-  OnChanges,
-  SimpleChanges,
-  inject,
+  ChangeDetectorRef,
+  Component,
   computed,
   effect,
-  PLATFORM_ID,
-  ChangeDetectorRef,
-  ViewChild,
   ElementRef,
+  inject,
+  Input,
+  OnChanges,
   OnDestroy,
-  signal
+  PLATFORM_ID,
+  signal,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { SectionTitle } from '../../../shared/components/section-title/section-title';
+import { SkeletonModule } from 'primeng/skeleton';
 import { AboutHome } from '../../../core/models/home.model';
 import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
-import { NgOptimizedImage } from '@angular/common';
-import { SkeletonModule } from 'primeng/skeleton';
+import { SectionTitle } from '../../../shared/components/section-title/section-title';
 
 @Component({
   selector: 'app-home-about',
@@ -193,6 +192,6 @@ export class HomeAbout implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   getResponsiveImage(): string {
-    return this.aboutData?.image?.desktop || '/images/placeholder.png';
+    return this.aboutData?.image?.desktop || '/images/placeholder.webp';
   }
 }

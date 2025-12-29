@@ -66,7 +66,7 @@ export class Blogs implements OnInit, AfterViewInit {
   }
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
-    if (!image) return '/images/placeholder.png';
+    if (!image) return '/images/placeholder.webp';
     let imageUrl = '';
     if (this.isBrowser) {
       const width = window.innerWidth;

@@ -62,7 +62,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  z-index: 1;
+  z-index: 2;
   /* Ensure image is visible immediately */
   content-visibility: auto;
   /* GPU acceleration for better performance */

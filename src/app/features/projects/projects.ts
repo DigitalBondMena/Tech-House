@@ -1,14 +1,13 @@
-import { Component, OnInit, computed, inject, NgZone, PLATFORM_ID, signal, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, computed, ElementRef, inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeroSection } from '../../shared/components/hero-section/hero-section';
-import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
-import { environment } from '../../../environments/environment';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { debounce } from '../../core/utils/performance.utils';
+import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
+import { HeroSection } from '../../shared/components/hero-section/hero-section';
 
 @Component({
   selector: 'app-projects',
@@ -186,7 +185,7 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
-    if (!image) return '/images/project.png';
+    if (!image) return '/images/project.webp';
     let imageUrl = '';
     if (this.isBrowser) {
       const width = this.getWindowWidth();
@@ -195,11 +194,11 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
       else imageUrl = image.desktop || '';
     } else imageUrl = image.desktop || '';
     const finalUrl = this.addBaseUrlIfNeeded(imageUrl);
-    return finalUrl || '/images/project.png';
+    return finalUrl || '/images/project.webp';
   }
 
   getProjectImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
-    if (!image) return '/images/project.png';
+    if (!image) return '/images/project.webp';
     let imageUrl = '';
     if (this.isBrowser) {
       const width = this.getWindowWidth();
@@ -208,7 +207,7 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
       else imageUrl = image.desktop || '';
     } else imageUrl = image.desktop || '';
     const finalUrl = this.addBaseUrlIfNeeded(imageUrl);
-    return finalUrl || '/images/project.png';
+    return finalUrl || '/images/project.webp';
   }
 
   private addBaseUrlIfNeeded(url: string): string {

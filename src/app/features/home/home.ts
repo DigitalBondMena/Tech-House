@@ -78,24 +78,34 @@ export class Home implements OnInit, AfterViewInit {
   isTestimonialsLoaded = computed(() => this.testimonials()?.length > 0);
   isBlogsLoaded = computed(() => this.blogs()?.length > 0);
 
-  // 🔹 Check if all data is loaded
+  // 🔹 Check if all sections are loaded and visible (contact will only show when all sections are loaded)
   isAllDataLoaded = computed(() => {
-    const data = this.homeData();
-    const countersData = this.counters();
-
-    if (!data) return false;
-
-    return !!(
-      data.heroSection &&
-      data.aboutHome &&
-      data.services?.length > 0 &&
-      data.projects?.length > 0 &&
-      data.testimonials?.length > 0 &&
-      data.blogs?.length > 0 &&
-      data.ctasection &&
-      countersData &&
-      countersData.length > 0
-    );
+    // Check hero section
+    if (!this.heroSection()) return false;
+    
+    // Check about section
+    if (!this.isAboutLoaded()) return false;
+    
+    // Check banners section (partners & clients)
+    if (!this.isBannersLoaded()) return false;
+    
+    // Check services section
+    if (!this.isServicesLoaded()) return false;
+    
+    // Check projects section
+    if (!this.isProjectsLoaded()) return false;
+    
+    // Check booking section
+    if (!this.isBookingLoaded()) return false;
+    
+    // Check testimonials section
+    if (!this.isTestimonialsLoaded()) return false;
+    
+    // Check blogs section
+    if (!this.isBlogsLoaded()) return false;
+    
+    // All sections are loaded
+    return true;
   });
 
   // 🔹 Helper method to get responsive image based on screen size

@@ -98,16 +98,16 @@ export class HomeServices implements AfterViewInit, OnChanges, OnDestroy {
 
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | undefined): string {
-    if (!image) return '/images/placeholder.png';
+    if (!image) return '/images/placeholder.webp';
     if (this.isBrowser) {
       const width = this.getWindowWidth();
       if (width < 768) {
-        return image.mobile || image.desktop || '/images/placeholder.png';
+        return image.mobile || image.desktop || '/images/placeholder.webp';
       } else if (width < 1024) {
-        return image.tablet || image.desktop || '/images/placeholder.png';
+        return image.tablet || image.desktop || '/images/placeholder.webp';
       }
     }
-    return image.desktop || '/images/placeholder.png';
+    return image.desktop || '/images/placeholder.webp';
   }
 
   // Right side elements (titles for even-indexed services)

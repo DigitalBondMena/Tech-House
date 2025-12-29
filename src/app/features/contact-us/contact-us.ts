@@ -1,11 +1,10 @@
-import { Component, OnInit, AfterViewInit, inject, computed, effect, PLATFORM_ID, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { HeroSection } from '../../shared/components/hero-section/hero-section';
-import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
-import { SharedFeatureService } from '../../core/services/sharedFeatureService';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, ChangeDetectorRef, Component, computed, effect, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { CircleSidebar } from '../../shared/components/circle-sidebar/circle-sidebar';
+import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
+import { HeroSection } from '../../shared/components/hero-section/hero-section';
 
 @Component({
   selector: 'app-contact-us',
@@ -186,7 +185,7 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
     if (!image) {
       console.warn('getResponsiveImage: No image provided');
-      return '/images/placeholder.png';
+      return '/images/placeholder.webp';
     }
     
     let imageUrl = '';
@@ -205,7 +204,7 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     
     if (!imageUrl) {
       console.warn('getResponsiveImage: No image URL found, using placeholder');
-      return '/images/placeholder.png';
+      return '/images/placeholder.webp';
     }
     
     // Add base URL if needed (الصور تأتي كـ URLs كاملة بالفعل، لكن للاحتياط)

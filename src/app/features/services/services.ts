@@ -1,11 +1,10 @@
-import { Component, OnInit, AfterViewInit, computed, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HeroSection } from '../../shared/components/hero-section/hero-section';
-import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
-import { FeatureService } from '../../core/services/featureService';
 import { environment } from '../../../environments/environment';
+import { FeatureService } from '../../core/services/featureService';
+import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
+import { HeroSection } from '../../shared/components/hero-section/hero-section';
 
 @Component({
   selector: 'app-services',
@@ -37,7 +36,7 @@ export class Services implements OnInit, AfterViewInit {
   }
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
-    if (!image) return '/images/placeholder.png';
+    if (!image) return '/images/placeholder.webp';
     let imageUrl = '';
     if (this.isBrowser) {
       const width = window.innerWidth;

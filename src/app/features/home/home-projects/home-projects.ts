@@ -41,7 +41,7 @@ export class HomeProjects implements AfterViewInit, OnChanges {
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
     if (!image || !image.desktop) {
-      return '/images/placeholder.png'; // Fallback image
+      return '/images/placeholder.webp'; // Fallback image
     }
     return image.desktop;
   }

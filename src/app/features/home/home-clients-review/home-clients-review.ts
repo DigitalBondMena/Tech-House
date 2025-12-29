@@ -158,7 +158,7 @@ export class HomeClientsReview implements OnChanges {
   // Helper method to get responsive image
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
     if (!image || !image.desktop) {
-      return '/images/placeholder.png';
+      return '/images/placeholder.webp';
     }
     return image.desktop;
   }
