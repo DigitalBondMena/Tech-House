@@ -1,12 +1,12 @@
 # =========================
-# VIDEO FILES (IMPORTANT FIRST)
+# VIDEO FILES
 # =========================
 /frontend/*.mp4
   Cache-Control: public, max-age=31536000, immutable
 
 
 # =========================
-# STATIC ASSETS (HASHED FILES)
+# STATIC ASSETS (HASHED)
 # =========================
 /*.js
   Cache-Control: public, max-age=31536000, immutable
@@ -39,16 +39,12 @@
 /*.gif
   Cache-Control: public, max-age=31536000, immutable
 
-
-# Hero images
 /images/hero/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Logos
 /images/logo/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Icons
 /images/icons/*
   Cache-Control: public, max-age=31536000, immutable
 
@@ -61,14 +57,3 @@
 # =========================
 /media/*
   Cache-Control: public, max-age=31536000, immutable
-
-
-# =========================
-# HTML (Angular / SPA / SSR)
-# MUST BE LAST
-# =========================
-/
-  Cache-Control: public, max-age=600, s-maxage=3600
-
-/*
-  Cache-Control: public, max-age=600
