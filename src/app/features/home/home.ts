@@ -58,6 +58,26 @@ export class Home implements OnInit, AfterViewInit {
   blogs = computed(() => this.homeData()?.blogs ?? []);
   ctasection = computed(() => this.homeData()?.ctasection ?? null);
 
+  // 🔹 Partners and Clients from SharedFeatureService
+  partners = computed(() => this.sharedFeatureService.partners());
+  clients = computed(() => this.sharedFeatureService.clients());
+
+  // 🔹 Loading states for each section
+  isAboutLoaded = computed(() => {
+    const counters = this.counters();
+    return !!(this.aboutHome() && counters && counters.length > 0);
+  });
+  isBannersLoaded = computed(() => {
+    const partners = this.partners();
+    const clients = this.clients();
+    return !!(partners && partners.length > 0 && clients && clients.length > 0);
+  });
+  isServicesLoaded = computed(() => this.services()?.length > 0);
+  isProjectsLoaded = computed(() => this.projects()?.length > 0);
+  isBookingLoaded = computed(() => !!this.ctasection());
+  isTestimonialsLoaded = computed(() => this.testimonials()?.length > 0);
+  isBlogsLoaded = computed(() => this.blogs()?.length > 0);
+
   // 🔹 Check if all data is loaded
   isAllDataLoaded = computed(() => {
     const data = this.homeData();
@@ -102,6 +122,9 @@ export class Home implements OnInit, AfterViewInit {
 
     // Load counters data (needed for home-about section)
     this.sharedFeatureService.loadCounters();
+
+    // Load partners/clients data (needed for home-banners-sec section)
+    this.sharedFeatureService.loadPartnersClients();
   }
 
   private disableScroll(): void {

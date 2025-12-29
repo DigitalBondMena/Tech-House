@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
       }),
 
     ),
-    provideClientHydration(withEventReplay(), withIncrementalHydration()),
+    provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
