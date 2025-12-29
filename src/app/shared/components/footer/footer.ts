@@ -22,22 +22,14 @@ export class Footer implements OnInit, AfterViewInit {
   servicesSection = this.sharedFeatureService.servicesSection;
 
   ngOnInit(): void {
-    // Load data on server-side (SSR) - this runs on both server and client
-    // On server, data will be fetched and stored in TransferState
-    // On client, data will be retrieved from TransferState if available
-    this.sharedFeatureService.loadContactUsData();
-    this.sharedFeatureService.loadServicesSection();
+    // Data loading moved to ngAfterViewInit
   }
 
   ngAfterViewInit(): void {
-    // On client-side, ensure data is loaded (in case SSR didn't run)
-    // Data should already be loaded from ngOnInit, but ensure it's there
-    if (!this.contactUsData()) {
-      this.sharedFeatureService.loadContactUsData();
-    }
-    if (!this.servicesSection()) {
-      this.sharedFeatureService.loadServicesSection();
-    }
+    // Load contact us data when view initializes
+    this.sharedFeatureService.loadContactUsData();
+    // Load services section data for footer
+    this.sharedFeatureService.loadServicesSection();
   }
 
   // Helper method to get responsive image

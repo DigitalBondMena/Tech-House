@@ -1,13 +1,9 @@
 
-import { Injectable, inject, signal, computed, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
 import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse, JobsResponse, JobDetailsResponse } from '../models/home.model';
 import { ApiService } from './apiservice';
-
-// TransferState keys for SSR
-const HOME_DATA_KEY = makeStateKey<HomeResponse>('homeData');
 
 
 @Injectable({
@@ -16,9 +12,6 @@ const HOME_DATA_KEY = makeStateKey<HomeResponse>('homeData');
 export class FeatureService {
 
   private apiService = inject(ApiService);
-  private transferState = inject(TransferState, { optional: true }) as TransferState | null;
-  private platformId = inject(PLATFORM_ID);
-  private readonly isServer = isPlatformServer(this.platformId);
 
   // 🔹 Internal API Response Signal Reference
   private apiResponseSignal = signal<HomeResponse | null>(null);
@@ -62,15 +55,6 @@ export class FeatureService {
   // HOME API
   // =====================
   loadHomeData(): void {
-    // Check TransferState first (for SSR)
-    if (this.transferState && this.transferState.hasKey(HOME_DATA_KEY)) {
-      const data = this.transferState.get<HomeResponse | null>(HOME_DATA_KEY, null as any);
-      if (data) {
-        this.apiResponseSignal.set(data);
-        return;
-      }
-    }
-
     const result = this.apiService.get<HomeResponse>(API_END_POINTS.HOME);
     
     // Watch the signal and update when data arrives
@@ -79,10 +63,6 @@ export class FeatureService {
     const checkInterval = setInterval(() => {
       const data = result();
       if (data) {
-        // Store in TransferState on server
-        if (this.isServer && this.transferState) {
-          this.transferState.set(HOME_DATA_KEY, data);
-        }
         this.apiResponseSignal.set(data);
         clearInterval(checkInterval);
       }

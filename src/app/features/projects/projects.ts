@@ -59,18 +59,11 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
-
-    // Load data on server-side (SSR) - this runs on both server and client
-    // On server, data will be fetched and stored in TransferState
-    // On client, data will be retrieved from TransferState if available
-    this.sharedFeatureService.loadServicesSection();
   }
 
   ngAfterViewInit(): void {
-    // On client-side, ensure data is loaded (in case SSR didn't run)
-    if (!this.serviceTitles().length) {
-      this.sharedFeatureService.loadServicesSection();
-    }
+    // Load service titles
+    this.sharedFeatureService.loadServicesSection();
     
     // Load projects initially
     this.loadProjects(1);

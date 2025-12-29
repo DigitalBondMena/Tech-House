@@ -1,26 +1,15 @@
-import { Injectable, inject, signal, computed, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse, ContactHero, ContactHeroResponse } from '../models/home.model';
-
-// TransferState keys for SSR
-const COUNTERS_KEY = makeStateKey<Counter[]>('counters');
-const CONTACT_US_KEY = makeStateKey<ContactUsData>('contactUs');
-const CONTACT_HERO_KEY = makeStateKey<ContactHero>('contactHero');
-const SERVICES_SECTION_KEY = makeStateKey<ServiceTitle[]>('servicesSection');
-const PARTNERS_CLIENTS_KEY = makeStateKey<PartnersClientsResponse>('partnersClients');
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedFeatureService {
   private http = inject(HttpClient);
-  private transferState = inject(TransferState, { optional: true }) as TransferState | null;
-  private platformId = inject(PLATFORM_ID);
   private readonly baseUrl = environment.apiUrl;
-  private readonly isServer = isPlatformServer(this.platformId);
 
   // 🔹 Internal API Response Signal Reference
   private countersResponseSignal = signal<Counter[] | null>(null);
@@ -73,24 +62,11 @@ export class SharedFeatureService {
       return;
     }
 
-    // Check TransferState first (for SSR)
-    if (this.transferState && this.transferState.hasKey(COUNTERS_KEY)) {
-      const data = this.transferState.get<Counter[]>(COUNTERS_KEY, []);
-      if (data && data.length > 0) {
-        this.countersResponseSignal.set(data);
-        return;
-      }
-    }
-
     this.countersLoading = true;
     
     this.http.get<CountersResponse>(`${this.baseUrl}${API_END_POINTS.COUNTERS}`).subscribe({
       next: (data) => {
         if (data && data.counters) {
-          // Store in TransferState on server
-          if (this.isServer && this.transferState) {
-            this.transferState.set(COUNTERS_KEY, data.counters);
-          }
           this.countersResponseSignal.set(data.counters);
         }
         this.countersLoading = false;
@@ -179,15 +155,6 @@ export class SharedFeatureService {
       return;
     }
 
-    // Check TransferState first (for SSR)
-    if (this.transferState && this.transferState.hasKey(CONTACT_US_KEY)) {
-      const data = this.transferState.get<ContactUsData | null>(CONTACT_US_KEY, null as any);
-      if (data) {
-        this.contactUsResponseSignal.set(data);
-        return;
-      }
-    }
-
     this.contactUsLoading = true;
     
     this.http.get<ContactUsResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_US}`).subscribe({
@@ -221,10 +188,6 @@ export class SharedFeatureService {
             } : undefined
           };
           
-          // Store in TransferState on server
-          if (this.isServer && this.transferState) {
-            this.transferState.set(CONTACT_US_KEY, contactData);
-          }
           this.contactUsResponseSignal.set(contactData);
         }
         this.contactUsLoading = false;
@@ -245,15 +208,6 @@ export class SharedFeatureService {
   loadServicesSection(): void {
     if (this.servicesSectionSignal() || this.servicesSectionLoading) {
       return;
-    }
-
-    // Check TransferState first (for SSR)
-    if (this.transferState && this.transferState.hasKey(SERVICES_SECTION_KEY)) {
-      const data = this.transferState.get<ServiceTitle[]>(SERVICES_SECTION_KEY, []);
-      if (data && data.length > 0) {
-        this.servicesSectionSignal.set(data);
-        return;
-      }
     }
 
     this.servicesSectionLoading = true;
@@ -288,10 +242,6 @@ export class SharedFeatureService {
         }
         
         if (services.length > 0) {
-          // Store in TransferState on server
-          if (this.isServer && this.transferState) {
-            this.transferState.set(SERVICES_SECTION_KEY, services);
-          }
           this.servicesSectionSignal.set(services);
         }
         this.servicesSectionLoading = false;
@@ -314,24 +264,11 @@ export class SharedFeatureService {
       return;
     }
 
-    // Check TransferState first (for SSR)
-    if (this.transferState && this.transferState.hasKey(PARTNERS_CLIENTS_KEY)) {
-      const data = this.transferState.get<PartnersClientsResponse | null>(PARTNERS_CLIENTS_KEY, null as any);
-      if (data) {
-        this.partnersClientsResponseSignal.set(data);
-        return;
-      }
-    }
-
     this.partnersClientsLoading = true;
     
     this.http.get<PartnersClientsResponse>(`${this.baseUrl}${API_END_POINTS.BANNERS}`).subscribe({
       next: (data) => {
         if (data && (data.clients || data.partners)) {
-          // Store in TransferState on server
-          if (this.isServer && this.transferState) {
-            this.transferState.set(PARTNERS_CLIENTS_KEY, data);
-          }
           this.partnersClientsResponseSignal.set(data);
         }
         this.partnersClientsLoading = false;
