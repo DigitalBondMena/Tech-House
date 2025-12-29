@@ -1,15 +1,27 @@
-# HTML pages (Angular / SSR / SPA)
-/
-  Cache-Control: public, max-age=600, s-maxage=3600
+# =========================
+# VIDEO FILES (IMPORTANT FIRST)
+# =========================
+/frontend/*.mp4
+  Cache-Control: public, max-age=31536000, immutable
 
-/*
-  Cache-Control: public, max-age=600
 
-# Static assets
+# =========================
+# STATIC ASSETS (HASHED FILES)
+# =========================
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 
 /*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+
+# =========================
+# IMAGES
+# =========================
+/*.webp
   Cache-Control: public, max-age=31536000, immutable
 
 /*.png
@@ -24,37 +36,39 @@
 /*.svg
   Cache-Control: public, max-age=31536000, immutable
 
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-
-# WebP Images (GIF converted, Hero images, etc.)
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-# GIF Images (Hero GIF, etc.)
 /*.gif
   Cache-Control: public, max-age=31536000, immutable
 
-# Hero Images
+
+# Hero images
 /images/hero/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Logos (نادرًا تتغير)
+# Logos
 /images/logo/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Static Icons
+# Icons
 /images/icons/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Social Icons
 /images/social-icons/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Media files (if exists)
+
+# =========================
+# MEDIA
+# =========================
 /media/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Video files 
-/frontend/*.mp4
-  Cache-Control: public, max-age=31536000, immutable
+
+# =========================
+# HTML (Angular / SPA / SSR)
+# MUST BE LAST
+# =========================
+/
+  Cache-Control: public, max-age=600, s-maxage=3600
+
+/*
+  Cache-Control: public, max-age=600
