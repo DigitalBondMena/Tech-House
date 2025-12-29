@@ -4,37 +4,40 @@
   <section class="bg-linear h-[80vh]! lg:h-screen! relative">
     <!-- LCP Background Image - Always rendered for optimal performance -->
     <div class="hero-lcp-container overflow-hidden h-[80vh] lg:h-screen w-full relative">
-      <!-- GIF Video - Background layer -->
-      <video src="/images/hero/gif.mp4" autoplay loop muted playsinline
+      <!-- GIF Video - Background layer - Optimized for LCP -->
+      <video src="/images/hero/gif.mp4" 
+        autoplay 
+        loop 
+        muted 
+        playsinline
+        preload="metadata"
+        poster="/images/hero/hero.webp"
         class="hero-gif-video"
-        width="1920" height="1080"></video>
+        width="1920" 
+        height="1080"
+        aria-hidden="true">
+      </video>
       <!-- Hero Image - Overlay on GIF -->
       <!-- <img src="/images/hero/hero.webp" alt="ابتكارات تسويقية رقمية تصنع الفرق لشركتك" class="hero-lcp-image"
         width="1920" height="1080" fetchpriority="high" loading="eager" decoding="sync" /> -->
       <div class="container h-full mx-auto px-5 lg:px-20 relative z-10">
         <div class="hero-content relative h-full w-full flex items-center justify-between" dir="rtl">
-          @if (!heroSection()) {
-          <!-- Skeleton content while loading -->
-          <div class="flex-1 hero-skeleton">
-            <!-- H1 always rendered for LCP optimization - hidden during skeleton -->
-            <h1 class="text-2xl md:text-3xl font-semibold text-white invisible">
-              ابتكارات تسويقية رقمية تصنع الفرق لشركتك
-            </h1>
-            <p-skeleton width="60%" height="60px" styleClass="rounded-lg mb-6"></p-skeleton>
-            <p-skeleton width="200px" height="50px" styleClass="rounded-full"></p-skeleton>
-          </div>
-          } @else {
-          <!-- Actual hero content -->
           <div>
-            <!-- H1 always rendered for LCP optimization -->
-            <h1 class="text-2xl md:text-3xl font-semibold text-white">{{ heroSection()!.title }}</h1>
-            @if (heroSection()!.input_title) {
-            <app-app-button [btnText]="'ابتكار يصنع كفائتنا'"
-              customClass="px-7 py-4 bg-black/60 text-white rounded-full flex items-center justify-center transition duration-300 mt-6">
-            </app-app-button>
+            <!-- H1 always rendered for LCP optimization - shows default text immediately -->
+            <h1 class="text-2xl md:text-3xl font-semibold text-white">
+              {{ heroSection()?.title || 'ابتكارات تسويقية رقمية تصنع الفرق لشركتك' }}
+            </h1>
+            @if (!heroSection()) {
+              <!-- Skeleton button while loading -->
+              <p-skeleton width="200px" height="50px" styleClass="rounded-full mt-6"></p-skeleton>
+            } @else {
+              @if (heroSection()!.input_title) {
+              <app-app-button [btnText]="'ابتكار يصنع كفائتنا'"
+                customClass="px-7 py-4 bg-black/60 text-white rounded-full flex items-center justify-center transition duration-300 mt-6">
+              </app-app-button>
+              }
             }
           </div>
-          }
         </div>
       </div>
     </div>

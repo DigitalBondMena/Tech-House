@@ -9,7 +9,7 @@
   overflow: hidden;
 }
 
-/* Hero GIF Video - Background layer */
+/* Hero GIF Video - Background layer - Optimized for LCP */
 .hero-gif-video {
   position: absolute;
   inset: 0;
@@ -23,6 +23,36 @@
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  /* Optimize video loading - don't block LCP */
+  content-visibility: auto;
+  /* Prevent video from blocking render */
+  pointer-events: none;
+}
+
+/* Mobile optimizations for video */
+@media (max-width: 768px) {
+  .hero-gif-video {
+    /* Reduce will-change on mobile for better performance */
+    will-change: auto;
+    /* Optimize rendering on mobile */
+    transform: translateZ(0);
+    /* Lazy load video on mobile to improve LCP */
+    content-visibility: auto;
+  }
+  
+  .hero-lcp-container {
+    /* CSS containment for better performance - isolates rendering */
+    contain: layout style paint;
+    /* Optimize rendering on mobile - GPU layer */
+    transform: translateZ(0);
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-gif-video {
+    object-position: center;
+  }
 }
 
 .hero-lcp-image {
