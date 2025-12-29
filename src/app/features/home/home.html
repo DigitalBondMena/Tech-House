@@ -68,7 +68,7 @@
   <!-- blogs   -->
   <app-home-blogs [blogs]="blogs()"></app-home-blogs>
   <!-- contact-us - Show skeleton until all data is loaded -->
-  @if (!isAllDataLoaded()) {
+  <!-- @if (!isAllDataLoaded()) { -->
   <!-- Contact Section Skeleton -->
   <section class="container mx-auto px-5 lg:px-20 py-20 min-h-[600px]">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch min-h-[600px]">
@@ -90,7 +90,7 @@
       </div>
     </div>
   </section>
-  } @else {
+  <!-- } @else { -->
   <app-contact-us-sec></app-contact-us-sec>
-  }
+  <!-- } -->
 </section>
