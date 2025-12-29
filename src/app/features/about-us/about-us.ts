@@ -53,12 +53,22 @@ export class AboutUs implements OnInit, AfterViewInit {
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+
+    // Load data on server-side (SSR) - this runs on both server and client
+    // On server, data will be fetched and stored in TransferState
+    // On client, data will be retrieved from TransferState if available
+    this.featureService.loadAboutData();
+    this.sharedFeatureService.loadPartnersClients();
   }
 
   ngAfterViewInit(): void {
-    // Load data when view initializes
-    this.featureService.loadAboutData();
-    this.sharedFeatureService.loadPartnersClients();
+    // On client-side, ensure data is loaded (in case SSR didn't run)
+    if (!this.aboutData()) {
+      this.featureService.loadAboutData();
+    }
+    if (!this.partners().length || !this.clients().length) {
+      this.sharedFeatureService.loadPartnersClients();
+    }
 
     if (this.isBrowser) {
       // Wait for cards to be rendered

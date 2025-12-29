@@ -64,16 +64,29 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+
+    // Load data on server-side (SSR) - this runs on both server and client
+    // On server, data will be fetched and stored in TransferState
+    // On client, data will be retrieved from TransferState if available
+    this.sharedFeatureService.loadContactHero();
+    this.sharedFeatureService.loadContactUsData();
+    this.sharedFeatureService.loadCounters();
   }
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
     this.viewReady = true;
 
-    // Load data when view initializes
-    this.sharedFeatureService.loadContactHero();
-    this.sharedFeatureService.loadContactUsData();
-    this.sharedFeatureService.loadCounters();
+    // On client-side, ensure data is loaded (in case SSR didn't run)
+    if (!this.contactHero()) {
+      this.sharedFeatureService.loadContactHero();
+    }
+    if (!this.contactUsData()) {
+      this.sharedFeatureService.loadContactUsData();
+    }
+    if (!this.counters()?.length) {
+      this.sharedFeatureService.loadCounters();
+    }
     
     // Setup Intersection Observer if counters are already loaded
     const counters = this.counters();

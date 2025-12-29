@@ -29,7 +29,9 @@
             </h1>
             @if (!heroSection()) {
               <!-- Skeleton button while loading -->
-              <p-skeleton width="200px" height="50px" styleClass="rounded-full mt-6"></p-skeleton>
+              <div class="hero-skeleton mt-6">
+                <p-skeleton width="200px" height="50px" styleClass="rounded-full"></p-skeleton>
+              </div>
             } @else {
               @if (heroSection()!.input_title) {
               <app-app-button [btnText]="'ابتكار يصنع كفائتنا'"

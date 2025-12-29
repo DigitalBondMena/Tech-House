@@ -46,12 +46,17 @@ export class HomeBannersSec implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // Data loading moved to ngAfterViewInit
+    // Load data on server-side (SSR) - this runs on both server and client
+    // On server, data will be fetched and stored in TransferState
+    // On client, data will be retrieved from TransferState if available
+    this.sharedFeatureService.loadPartnersClients();
   }
 
   ngAfterViewInit(): void {
-    // Load partners/clients data when view initializes
-    this.sharedFeatureService.loadPartnersClients();
+    // On client-side, ensure data is loaded (in case SSR didn't run)
+    if (!this.partners().length || !this.clients().length) {
+      this.sharedFeatureService.loadPartnersClients();
+    }
 
     // Check if data is already loaded
     if (this.partners().length > 0 && this.clients().length > 0 && !this.animationStarted) {

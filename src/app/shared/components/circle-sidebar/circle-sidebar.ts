@@ -16,12 +16,18 @@ export class CircleSidebar implements OnInit, AfterViewInit {
   contactUsData = this.sharedFeatureService.contactUsData;
 
   ngOnInit(): void {
-    // Data loading moved to ngAfterViewInit
+    // Load data on server-side (SSR) - this runs on both server and client
+    // On server, data will be fetched and stored in TransferState
+    // On client, data will be retrieved from TransferState if available
+    this.sharedFeatureService.loadContactUsData();
   }
 
   ngAfterViewInit(): void {
-    // Load contact us data when view initializes
-    this.sharedFeatureService.loadContactUsData();
+    // On client-side, ensure data is loaded (in case SSR didn't run)
+    // Data should already be loaded from ngOnInit, but ensure it's there
+    if (!this.contactUsData()) {
+      this.sharedFeatureService.loadContactUsData();
+    }
   }
 
   // Helper method to format WhatsApp URL
