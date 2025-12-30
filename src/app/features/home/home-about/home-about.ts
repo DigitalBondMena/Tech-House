@@ -97,9 +97,6 @@ export class HomeAbout implements AfterViewInit, OnDestroy, OnChanges {
     // ✅ تأكيد أن الـ DOM اترسم
     this.viewReady = true;
     
-    // Load counters data when view initializes
-    this.sharedFeatureService.loadCounters();
-    
     // Update loading state after view init
     this.updateLoadingState();
     
