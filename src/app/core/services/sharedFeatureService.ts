@@ -1,16 +1,8 @@
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, PLATFORM_ID, TransferState, computed, inject, makeStateKey, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
-import { ContactHero, ContactHeroResponse, ContactUsData, ContactUsResponse, Counter, CountersResponse, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse, ServiceTitle, ServicesSectionResponse } from '../models/home.model';
-
-// TransferState keys
-const COUNTERS_KEY = makeStateKey<Counter[]>('counters');
-const CONTACT_US_KEY = makeStateKey<ContactUsData>('contactUs');
-const CONTACT_HERO_KEY = makeStateKey<ContactHero>('contactHero');
-const SERVICES_SECTION_KEY = makeStateKey<ServiceTitle[]>('servicesSection');
-const PARTNERS_CLIENTS_KEY = makeStateKey<PartnersClientsResponse>('partnersClients');
+import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse, ContactHero, ContactHeroResponse } from '../models/home.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +10,6 @@ const PARTNERS_CLIENTS_KEY = makeStateKey<PartnersClientsResponse>('partnersClie
 export class SharedFeatureService {
   private http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl;
-  private platformId = inject(PLATFORM_ID);
-  private transferState = inject(TransferState, { optional: true });
-  private isBrowser = isPlatformBrowser(this.platformId);
 
   // 🔹 Internal API Response Signal Reference
   private countersResponseSignal = signal<Counter[] | null>(null);
@@ -73,26 +62,12 @@ export class SharedFeatureService {
       return;
     }
 
-    // Check TransferState first (SSR data)
-    if (this.transferState && this.isBrowser && this.transferState.hasKey(COUNTERS_KEY)) {
-      const serverData = this.transferState.get<Counter[]>(COUNTERS_KEY, []);
-      if (serverData && serverData.length > 0) {
-        this.countersResponseSignal.set(serverData);
-        this.transferState.remove(COUNTERS_KEY);
-        return;
-      }
-    }
-
     this.countersLoading = true;
     
     this.http.get<CountersResponse>(`${this.baseUrl}${API_END_POINTS.COUNTERS}`).subscribe({
       next: (data) => {
         if (data && data.counters) {
           this.countersResponseSignal.set(data.counters);
-          // Save to TransferState if on server
-          if (this.transferState && !this.isBrowser) {
-            this.transferState.set(COUNTERS_KEY, data.counters);
-          }
         }
         this.countersLoading = false;
       },
@@ -112,16 +87,6 @@ export class SharedFeatureService {
   loadContactHero(): void {
     if (this.contactHeroResponseSignal() || this.contactHeroLoading) {
       return;
-    }
-
-    // Check TransferState first (SSR data)
-    if (this.transferState && this.isBrowser && this.transferState.hasKey(CONTACT_HERO_KEY)) {
-      const serverData = this.transferState.get<ContactHero>(CONTACT_HERO_KEY, {} as ContactHero);
-      if (serverData) {
-        this.contactHeroResponseSignal.set(serverData);
-        this.transferState.remove(CONTACT_HERO_KEY);
-        return;
-      }
     }
 
     this.contactHeroLoading = true;
@@ -167,10 +132,6 @@ export class SharedFeatureService {
         
         if (heroData) {
           this.contactHeroResponseSignal.set(heroData);
-          // Save to TransferState if on server
-          if (this.transferState && !this.isBrowser) {
-            this.transferState.set(CONTACT_HERO_KEY, heroData);
-          }
         } else {
           console.warn('Contact Hero Data is null or empty:', data);
         }
@@ -192,16 +153,6 @@ export class SharedFeatureService {
   loadContactUsData(): void {
     if (this.contactUsResponseSignal() || this.contactUsLoading) {
       return;
-    }
-
-    // Check TransferState first (SSR data)
-    if (this.transferState && this.isBrowser && this.transferState.hasKey(CONTACT_US_KEY)) {
-      const serverData = this.transferState.get<ContactUsData>(CONTACT_US_KEY, {} as ContactUsData);
-      if (serverData) {
-        this.contactUsResponseSignal.set(serverData);
-        this.transferState.remove(CONTACT_US_KEY);
-        return;
-      }
     }
 
     this.contactUsLoading = true;
@@ -238,10 +189,6 @@ export class SharedFeatureService {
           };
           
           this.contactUsResponseSignal.set(contactData);
-          // Save to TransferState if on server
-          if (this.transferState && !this.isBrowser) {
-            this.transferState.set(CONTACT_US_KEY, contactData);
-          }
         }
         this.contactUsLoading = false;
       },
@@ -261,16 +208,6 @@ export class SharedFeatureService {
   loadServicesSection(): void {
     if (this.servicesSectionSignal() || this.servicesSectionLoading) {
       return;
-    }
-
-    // Check TransferState first (SSR data)
-    if (this.transferState && this.isBrowser && this.transferState.hasKey(SERVICES_SECTION_KEY)) {
-      const serverData = this.transferState.get<ServiceTitle[]>(SERVICES_SECTION_KEY, []);
-      if (serverData && serverData.length > 0) {
-        this.servicesSectionSignal.set(serverData);
-        this.transferState.remove(SERVICES_SECTION_KEY);
-        return;
-      }
     }
 
     this.servicesSectionLoading = true;
@@ -306,10 +243,6 @@ export class SharedFeatureService {
         
         if (services.length > 0) {
           this.servicesSectionSignal.set(services);
-          // Save to TransferState if on server
-          if (this.transferState && !this.isBrowser) {
-            this.transferState.set(SERVICES_SECTION_KEY, services);
-          }
         }
         this.servicesSectionLoading = false;
       },
@@ -331,26 +264,12 @@ export class SharedFeatureService {
       return;
     }
 
-    // Check TransferState first (SSR data)
-    if (this.transferState && this.isBrowser && this.transferState.hasKey(PARTNERS_CLIENTS_KEY)) {
-      const serverData = this.transferState.get<PartnersClientsResponse>(PARTNERS_CLIENTS_KEY, {} as PartnersClientsResponse);
-      if (serverData) {
-        this.partnersClientsResponseSignal.set(serverData);
-        this.transferState.remove(PARTNERS_CLIENTS_KEY);
-        return;
-      }
-    }
-
     this.partnersClientsLoading = true;
     
     this.http.get<PartnersClientsResponse>(`${this.baseUrl}${API_END_POINTS.BANNERS}`).subscribe({
       next: (data) => {
         if (data && (data.clients || data.partners)) {
           this.partnersClientsResponseSignal.set(data);
-          // Save to TransferState if on server
-          if (this.transferState && !this.isBrowser) {
-            this.transferState.set(PARTNERS_CLIENTS_KEY, data);
-          }
         }
         this.partnersClientsLoading = false;
       },

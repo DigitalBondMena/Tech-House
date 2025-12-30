@@ -1,16 +1,9 @@
 
-import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, makeStateKey, PLATFORM_ID, signal, TransferState } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
-import { AboutResponse, BlogDetailsResponse, BlogsResponse, HomeResponse, JobDetailsResponse, JobsResponse, ProjectDetailsResponse, ProjectsResponse, ServicesResponse } from '../models/home.model';
+import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse, JobsResponse, JobDetailsResponse } from '../models/home.model';
 import { ApiService } from './apiservice';
-
-// TransferState keys
-const HOME_KEY = makeStateKey<HomeResponse>('home');
 
 
 @Injectable({
@@ -19,11 +12,6 @@ const HOME_KEY = makeStateKey<HomeResponse>('home');
 export class FeatureService {
 
   private apiService = inject(ApiService);
-  private http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
-  private platformId = inject(PLATFORM_ID);
-  private transferState = inject(TransferState, { optional: true });
-  private isBrowser = isPlatformBrowser(this.platformId);
 
   // 🔹 Internal API Response Signal Reference
   private apiResponseSignal = signal<HomeResponse | null>(null);
@@ -66,21 +54,19 @@ export class FeatureService {
   // =====================
   // HOME API
   // =====================
-  async loadHomeData(): Promise<void> {
-    // Check TransferState first (SSR data)
-    if (this.transferState && this.isBrowser && this.transferState.hasKey(HOME_KEY)) {
-      const serverData = this.transferState.get<HomeResponse>(HOME_KEY, {} as HomeResponse);
-      if (serverData && Object.keys(serverData).length > 0) {
-        this.apiResponseSignal.set(serverData);
-        this.transferState.remove(HOME_KEY);
-        return;
+  loadHomeData(): void {
+    const result = this.apiService.get<HomeResponse>(API_END_POINTS.HOME);
+    
+    // Watch the signal and update when data arrives
+    // Since the API service updates the signal asynchronously,
+    // we'll check periodically until data is available
+    const checkInterval = setInterval(() => {
+      const data = result();
+      if (data) {
+        this.apiResponseSignal.set(data);
+        clearInterval(checkInterval);
       }
-    }
-
-    // If data already loaded, don't reload
-    if (this.apiResponseSignal()) {
-      return;
-    }
+    }, 50);
 
     try {
       const data = await firstValueFrom(this.http.get<HomeResponse>(`${this.baseUrl}${API_END_POINTS.HOME}`));
