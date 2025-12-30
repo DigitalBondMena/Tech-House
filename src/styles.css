@@ -90,3 +90,12 @@ h2 {
 ::-webkit-scrollbar-thumb:hover {
     background: #940000;
 }
+
+/* Global Skeleton Transparent Styles */
+::ng-deep .p-skeleton {
+    background: transparent !important;
+}
+
+::ng-deep .p-skeleton::after {
+    background: transparent !important;
+}

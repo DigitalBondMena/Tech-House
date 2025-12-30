@@ -537,8 +537,8 @@
  .p-select-overlay {
     position: absolute !important;
     top: 100% !important;
-    left: 0 !important;
-    right: auto !important;
+    /* left: 0 !important; */
+    right: 0!important;
     margin-top: 4px !important;
     width: 200px !important;
     min-width: 200px !important;

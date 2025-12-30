@@ -1,9 +1,13 @@
 
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { computed, inject, Injectable, makeStateKey, PLATFORM_ID, signal, TransferState } from '@angular/core';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
-import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse, JobsResponse, JobDetailsResponse } from '../models/home.model';
+import { AboutResponse, BlogDetailsResponse, BlogsResponse, HomeResponse, JobDetailsResponse, JobsResponse, ProjectDetailsResponse, ProjectsResponse, ServicesResponse } from '../models/home.model';
 import { ApiService } from './apiservice';
+
+// TransferState keys
+const HOME_KEY = makeStateKey<HomeResponse>('home');
 
 
 @Injectable({
@@ -12,6 +16,9 @@ import { ApiService } from './apiservice';
 export class FeatureService {
 
   private apiService = inject(ApiService);
+  private platformId = inject(PLATFORM_ID);
+  private transferState = inject(TransferState, { optional: true });
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // 🔹 Internal API Response Signal Reference
   private apiResponseSignal = signal<HomeResponse | null>(null);
@@ -55,6 +62,16 @@ export class FeatureService {
   // HOME API
   // =====================
   loadHomeData(): void {
+    // Check TransferState first (SSR data)
+    if (this.transferState && this.isBrowser && this.transferState.hasKey(HOME_KEY)) {
+      const serverData = this.transferState.get<HomeResponse>(HOME_KEY, {} as HomeResponse);
+      if (serverData) {
+        this.apiResponseSignal.set(serverData);
+        this.transferState.remove(HOME_KEY);
+        return;
+      }
+    }
+
     const result = this.apiService.get<HomeResponse>(API_END_POINTS.HOME);
     
     // Watch the signal and update when data arrives
@@ -64,6 +81,10 @@ export class FeatureService {
       const data = result();
       if (data) {
         this.apiResponseSignal.set(data);
+        // Save to TransferState if on server
+        if (this.transferState && !this.isBrowser) {
+          this.transferState.set(HOME_KEY, data);
+        }
         clearInterval(checkInterval);
       }
     }, 50);

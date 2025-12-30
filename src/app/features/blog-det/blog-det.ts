@@ -1,16 +1,15 @@
-import { isPlatformBrowser } from "@angular/common";
-import { Component, computed, effect, inject, signal, ViewEncapsulation, NgZone } from "@angular/core";  
-import { CommonModule } from "@angular/common";
-import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
-import { FeatureService } from "../../core/services/featureService";
-import { ActivatedRoute, Router } from "@angular/router";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { Component, computed, effect, inject, NgZone, PLATFORM_ID, signal, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { PLATFORM_ID } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FeatureService } from "../../core/services/featureService";
+import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
+import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
 
 @Component({
   selector: 'app-blog-det',
   standalone: true,
-  imports: [CommonModule, ContactUsSec],
+  imports: [CommonModule, ContactUsSec, SafeHtmlPipe],
   templateUrl: './blog-det.html',
   styleUrl: './blog-det.css',
   encapsulation: ViewEncapsulation.None

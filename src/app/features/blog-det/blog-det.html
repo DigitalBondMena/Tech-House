@@ -37,7 +37,7 @@
                   [class.toc-item-active]="isSectionActive(i)"
                   (click)="navigateToSection(i)">
                   <span class="toc-number">{{ i + 1 }}.</span>
-                  <span class="toc-text">{{ section.title }}</span>
+                  <span class="toc-text" [innerHTML]="section.title | safeHtml"></span>
                   @if (isSectionActive(i)) {
             
                   <span class="toc-active-bar"></span>

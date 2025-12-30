@@ -116,21 +116,21 @@ app-home-banner {
   z-index: 20;
 }
 
-/* Hero Skeleton Custom Colors */
+/* Hero Skeleton Custom Colors - Transparent */
 :host ::ng-deep .hero-skeleton .p-skeleton {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: transparent !important;
   border-radius: 0.5rem;
 }
 
 :host ::ng-deep .hero-skeleton .p-skeleton::after {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+  background: transparent !important;
 }
 
 :host ::ng-deep .hero-banner-skeleton .p-skeleton {
-  background: #B90000 !important;
+  background: transparent !important;
   border-radius: 0.5rem;
 }
 
 :host ::ng-deep .hero-banner-skeleton .p-skeleton::after {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+  background: transparent !important;
 }
