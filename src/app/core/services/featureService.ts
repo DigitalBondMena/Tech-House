@@ -68,16 +68,8 @@ export class FeatureService {
       }
     }, 50);
 
-    try {
-      const data = await firstValueFrom(this.http.get<HomeResponse>(`${this.baseUrl}${API_END_POINTS.HOME}`));
-      this.apiResponseSignal.set(data);
-      // Save to TransferState if on server
-      if (this.transferState && !this.isBrowser) {
-        this.transferState.set(HOME_KEY, data);
-      }
-    } catch (err) {
-      console.error('Error loading home data:', err);
-    }
+    // Clean up after 30 seconds if no data arrives (timeout)
+    setTimeout(() => clearInterval(checkInterval), 30000);
   }
 
   // =====================
