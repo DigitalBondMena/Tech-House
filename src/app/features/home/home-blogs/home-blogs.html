@@ -36,7 +36,7 @@
         <!-- Desktop: Cards with interactive behavior -->
         <div class="hidden lg:flex flex-row justify-center mt-4 gap-6 items-start min-h-[500px]">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
-                <div class="cursor-pointer transition-all duration-800 blog-card min-h-[500px]" (click)="setActive(i + 1)"
+                <div class="cursor-pointer transition-all duration-800 blog-card min-h-[500px]" (click)="setActive(i + 1, blog, $event)"
                     [class]="activeCard === (i + 1) ? (i === 0 ? 'w-full lg:w-1/2 pt-0' : i === 1 ? 'w-1/2' : 'w-1/2 pt-0') : 'w-full lg:w-1/4  pt-6'">
                     <div class="relative blog-image-container min-h-[40vh]">
                         <img [ngSrc]="getResponsiveImage(blog.image) || '/images/placeholder.webp'" [alt]="blog.title || ''" width="800" height="600" class="rounded-3xl w-full h-[40vh] object-cover transition-all duration-800"
@@ -46,7 +46,7 @@
                                  width="48" height="48"
                                  class="blog-hover-image cursor-pointer w-12 h-12 object-cover"
                                  [alt]="blog.title || ''" 
-                                 (click)="navigateToProjectDetails(blog, $event)">
+                                 (click)="navigateToBlogDetails(blog, $event)">
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@
         <!-- Mobile: Cards stacked normally, full width -->
         <div class="flex lg:hidden flex-col gap-6 mt-4 min-h-[500px]">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
-                <div class="cursor-pointer blog-card-mobile w-full min-h-[400px]" (click)="navigateToProjectDetails(blog, $event)">
+                <div class="cursor-pointer blog-card-mobile w-full min-h-[400px]" (click)="navigateToBlogDetails(blog, $event)">
                     <div class="relative blog-image-container w-full min-h-[40vh] mb-4">
                         <img [ngSrc]="getResponsiveImage(blog.image) || '/images/placeholder.webp'" [alt]="blog.title || ''" width="800" height="600" class="rounded-3xl w-full h-[40vh] object-cover">
                     </div>
@@ -100,6 +100,7 @@
     <!-- } -->
     <div class="flex justify-center ">
         <app-app-button [btnText]="btnText"
+            routerLink="/Blogs"
             customClass="mt-0! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
         </app-app-button>
     </div>

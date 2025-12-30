@@ -25,10 +25,10 @@
   <div class="flex justify-between items-center min-h-[60px]">
     <app-section-title [title]="aboutData?.title || ''"></app-section-title>
 
-    <span class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer">
+    <a routerLink="/About-Us" class="underline text-[#ED2924] font-semibold text-xl flex items-center cursor-pointer">
       معرفة المزيد
       <img ngSrc="images/icons/arrow-left.webp" alt="arrow-left" width="24" height="24" class="mx-1">
-    </span>
+    </a>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 items-start mt-10 min-h-[500px]">

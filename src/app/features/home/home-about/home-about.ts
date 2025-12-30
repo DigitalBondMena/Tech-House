@@ -15,6 +15,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AboutHome } from '../../../core/models/home.model';
 import { SharedFeatureService } from '../../../core/services/sharedFeatureService';
@@ -23,7 +24,7 @@ import { SectionTitle } from '../../../shared/components/section-title/section-t
 @Component({
   selector: 'app-home-about',
   standalone: true,
-  imports: [SectionTitle, NgOptimizedImage, SkeletonModule],
+  imports: [SectionTitle, NgOptimizedImage, SkeletonModule, RouterLink],
   templateUrl: './home-about.html',
   styleUrl: './home-about.css'
 })

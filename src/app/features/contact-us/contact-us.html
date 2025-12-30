@@ -4,21 +4,23 @@
     [paragraph]="contactHero()?.paragraph || 'نحن هنا للإجابة عن أسئلتك ودعمك في كل خطوة تواصل معنا ودع فريقنا يوجهك نحو الحل الأنسب.'"
     [image]="contactHero()?.image ? getResponsiveImage(contactHero()?.image) : undefined"
     [imagePosition]="contactHero()?.image ? 'left' : 'none'"
-    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[0px]! -left-[0px]! lg:-left-[0px]!">
+    imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-auto absolute -bottom-[0px]! -left-[0px]! lg:-left-[0px]!"
+    customClass="h-[80vh]!" >
+    
 </app-hero-section>
 }
 
 <!-- Contact Information Section -->
 @if (contactUsData()) {
-<section class="overflow-hidden section-pattern section-pattern-right" dir="rtl">
+<section class="overflow-hidden section-pattern section-pattern-right" >
     <app-circle-sidebar class="hidden xl:block"></app-circle-sidebar>
-    <div class="container mx-auto px-5 lg:px-20 py-40 bg-white relative ">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <div class="container mx-auto px-5 lg:px-20 py-40  relative ">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <!-- Left Side - Image -->
             <div class="col-span-1">
                 @if (contactUsData()?.image) {
                 <img [src]="getResponsiveImage(contactUsData()?.image)" alt="Contact Us"
-                    class="w-full h-auto rounded-lg" />
+                    class="w-[500px] h-[500px]  object-contain rounded-lg " />
                 }
             </div>
             <!-- Right Side - Contact Info Text -->

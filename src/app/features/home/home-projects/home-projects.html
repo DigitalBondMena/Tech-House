@@ -48,13 +48,13 @@
                      class="project-card absolute flex justify-between items-center rounded-3xl p-8 px-10 transition-all duration-300 cursor-pointer min-h-[300px]"
                      [class]="i === 0 ? '-rotate-4 -translate-y-20 bg-gray-200' : i === 1 ? 'active-card bg-white shadow-lg' : 'rotate-4 translate-y-20 bg-gray-100'"
                      (click)="onCardClick(i)">
-                    <div class="w-1/4 p-5 xl:p-10 min-h-[300px] min-w-[200px]">
-                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.webp'" [alt]="project.title || ''" width="300" height="300" class="w-[300px] h-[300px] xl:w-[200px] xl:h-[200px] object-cover">
+                    <div class="w-1/4 p-5 xl:p-10 ">
+                        <img [ngSrc]="getResponsiveImage(project.image) || '/images/placeholder.webp'" [alt]="project.title || ''" width="300" height="300" class="w-[250px] h-[230px] xl:w-[400px] xl:h-[300px]  object-cover ">
                     </div>
                     <div class="h-full w-3/4 p-5 xl:p-10 min-h-[300px]">
                         <h2 class="text-xl text-[#636363] font-medium mb-6">{{ project.category_name }}</h2>
                         <h3 class="text-xl font-bold text-[#440000] mb-6">{{ project.title }}</h3>
-                        <p class="mb-12 text-lg font-medium text-[#440000]">{{ project.text }}</p>
+                        <p class="mb-12 text-xs xl:text-lg font-medium text-[#440000]">{{ project.text }}</p>
                         <span class="underline text-[#ED2924] font-semibold text-xl flex items-center justify-center">عرض تفاصيل
                             المشروع
                             <img ngSrc="images/icons/arrow-left.webp" alt="arrow-left" width="32" height="32" class="mx-1 w-8! ">
@@ -74,7 +74,7 @@
                     <div class="w-full md:w-3/4 p-4 min-h-[200px]">
                         <h2 class="text-lg md:text-xl text-[#636363] font-medium mb-4">{{ project.category_name }}</h2>
                         <h3 class="text-lg md:text-xl font-bold text-[#440000] mb-4">{{ project.title }}</h3>
-                        <p class="mb-6 text-base md:text-lg font-medium text-[#440000] line-clamp-3">{{ project.text }}</p>
+                        <p class="mb-6 text-xs xl:text-lg font-medium text-[#440000] line-clamp-3">{{ project.text }}</p>
                         <span class="underline text-[#ED2924] font-semibold text-lg flex items-center justify-center md:justify-start">عرض تفاصيل
                             المشروع
                             <img ngSrc="images/icons/arrow-left.webp" alt="arrow-left" width="32" height="32" class="mx-1 w-6 h-6">
@@ -87,7 +87,8 @@
 
     <div class="flex justify-center ">
         <app-app-button [btnText]="btnText"
-            customClass="mt-20! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
+            routerLink="/Projects"
+            customClass="mt-20! lg:mt-50! xl:mt-40! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center transition duration-300 cursor-pointer">
         </app-app-button>
     </div>
   }
