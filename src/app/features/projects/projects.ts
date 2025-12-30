@@ -58,12 +58,12 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+
+    // Load data in ngOnInit (runs on both server and client)
+    this.sharedFeatureService.loadServicesSection();
   }
 
   ngAfterViewInit(): void {
-    // Load service titles
-    this.sharedFeatureService.loadServicesSection();
-    
     // Load projects initially
     this.loadProjects(1);
 

@@ -124,17 +124,17 @@ export class Home implements OnInit, AfterViewInit {
       // Prevent scroll during page load - more robust method
       // this.disableScroll();
     }
+
+    // Load data in ngOnInit (runs on both server and client)
+    // On server: loads data and saves to TransferState
+    // On client: checks TransferState first, then loads if needed
+    this.featureService.loadHomeData();
+    this.sharedFeatureService.loadCounters();
+    this.sharedFeatureService.loadPartnersClients();
   }
 
   ngAfterViewInit(): void {
-    // Load home data when view initializes
-    this.featureService.loadHomeData();
-
-    // Load counters data (needed for home-about section)
-    this.sharedFeatureService.loadCounters();
-
-    // Load partners/clients data (needed for home-banners-sec section)
-    this.sharedFeatureService.loadPartnersClients();
+    // View initialization logic (if needed)
   }
 
   private disableScroll(): void {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ResponsiveImage } from '../../../core/models/home.model';
@@ -22,14 +22,14 @@ export class Footer implements OnInit, AfterViewInit {
   servicesSection = this.sharedFeatureService.servicesSection;
 
   ngOnInit(): void {
-    // Data loading moved to ngAfterViewInit
+    // Load data in ngOnInit (runs on both server and client)
+    // Note: These may be called from other components as well, but services have guards to prevent duplicate calls
+    this.sharedFeatureService.loadContactUsData();
+    this.sharedFeatureService.loadServicesSection();
   }
 
   ngAfterViewInit(): void {
-    // Load contact us data when view initializes
-    this.sharedFeatureService.loadContactUsData();
-    // Load services section data for footer
-    this.sharedFeatureService.loadServicesSection();
+    // View initialization logic (if needed)
   }
 
   // Helper method to get responsive image

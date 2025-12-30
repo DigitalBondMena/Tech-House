@@ -1,6 +1,9 @@
 
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, makeStateKey, PLATFORM_ID, signal, TransferState } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
 import { AboutResponse, BlogDetailsResponse, BlogsResponse, HomeResponse, JobDetailsResponse, JobsResponse, ProjectDetailsResponse, ProjectsResponse, ServicesResponse } from '../models/home.model';
@@ -16,6 +19,8 @@ const HOME_KEY = makeStateKey<HomeResponse>('home');
 export class FeatureService {
 
   private apiService = inject(ApiService);
+  private http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
   private platformId = inject(PLATFORM_ID);
   private transferState = inject(TransferState, { optional: true });
   private isBrowser = isPlatformBrowser(this.platformId);
@@ -61,36 +66,32 @@ export class FeatureService {
   // =====================
   // HOME API
   // =====================
-  loadHomeData(): void {
+  async loadHomeData(): Promise<void> {
     // Check TransferState first (SSR data)
     if (this.transferState && this.isBrowser && this.transferState.hasKey(HOME_KEY)) {
       const serverData = this.transferState.get<HomeResponse>(HOME_KEY, {} as HomeResponse);
-      if (serverData) {
+      if (serverData && Object.keys(serverData).length > 0) {
         this.apiResponseSignal.set(serverData);
         this.transferState.remove(HOME_KEY);
         return;
       }
     }
 
-    const result = this.apiService.get<HomeResponse>(API_END_POINTS.HOME);
-    
-    // Watch the signal and update when data arrives
-    // Since the API service updates the signal asynchronously,
-    // we'll check periodically until data is available
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.apiResponseSignal.set(data);
-        // Save to TransferState if on server
-        if (this.transferState && !this.isBrowser) {
-          this.transferState.set(HOME_KEY, data);
-        }
-        clearInterval(checkInterval);
-      }
-    }, 50);
+    // If data already loaded, don't reload
+    if (this.apiResponseSignal()) {
+      return;
+    }
 
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    try {
+      const data = await firstValueFrom(this.http.get<HomeResponse>(`${this.baseUrl}${API_END_POINTS.HOME}`));
+      this.apiResponseSignal.set(data);
+      // Save to TransferState if on server
+      if (this.transferState && !this.isBrowser) {
+        this.transferState.set(HOME_KEY, data);
+      }
+    } catch (err) {
+      console.error('Error loading home data:', err);
+    }
   }
 
   // =====================
