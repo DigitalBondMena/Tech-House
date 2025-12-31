@@ -52,7 +52,7 @@
 //  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
 //  */
 // if (isMainModule(import.meta.url) || process.env['pm_id']) {
-//   const port = process.env['PORT'] || 5000;
+//   const port = process.env['PORT'] || 4000;
 //   app.listen(port, (error) => {
 //     if (error) {
 //       throw error;
@@ -78,10 +78,10 @@
 
 
 
-/**
- * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
- */
-export const reqHandler = createNodeRequestHandler(app);
+// /**
+//  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
+//  */
+// export const reqHandler = createNodeRequestHandler(app);
 import { AngularAppEngine, createRequestHandler } from '@angular/ssr'
 import { getContext } from '@netlify/angular-runtime/context.mjs'
 
