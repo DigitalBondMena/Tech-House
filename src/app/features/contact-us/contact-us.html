@@ -70,7 +70,7 @@
                     }
                 </div>
                 @if (counters() && counters()!.length > 0) {
-                <section #countersSection class="container mx-auto px-5 py-12 bg-white" dir="rtl">
+                <section #countersSection class="container mx-auto px-5 py-12 " dir="rtl">
                     <div class="grid  grid-cols-3 gap-6">
                         @for (counter of counters()!.slice(0, 3); track $index; let i = $index) {
                         <div class="bg-counter rounded-2xl p-3 lg:p-6  text-center text-white">

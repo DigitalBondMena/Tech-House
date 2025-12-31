@@ -3,7 +3,7 @@
     customClass="h-[80vh]!" [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
     [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
     imageClass="max-w-xs md:max-w-sm lg:max-w-xl w-full h-aut absolute -bottom-[0px]! -left-[0px]! "
-    customClass="h-[80vh]!" >
+    customClass=" h-[90vh] lg:h-[80vh]!" >
     
 
 </app-hero-section>
@@ -45,12 +45,12 @@
   </div>
   <div class="w-full">
     <app-banner [items]="partners()" direction="right"
-      customClass="-rotate-[20deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[150%] lg:w-[120%] -right-40">
+      customClass="-rotate-[28deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[160%] lg:w-[120%] -right-40">
     </app-banner>
   </div>
   <div class="w-full">
     <app-banner [items]="clients()" direction="left"
-      customClass="rotate-[20deg] lg:rotate-[10deg] translate-y-[10px] relative w-[150%] lg:w-[120%] -right-40 bg-[#940000]!">
+      customClass="rotate-[28deg] lg:rotate-[10deg] translate-y-[10px] relative w-[160%] lg:w-[120%] -right-26 lg:-right-40 bg-[#940000]!">
     </app-banner>
   </div>
 </section>
