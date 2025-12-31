@@ -34,8 +34,12 @@
 @else if (hasJob()) {
 <!-- Hero Section with Job Title -->
 <section class="bg-linear section-pattern">
-    <div class="job-hero-section bg-hero overflow-hidden">
-        <div class="container h-full mx-auto px-5 lg:px-20 relative">
+    <div class="job-hero-section bg-hero overflow-hidden relative">
+        <!-- Background Image for LCP Optimization -->
+        <img src="/images/hero/hero.webp" alt="Job Hero Background" 
+            class="hero-background-image" width="1920" height="1080" fetchpriority="high" loading="eager" />
+        <div class="container h-full mx-auto px-5 lg:px-20 relative z-10">
+            
             <div class="job-hero-content pb-20!">
                 <!-- Job Title -->
                 <h1 class="job-hero-title">
