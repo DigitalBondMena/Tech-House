@@ -9,7 +9,7 @@
   overflow: hidden;
 }
 
-/* Hero GIF Video - Background layer - Optimized for LCP */
+/* Hero GIF Video - Background layer - Enhanced after First Paint */
 .hero-gif-video {
   position: absolute;
   inset: 0;
@@ -17,9 +17,9 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  z-index: 1;
+  z-index: 2;
   /* GPU acceleration for smooth playback */
-  will-change: transform;
+  will-change: transform, opacity;
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -27,6 +27,13 @@
   content-visibility: auto;
   /* Prevent video from blocking render */
   pointer-events: none;
+  /* Smooth transition when video appears */
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.hero-gif-video[style*="opacity: 1"] {
+  opacity: 1 !important;
 }
 
 /* Mobile optimizations for video */
@@ -63,7 +70,7 @@
   object-fit: cover;
   object-position: center;
   z-index: 2;
-  /* Ensure image is visible immediately */
+  /* Ensure image is visible immediately for LCP */
   content-visibility: auto;
   /* GPU acceleration for better performance */
   will-change: transform;
@@ -74,6 +81,15 @@
   backface-visibility: hidden;
   /* Prevent image from causing layout shifts */
   display: block;
+  /* Smooth transition when video appears */
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.hero-lcp-image.hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Mobile optimizations - Better performance on small screens */

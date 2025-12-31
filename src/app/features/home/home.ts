@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, computed, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
@@ -27,6 +27,10 @@ export class Home implements OnInit, AfterViewInit {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private scrollEnabled = false;
+  private cdr = inject(ChangeDetectorRef);
+  
+  // Control video visibility - show after First Paint for LCP optimization
+  showVideo = false;
 
   // 🔹 Home Data from API
   homeData = computed(() => this.featureService.homeData());
@@ -134,7 +138,39 @@ export class Home implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // View initialization logic (if needed)
+    // Show video after First Paint for LCP optimization
+    // Image shows first for optimal LCP, then video enhances the experience
+    if (this.isBrowser) {
+      // Use requestAnimationFrame to wait for First Paint
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          this.showVideo = true;
+          this.cdr.detectChanges();
+          // Play video after it's rendered
+          setTimeout(() => {
+            const videoElement = document.querySelector('.hero-gif-video') as HTMLVideoElement;
+            if (videoElement) {
+              // Load video source
+              videoElement.load();
+              // Wait for video to be ready
+              videoElement.addEventListener('canplay', () => {
+                videoElement.play().catch((error) => {
+                  console.warn('Video autoplay prevented:', error);
+                });
+              }, { once: true });
+              // Fallback - try to play after a delay
+              setTimeout(() => {
+                if (videoElement.paused) {
+                  videoElement.play().catch((error) => {
+                    console.warn('Video autoplay prevented:', error);
+                  });
+                }
+              }, 1000);
+            }
+          }, 300);
+        });
+      });
+    }
   }
 
   private disableScroll(): void {
