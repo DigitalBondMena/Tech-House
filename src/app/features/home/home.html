@@ -15,7 +15,7 @@
         <div class="hero-content relative h-full w-full flex items-center justify-between" dir="rtl">
           <div>
             <!-- H1 always rendered for LCP optimization - shows default text immediately -->
-            <h1 class="text-2xl md:text-3xl font-semibold text-white">
+            <h1 class="text-3xl md:text-4xl font-semibold text-white max-w-sm lg:max-w-lg">
               {{ heroSection()?.title || 'ابتكارات تسويقية رقمية تصنع الفرق لشركتك' }}
             </h1>
             @if (!heroSection()) {
@@ -26,7 +26,8 @@
             } @else {
             @if (heroSection()!.input_title) {
             <app-app-button [btnText]="'ابتكار يصنع كفائتنا'"
-              customClass="px-7 py-4 bg-black/60 text-white rounded-full flex items-center justify-center transition duration-300 mt-6">
+              routerLink="/Services"
+              customClass="px-7 py-4 bg-black/60 text-white rounded-full flex items-center justify-center transition duration-300 mt-6 cursor-pointer">
             </app-app-button>
             }
             }

@@ -1,10 +1,18 @@
-<button
-    [disabled]="disabled"
-    (click)="onClick()"
-    class="ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center]  transition duration-300" 
-    [class]="customClass"
-    [class.opacity-50]="disabled"
-    [class.cursor-not-allowed]="disabled">
-  {{ btnText }}
+@if (routerLink) {
+  <button
+      [routerLink]="routerLink"
+      [class]="customClass || 'ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center transition duration-300 cursor-pointer'">
+    {{ btnText }}
     <img src="images/icons/arrow-left.webp" alt="arrow-left" class="h-7 w-7 p-1 ms-5  bg-white rounded-full">
-</button>
+  </button>
+} @else {
+  <button
+      [disabled]="disabled"
+      (click)="onClick()"
+      [class]="customClass || 'ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center transition duration-300 cursor-pointer'"
+      [class.opacity-50]="disabled"
+      [class.cursor-not-allowed]="disabled">
+    {{ btnText }}
+    <img src="images/icons/arrow-left.webp" alt="arrow-left" class="h-7 w-7 p-1 ms-5  bg-white rounded-full">
+  </button>
+}

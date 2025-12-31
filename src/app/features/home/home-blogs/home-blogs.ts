@@ -36,11 +36,17 @@ export class HomeBlogs implements OnChanges {
   constructor(private router: Router) {}
 
   //! method to set active card
-  setActive(cardNumber: number, event?: Event) {
+  setActive(cardNumber: number, blog?: Blog, event?: Event) {
     if (event) {
       event.stopPropagation();
     }
     this.activeCard = cardNumber;
+  }
+
+  //! method to navigate to blog details
+  navigateToBlogDetails(blog: Blog, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/Blog-Det'], { queryParams: { slug: blog.slug } });
   }
 
   //! method to navigate to project details
