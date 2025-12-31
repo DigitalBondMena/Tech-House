@@ -35,25 +35,24 @@ export class HomeBlogs implements OnChanges {
 
   constructor(private router: Router) {}
 
-  //! method to set active card or navigate if already active
-  setActive(cardNumber: number, blog: Blog, event?: Event) {
+  //! method to set active card
+  setActive(cardNumber: number, blog?: Blog, event?: Event) {
     if (event) {
       event.stopPropagation();
     }
-    // If clicking on already active card, navigate to blog details
-    if (this.activeCard === cardNumber) {
-      this.navigateToBlogDetails(blog, event);
-    } else {
-      this.activeCard = cardNumber;
-    }
+    this.activeCard = cardNumber;
   }
 
   //! method to navigate to blog details
-  navigateToBlogDetails(blog: Blog, event?: Event) {
-    if (event) {
-      event.stopPropagation();
-    }
+  navigateToBlogDetails(blog: Blog, event: Event) {
+    event.stopPropagation();
     this.router.navigate(['/Blog-Det'], { queryParams: { slug: blog.slug } });
+  }
+
+  //! method to navigate to project details
+  navigateToProjectDetails(blog: Blog, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/Project-Det'], { queryParams: { slug: blog.slug } });
   }
 
   // Helper method to get responsive image
