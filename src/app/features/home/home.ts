@@ -27,6 +27,9 @@ export class Home implements OnInit, AfterViewInit {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private scrollEnabled = false;
+  
+  // Control video visibility for better performance
+  showVideo = false;
 
   // 🔹 Home Data from API
   homeData = computed(() => this.featureService.homeData());
@@ -135,6 +138,12 @@ export class Home implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // View initialization logic (if needed)
+    // Show video after view init for better performance
+    if (this.isBrowser) {
+      requestAnimationFrame(() => {
+        this.showVideo = true;
+      });
+    }
   }
 
   private disableScroll(): void {
