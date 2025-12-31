@@ -1,6 +1,6 @@
 @if (bannerSection()) {
 <app-hero-section [title]="bannerSection()?.title || ''" [paragraph]="bannerSection()?.text || ''"
-    customClass="h-[80vh]!" [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
+    customClass=" h-[90vh] lg:h-[80vh]!" [image]="bannerSection()?.image ? getResponsiveImage(bannerSection()?.image) : undefined"
     [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
     imageClass=" absolute -bottom-[0px]! -left-[0px]! lg:-left-[0px]!">
 </app-hero-section>
