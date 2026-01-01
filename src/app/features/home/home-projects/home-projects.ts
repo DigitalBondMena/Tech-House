@@ -95,11 +95,14 @@ export class HomeProjects implements AfterViewInit, OnChanges {
       return;
     }
 
-    // Get the clicked project
-    const clickedProject = this.projects[clickedIndex];
+    // Get the clicked project from the sliced array (first 3 projects)
+    const displayedProjects = this.projects.slice(0, 3);
+    const clickedProject = displayedProjects[clickedIndex];
     if (!clickedProject) {
       return;
     }
+
+  
 
     // On mobile, navigate directly to project details
     if (this.getWindowWidth() < 1024) {

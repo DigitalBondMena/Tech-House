@@ -34,7 +34,7 @@
     <app-section-title [title]="projectsTitle" customClass="flex justify-start mb-10 min-h-[60px]">
     </app-section-title>
         <!-- Desktop: Cards with interactive behavior -->
-        <div class="hidden lg:flex flex-row justify-center mt-4 gap-6 items-start min-h-[500px]">
+        <div class="hidden lg:flex flex-row justify-center mt-4 gap-6 items-start  h-[650px]">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
                 <div class="cursor-pointer transition-all duration-800 blog-card min-h-[500px]" 
                     (click)="navigateToBlogDetails(blog, $event)"
@@ -102,7 +102,7 @@
     <div class="flex justify-center ">
         <app-app-button [btnText]="btnText"
             routerLink="/Blogs"
-            customClass="mt-0! ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
+            customClass="mt-0! cursor-pointer ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-full flex items-center justify-center  transition duration-300">
         </app-app-button>
     </div>
   }

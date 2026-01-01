@@ -1,8 +1,8 @@
 
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
-import { HomeResponse, AboutResponse, ServicesResponse, BlogsResponse, BlogDetailsResponse, ProjectsResponse, ProjectDetailsResponse, JobsResponse, JobDetailsResponse } from '../models/home.model';
+import { AboutResponse, BlogDetailsResponse, BlogsResponse, HomeResponse, JobDetailsResponse, JobsResponse, ProjectDetailsResponse, ProjectsResponse, ServicesResponse } from '../models/home.model';
 import { ApiService } from './apiservice';
 
 
@@ -180,8 +180,26 @@ export class FeatureService {
     // Reset previous data
     this.projectDetailsResponseSignal.set(null);
     
+    // Decode the slug first in case it was double-encoded, then encode properly
+    // Handle both encoded and unencoded slugs
+    let cleanSlug = slug;
+    try {
+      // If slug is already encoded, decode it first
+      if (slug.includes('%')) {
+        cleanSlug = decodeURIComponent(slug);
+      }
+    } catch (e) {
+      // If decoding fails, use the original slug
+      cleanSlug = slug;
+    }
+    
+    // Remove spaces from the slug
+    cleanSlug = cleanSlug.replace(/\s+/g, '');
+    
+    
     // Encode the slug to handle Arabic characters
-    const encodedSlug = encodeURIComponent(slug);
+    // Use encodeURIComponent which properly handles special characters
+    const encodedSlug = encodeURIComponent(cleanSlug);
     const endpoint = API_END_POINTS.PROJECT_DETAILS.replace('{slug}', encodedSlug);
     
     // Try both response types - sometimes API might return different structure
