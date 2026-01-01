@@ -30,11 +30,11 @@ export const routes: Routes = [
                 )
             },
             {
-                path: 'Contact-Us', loadComponent: () => import('./features/contact-us/contact-us').then(m => m.ContactUs
+                path: 'Contact-Us/Done', loadComponent: () => import('./features/contact-us/contact-us').then(m => m.ContactUs
                 )
             },
             {
-                path: 'Contact-Us/Done', loadComponent: () => import('./features/contact-us/contact-us').then(m => m.ContactUs
+                path: 'Contact-Us', loadComponent: () => import('./features/contact-us/contact-us').then(m => m.ContactUs
                 )
             },
             {
@@ -51,11 +51,11 @@ export const routes: Routes = [
                 )
             },
             {
-                path: 'Jop-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                path: 'Jop-Det/Done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             {
-                path: 'Jop-Det/Done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                path: 'Jop-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             { path: '**', redirectTo: '', pathMatch: 'full' },

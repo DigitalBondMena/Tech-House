@@ -1,15 +1,16 @@
-import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { CommonModule, isPlatformBrowser, Location } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Component, computed, effect, inject, PLATFORM_ID, signal, ViewEncapsulation } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { FloatLabelModule } from "primeng/floatlabel";
 import { InputGroupModule } from "primeng/inputgroup";
 import { InputGroupAddonModule } from "primeng/inputgroupaddon";
 import { InputTextModule } from "primeng/inputtext";
 import { SelectModule } from "primeng/select";
 import { TextareaModule } from "primeng/textarea";
+import { filter } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
 import { API_END_POINTS } from "../../core/constant/ApiEndPoints";
 import { FeatureService } from "../../core/services/featureService";
@@ -48,6 +49,7 @@ export class JopDet {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   private readonly apiUrl = environment.apiUrl;
+  private location = inject(Location);
   isBrowser = isPlatformBrowser(this.platformId);
 
 
@@ -180,10 +182,14 @@ export class JopDet {
     this.initializeContactForm();
     
     // Check if URL contains "/Done" and show popup if it does
-    const currentUrl = this.router.url.split('?')[0];
-    if (currentUrl.endsWith('/Done')) {
-      this.showSuccessPopup.set(true);
-    }
+    this.checkUrlForDone();
+    
+    // Listen to route changes
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkUrlForDone();
+    });
     
     this.route.queryParams.subscribe(params => {
       const slug = params['slug'];
@@ -614,7 +620,10 @@ export class JopDet {
           const currentUrl = this.router.url.split('?')[0];
           if (!currentUrl.endsWith('/Done')) {
             const queryParams = this.router.parseUrl(this.router.url).queryParams;
-            this.router.navigate([currentUrl + '/Done'], { queryParams });
+            const queryString = Object.keys(queryParams).length > 0 
+              ? '?' + new URLSearchParams(queryParams as any).toString() 
+              : '';
+            this.router.navigateByUrl(currentUrl + '/Done' + queryString, { replaceUrl: false });
           }
         },
         error: (error) => {
@@ -846,12 +855,22 @@ export class JopDet {
 
   onClosePopup(): void {
     this.showSuccessPopup.set(false);
-    // Remove "Done" from the route path
-    const currentUrl = this.router.url.split('?')[0];
+    // Remove "Done" from the route path using Location API
+    const currentUrl = this.location.path().split('?')[0];
     if (currentUrl.endsWith('/Done')) {
       const baseUrl = currentUrl.replace('/Done', '');
       const queryParams = this.router.parseUrl(this.router.url).queryParams;
-      this.router.navigate([baseUrl], { queryParams });
+      const queryString = Object.keys(queryParams).length > 0 
+        ? '?' + new URLSearchParams(queryParams as any).toString() 
+        : '';
+      this.location.replaceState(baseUrl + queryString);
+    }
+  }
+  
+  private checkUrlForDone(): void {
+    const currentUrl = this.router.url.split('?')[0];
+    if (currentUrl.endsWith('/Done')) {
+      this.showSuccessPopup.set(true);
     }
   }
 }
