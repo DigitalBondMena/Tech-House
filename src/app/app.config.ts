@@ -1,13 +1,13 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideClientHydration, withEventReplay, withIncrementalHydration } from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { loadingInterceptor } from './core/interceptors/loading-interceptor';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 export const appConfig: ApplicationConfig = {
@@ -17,9 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling({
-        scrollPositionRestoration: 'top'
+        scrollPositionRestoration: 'enabled'
       }),
-
+      withViewTransitions()
     ),
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
