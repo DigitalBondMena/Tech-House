@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, computed, ElementRef, inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
@@ -24,6 +24,7 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
   private featureService = inject(FeatureService);
   private sharedFeatureService = inject(SharedFeatureService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private ngZone = inject(NgZone);
@@ -64,13 +65,57 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // Load projects initially
-    this.loadProjects(1);
-
-    if (this.isBrowser && this.selectedIndex() === null) {
-      setTimeout(() => {
-        this.selectService(null, 0);
-      }, 300);
+    // Check for service query parameter
+    if (this.isBrowser) {
+      this.route.queryParams.subscribe(params => {
+        const serviceSlug = params['service'];
+        if (serviceSlug) {
+          // Wait for serviceTitles to be loaded, then find the service index by slug
+          let retryCount = 0;
+          const maxRetries = 10;
+          const checkService = () => {
+            const serviceTitles = this.serviceTitles();
+            if (serviceTitles.length > 0) {
+              const serviceIndex = serviceTitles.findIndex(st => st.slug === serviceSlug);
+              if (serviceIndex !== -1) {
+                // Select the service (index + 1 because index 0 is "الكل")
+                setTimeout(() => {
+                  this.selectService(serviceSlug, serviceIndex + 1);
+                }, 300);
+                return;
+              }
+              // Service not found in loaded serviceTitles, fall through to default behavior
+              if (this.selectedIndex() === null) {
+                setTimeout(() => {
+                  this.selectService(null, 0);
+                }, 300);
+              }
+            } else if (retryCount < maxRetries) {
+              // If serviceTitles not loaded yet, wait a bit and try again
+              retryCount++;
+              setTimeout(checkService, 100);
+            } else {
+              // Max retries reached, fall through to default behavior
+              if (this.selectedIndex() === null) {
+                setTimeout(() => {
+                  this.selectService(null, 0);
+                }, 300);
+              }
+            }
+          };
+          checkService();
+          return;
+        }
+        // No service parameter, select "الكل"
+        if (this.selectedIndex() === null) {
+          setTimeout(() => {
+            this.selectService(null, 0);
+          }, 300);
+        }
+      });
+    } else {
+      // SSR: Load projects initially without filter
+      this.loadProjects(1);
     }
   }
 

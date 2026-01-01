@@ -17,6 +17,19 @@
 
 .blog-card {
   position: relative;
+  cursor: pointer;
+}
+
+.blog-card * {
+  pointer-events: none;
+}
+
+.blog-hover-overlay {
+  pointer-events: none !important;
+}
+
+.blog-hover-image {
+  pointer-events: none !important;
 }
 
 .blog-image-container {

@@ -36,7 +36,9 @@
         <!-- Desktop: Cards with interactive behavior -->
         <div class="hidden lg:flex flex-row justify-center mt-4 gap-6 items-start min-h-[500px]">
             @for (blog of getDisplayBlogs(); track blog.slug; let i = $index) {
-                <div class="cursor-pointer transition-all duration-800 blog-card min-h-[500px]" (click)="setActive(i + 1, blog, $event)"
+                <div class="cursor-pointer transition-all duration-800 blog-card min-h-[500px]" 
+                    (click)="navigateToBlogDetails(blog, $event)"
+                    (mouseenter)="setActive(i + 1, blog, $event)"
                     [class]="activeCard === (i + 1) ? (i === 0 ? 'w-full lg:w-1/2 pt-0' : i === 1 ? 'w-1/2' : 'w-1/2 pt-0') : 'w-full lg:w-1/4  pt-6'">
                     <div class="relative blog-image-container min-h-[40vh]">
                         <img [ngSrc]="getResponsiveImage(blog.image) || '/images/placeholder.webp'" [alt]="blog.title || ''" width="800" height="600" class="rounded-3xl w-full h-[40vh] object-cover transition-all duration-800"
@@ -45,8 +47,7 @@
                             <img ngSrc="/images/blog-hover.webp" 
                                  width="48" height="48"
                                  class="blog-hover-image cursor-pointer w-12 h-12 object-cover"
-                                 [alt]="blog.title || ''" 
-                                 (click)="navigateToBlogDetails(blog, $event)">
+                                 [alt]="blog.title || ''">
                         </div>
                     </div>
 

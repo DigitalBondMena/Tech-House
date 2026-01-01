@@ -1,5 +1,6 @@
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, PLATFORM_ID, QueryList, SimpleChanges, ViewChildren, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/all';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -34,6 +35,7 @@ export class HomeProjects implements AfterViewInit, OnChanges {
 
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private router = inject(Router);
   
   // Cache window width to avoid repeated reads
   private cachedWindowWidth = signal<number | null>(null);
@@ -87,16 +89,34 @@ export class HomeProjects implements AfterViewInit, OnChanges {
   }
 
   // Handle card click
-  onCardClick(clickedIndex: number) {
+  onCardClick(clickedIndex: number, event?: Event) {
     // Only run in browser, not in SSR
     if (!this.isBrowser) {
       return;
     }
 
-    // Only apply animations on large screens
-    if (this.getWindowWidth() < 1024) return;
+    // Get the clicked project
+    const clickedProject = this.projects[clickedIndex];
+    if (!clickedProject) {
+      return;
+    }
 
-    if (clickedIndex === this.activeCardIndex) return; // Don't do anything if clicking the active card
+    // On mobile, navigate directly to project details
+    if (this.getWindowWidth() < 1024) {
+      if (clickedProject.slug) {
+        this.router.navigate(['/Project-Det'], { queryParams: { slug: clickedProject.slug } });
+      }
+      return;
+    }
+
+    // On desktop, handle active card click differently
+    if (clickedIndex === this.activeCardIndex) {
+      // If clicking the active card, navigate to project details
+      if (clickedProject.slug) {
+        this.router.navigate(['/Project-Det'], { queryParams: { slug: clickedProject.slug } });
+      }
+      return;
+    }
 
     // Get all card elements
     const cards = this.projectCards.toArray().map(card => card.nativeElement);

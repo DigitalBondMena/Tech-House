@@ -56,6 +56,12 @@
 @media (min-width: 1536px) {
   .sidebar {
     transform: translateY(60%);
+    left: -15%;
+  }
+}
+@media (min-width: 1920px) {
+  .sidebar {
+    transform: translateY(60%);
     left: -12%;
   }
 }

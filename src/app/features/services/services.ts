@@ -3,6 +3,7 @@ import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID } from 
 import { RouterModule } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
+import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 
@@ -14,6 +15,7 @@ import { HeroSection } from '../../shared/components/hero-section/hero-section';
 })
 export class Services implements OnInit, AfterViewInit {
   private featureService = inject(FeatureService);
+  private sharedFeatureService = inject(SharedFeatureService);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
@@ -23,6 +25,7 @@ export class Services implements OnInit, AfterViewInit {
     const services = this.servicesData()?.services ?? [];
     return services.filter(s => s.is_active);
   });
+  serviceTitles = computed(() => this.sharedFeatureService.servicesSection() ?? []);
 
   ngOnInit(): void {
     if (this.isBrowser) {
@@ -33,6 +36,8 @@ export class Services implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // Load services data when view initializes
     this.featureService.loadServicesData();
+    // Load service titles for slug matching
+    this.sharedFeatureService.loadServicesSection();
   }
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
@@ -56,6 +61,15 @@ export class Services implements OnInit, AfterViewInit {
   }
 
   getProjectsUrl(service: any): string {
-    return `/Projects`;
+    return '/Projects';
+  }
+
+  getServiceQueryParams(service: any): { service?: string } {
+    // Try to find matching service title by title to get slug
+    const matchingServiceTitle = this.serviceTitles().find(st => st.title === service.title);
+    if (matchingServiceTitle?.slug) {
+      return { service: matchingServiceTitle.slug };
+    }
+    return {};
   }
 }
