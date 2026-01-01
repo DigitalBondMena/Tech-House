@@ -34,6 +34,10 @@ export const routes: Routes = [
                 )
             },
             {
+                path: 'Contact-Us/Done', loadComponent: () => import('./features/contact-us/contact-us').then(m => m.ContactUs
+                )
+            },
+            {
                 path: 'Privacy-Policy', loadComponent: () => import('./features/privacy-policy/privacy-policy').then(m => m.PrivacyPolicy
                 )
             },
@@ -48,6 +52,10 @@ export const routes: Routes = [
             },
             {
                 path: 'Jop-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                )
+            },
+            {
+                path: 'Jop-Det/Done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             { path: '**', redirectTo: '', pathMatch: 'full' },

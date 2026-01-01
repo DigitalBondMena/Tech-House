@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
-import { environment } from '../../../../environments/environment';
 import { API_END_POINTS } from '../../../core/constant/ApiEndPoints';
 import { AppButton } from '../app-button/app-button';
 import { SectionTitle } from '../section-title/section-title';
@@ -132,6 +132,8 @@ export class ContactUsSec implements OnInit {
   submitError = signal<string | null>(null);
   showSuccessPopup = signal(false);
 
+  private router = inject(Router);
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -139,6 +141,12 @@ export class ContactUsSec implements OnInit {
     this.selectedCountryModel = COUNTRIES[0];
     this.selectedCountry.set(COUNTRIES[0]);
     this.initializeForm();
+    
+    // Check if URL contains "/Done" and show popup if it does
+    const currentUrl = this.router.url.split('?')[0];
+    if (currentUrl.endsWith('/Done')) {
+      this.showSuccessPopup.set(true);
+    }
   }
   
   private initializeForm() {
@@ -291,6 +299,13 @@ export class ContactUsSec implements OnInit {
           this.contactForm.reset();
           // Show success popup
           this.showSuccessPopup.set(true);
+          // Add "Done" to the route path
+          const currentUrl = this.router.url.split('?')[0];
+          if (!currentUrl.endsWith('/Done')) {
+            this.router.navigate([currentUrl + '/Done'], {
+              queryParamsHandling: 'preserve'
+            });
+          }
         },
         error: (error) => {
           this.isSubmitting.set(false);
@@ -386,5 +401,12 @@ export class ContactUsSec implements OnInit {
 
   onClosePopup(): void {
     this.showSuccessPopup.set(false);
+    // Remove "Done" from the route path
+    const currentUrl = this.router.url.split('?')[0];
+    if (currentUrl.endsWith('/Done')) {
+      const baseUrl = currentUrl.replace('/Done', '');
+      const queryParams = this.router.parseUrl(this.router.url).queryParams;
+      this.router.navigate([baseUrl], { queryParams });
+    }
   }
 }

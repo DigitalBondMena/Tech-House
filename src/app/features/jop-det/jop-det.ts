@@ -14,10 +14,8 @@ import { environment } from "../../../environments/environment";
 import { API_END_POINTS } from "../../core/constant/ApiEndPoints";
 import { FeatureService } from "../../core/services/featureService";
 import { AppButton } from "../../shared/components/app-button/app-button";
-import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
 import { COUNTRIES } from "../../shared/components/contact-us-sec/models/countries";
 import { Country } from "../../shared/components/contact-us-sec/models/country.model";
-import { SectionTitle } from "../../shared/components/section-title/section-title";
 import { SuccessPopup } from "../../shared/components/success-popup/success-popup";
 
 @Component({
@@ -180,6 +178,12 @@ export class JopDet {
     // Initialize forms
     this.initializeForm();
     this.initializeContactForm();
+    
+    // Check if URL contains "/Done" and show popup if it does
+    const currentUrl = this.router.url.split('?')[0];
+    if (currentUrl.endsWith('/Done')) {
+      this.showSuccessPopup.set(true);
+    }
     
     this.route.queryParams.subscribe(params => {
       const slug = params['slug'];
@@ -606,6 +610,12 @@ export class JopDet {
           this.jobApplicationForm.reset();
           // Show success popup
           this.showSuccessPopup.set(true);
+          // Add "Done" to the route path
+          const currentUrl = this.router.url.split('?')[0];
+          if (!currentUrl.endsWith('/Done')) {
+            const queryParams = this.router.parseUrl(this.router.url).queryParams;
+            this.router.navigate([currentUrl + '/Done'], { queryParams });
+          }
         },
         error: (error) => {
           this.isSubmitting.set(false);
@@ -836,5 +846,12 @@ export class JopDet {
 
   onClosePopup(): void {
     this.showSuccessPopup.set(false);
+    // Remove "Done" from the route path
+    const currentUrl = this.router.url.split('?')[0];
+    if (currentUrl.endsWith('/Done')) {
+      const baseUrl = currentUrl.replace('/Done', '');
+      const queryParams = this.router.parseUrl(this.router.url).queryParams;
+      this.router.navigate([baseUrl], { queryParams });
+    }
   }
 }
