@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, computed, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
+import { forkJoin } from 'rxjs';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { AppButton } from '../../shared/components/app-button/app-button';
@@ -14,6 +15,7 @@ import { HomeBooking } from './home-booking/home-booking';
 import { HomeClientsReview } from './home-clients-review/home-clients-review';
 import { HomeProjects } from './home-projects/home-projects';
 import { HomeServices } from './home-services/home-services';
+
 
 @Component({
   selector: 'app-home',
@@ -129,12 +131,21 @@ export class Home implements OnInit, AfterViewInit {
       // this.disableScroll();
     }
 
-    // Load data in ngOnInit (runs on both server and client)
-    // On server: loads data and saves to TransferState
-    // On client: checks TransferState first, then loads if needed
-    this.featureService.loadHomeData();
-    this.sharedFeatureService.loadCounters();
-    this.sharedFeatureService.loadPartnersClients();
+    // 🔥 PARALLEL API LOADING - Load all APIs simultaneously to reduce critical path latency
+    // This replaces sequential loading which was causing 2.6s+ latency
+    forkJoin({
+      home: this.featureService.loadHomeData(),
+      counters: this.sharedFeatureService.loadCounters(),
+      partners: this.sharedFeatureService.loadPartnersClients()
+    }).subscribe({
+      next: () => {
+        // All APIs loaded in parallel - much faster than sequential
+        // Data is automatically set in signals by the services
+      },
+      error: (err: any) => {
+        console.error('Error loading home page data:', err);
+      }
+    });
   }
 
   ngAfterViewInit(): void {

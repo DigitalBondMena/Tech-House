@@ -1,5 +1,7 @@
 
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 
 import { AboutResponse, BlogDetailsResponse, BlogsResponse, HomeResponse, JobDetailsResponse, JobsResponse, ProjectDetailsResponse, ProjectsResponse, ServicesResponse } from '../models/home.model';
@@ -52,62 +54,76 @@ export class FeatureService {
   jobDetailsData = computed(() => this.jobDetailsResponseSignal());
 
   // =====================
-  // HOME API
+  // HOME API - Optimized with Observable
   // =====================
-  loadHomeData(): void {
-    const result = this.apiService.get<HomeResponse>(API_END_POINTS.HOME);
-    
-    // Watch the signal and update when data arrives
-    // Since the API service updates the signal asynchronously,
-    // we'll check periodically until data is available
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.apiResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
+  loadHomeData(): Observable<HomeResponse | null> {
+    // Check if data already exists
+    if (this.apiResponseSignal()) {
+      return of(this.apiResponseSignal());
+    }
 
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    return this.apiService.get<HomeResponse>(API_END_POINTS.HOME).pipe(
+      tap((data) => {
+        if (data) {
+          this.apiResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading home data:', err);
+        return of(null);
+      })
+    );
+  }
+
+  // =====================
+  // Load Home Data (Legacy - for backward compatibility)
+  // =====================
+  loadHomeDataSync(): void {
+    this.loadHomeData().subscribe();
   }
 
   // =====================
   // ABOUT API
   // =====================
   loadAboutData(): void {
-    const result = this.apiService.get<AboutResponse>(API_END_POINTS.ABOUT);
-    
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.aboutResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
+    // Check if data already exists
+    if (this.aboutResponseSignal()) {
+      return;
+    }
 
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<AboutResponse>(API_END_POINTS.ABOUT).pipe(
+      tap((data) => {
+        if (data) {
+          this.aboutResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading about data:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
   // SERVICES API
   // =====================
   loadServicesData(): void {
-    const result = this.apiService.get<ServicesResponse>(API_END_POINTS.SERVICES);
-    
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.servicesResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
+    // Check if data already exists
+    if (this.servicesResponseSignal()) {
+      return;
+    }
 
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<ServicesResponse>(API_END_POINTS.SERVICES).pipe(
+      tap((data) => {
+        if (data) {
+          this.servicesResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading services data:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
@@ -115,19 +131,18 @@ export class FeatureService {
   // =====================
   loadBlogsData(page: number = 1): void {
     const endpoint = `${API_END_POINTS.BLOGS}?page=${page}`;
-    const result = this.apiService.get<BlogsResponse>(endpoint);
     
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.blogsResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
-
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<BlogsResponse>(endpoint).pipe(
+      tap((data) => {
+        if (data) {
+          this.blogsResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading blogs data:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
@@ -135,19 +150,18 @@ export class FeatureService {
   // =====================
   loadBlogDetails(slug: string): void {
     const endpoint = API_END_POINTS.BLOG_DETAILS.replace('{slug}', slug);
-    const result = this.apiService.get<BlogDetailsResponse>(endpoint);
     
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.blogDetailsResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
-
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<BlogDetailsResponse>(endpoint).pipe(
+      tap((data) => {
+        if (data) {
+          this.blogDetailsResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading blog details:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
@@ -158,19 +172,18 @@ export class FeatureService {
     if (slug) {
       endpoint = `/projects/${slug}?page=${page}`;
     }
-    const result = this.apiService.get<ProjectsResponse>(endpoint);
     
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.projectsResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
-
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<ProjectsResponse>(endpoint).pipe(
+      tap((data) => {
+        if (data) {
+          this.projectsResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading projects data:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
@@ -203,56 +216,43 @@ export class FeatureService {
     const endpoint = API_END_POINTS.PROJECT_DETAILS.replace('{slug}', encodedSlug);
     
     // Try both response types - sometimes API might return different structure
-    const result = this.apiService.get<any>(endpoint);
-    
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        
-        // Check if it's ProjectDetailsResponse (has project property)
-        if (data.project) {
-          this.projectDetailsResponseSignal.set(data as ProjectDetailsResponse);
-          clearInterval(checkInterval);
-        }
-        // Check if it's ProjectsResponse (has projects array) - extract the matching project
-        else if (data.projects && Array.isArray(data.projects.data)) {
-          const projectItem = data.projects.data.find((p: any) => p.slug === slug);
-          if (projectItem) {
+    this.apiService.get<any>(endpoint).pipe(
+      tap((data) => {
+        if (data) {
+          // Check if it's ProjectDetailsResponse (has project property)
+          if (data.project) {
+            this.projectDetailsResponseSignal.set(data as ProjectDetailsResponse);
+          }
+          // Check if it's ProjectsResponse (has projects array) - extract the matching project
+          else if (data.projects && Array.isArray(data.projects.data)) {
+            const projectItem = data.projects.data.find((p: any) => p.slug === slug);
+            if (projectItem) {
+              this.projectDetailsResponseSignal.set({
+                project: projectItem as any
+              } as ProjectDetailsResponse);
+            } else {
+              console.warn('Project not found in list');
+              this.projectDetailsResponseSignal.set(null);
+            }
+          }
+          // If data has project at root level (direct project object)
+          else if (data.id && data.slug) {
             this.projectDetailsResponseSignal.set({
-              project: projectItem as any
+              project: data
             } as ProjectDetailsResponse);
-            clearInterval(checkInterval);
-          } else {
-            console.warn('Project not found in list');
-            // Set null to trigger error state
+          }
+          else {
+            console.warn('Unknown data format:', data);
             this.projectDetailsResponseSignal.set(null);
-            clearInterval(checkInterval);
           }
         }
-        // If data has project at root level (direct project object)
-        else if (data.id && data.slug) {
-          this.projectDetailsResponseSignal.set({
-            project: data
-          } as ProjectDetailsResponse);
-          clearInterval(checkInterval);
-        }
-        else {
-          console.warn('Unknown data format:', data);
-          this.projectDetailsResponseSignal.set(null);
-          clearInterval(checkInterval);
-        }
-      }
-    }, 50);
-
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => {
-      clearInterval(checkInterval);
-      const finalData = result();
-      if (!finalData) {
-        console.error('Failed to load project details after timeout');
-      }
-    }, 30000);
+      }),
+      catchError((err) => {
+        console.error('Error loading project details:', err);
+        this.projectDetailsResponseSignal.set(null);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
@@ -263,19 +263,18 @@ export class FeatureService {
     if (categoryId) {
       endpoint = API_END_POINTS.JOB_BY_CATEGORY.replace('{category_id}', categoryId.toString());
     }
-    const result = this.apiService.get<JobsResponse>(endpoint);
     
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.jobsResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
-
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<JobsResponse>(endpoint).pipe(
+      tap((data) => {
+        if (data) {
+          this.jobsResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading jobs data:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================
@@ -289,19 +288,17 @@ export class FeatureService {
     const encodedSlug = encodeURIComponent(slug);
     const endpoint = API_END_POINTS.JOB_DETAILS.replace('{slug}', encodedSlug);
     
-    const result = this.apiService.get<JobDetailsResponse>(endpoint);
-    
-    // Watch the signal and update when data arrives
-    const checkInterval = setInterval(() => {
-      const data = result();
-      if (data) {
-        this.jobDetailsResponseSignal.set(data);
-        clearInterval(checkInterval);
-      }
-    }, 50);
-
-    // Clean up after 30 seconds if no data arrives (timeout)
-    setTimeout(() => clearInterval(checkInterval), 30000);
+    this.apiService.get<JobDetailsResponse>(endpoint).pipe(
+      tap((data) => {
+        if (data) {
+          this.jobDetailsResponseSignal.set(data);
+        }
+      }),
+      catchError((err) => {
+        console.error('Error loading job details:', err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   // =====================

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { API_END_POINTS } from '../constant/ApiEndPoints';
 import { Counter, CountersResponse, ContactUsData, ContactUsResponse, ServiceTitle, ServicesSectionResponse, ClientPartner, PartnersClientsResponse, PrivacyPolicyData, PrivacyPolicyResponse, ContactHero, ContactHeroResponse } from '../models/home.model';
+import { Observable, catchError, of } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -54,31 +56,35 @@ export class SharedFeatureService {
   privacyPolicyData = computed(() => this.privacyPolicyResponseSignal());
 
   // =====================
-  // COUNTERS API
+  // COUNTERS API - Returns Observable for parallel loading
   // =====================
-  loadCounters(): void {
+  loadCounters(): Observable<Counter[] | null> {
     // إذا كانت البيانات موجودة بالفعل أو جاري التحميل، لا تفعل شيء
     if (this.countersResponseSignal() || this.countersLoading) {
-      return;
+      return of(this.countersResponseSignal());
     }
 
     this.countersLoading = true;
     
-    this.http.get<CountersResponse>(`${this.baseUrl}${API_END_POINTS.COUNTERS}`).subscribe({
-      next: (data) => {
+    return this.http.get<CountersResponse>(`${this.baseUrl}${API_END_POINTS.COUNTERS}`).pipe(
+      map((data) => {
         if (data && data.counters) {
           this.countersResponseSignal.set(data.counters);
+          this.countersLoading = false;
+          return data.counters;
         }
         this.countersLoading = false;
-      },
-      error: (err) => {
+        return null;
+      }),
+      catchError((err) => {
         // Only log if it's not a network/CORS error (status 0)
         if (err.status !== 0) {
           console.error('Error loading counters:', err);
         }
         this.countersLoading = false;
-      }
-    });
+        return of(null);
+      })
+    );
   }
 
   // =====================
@@ -148,17 +154,17 @@ export class SharedFeatureService {
   }
 
   // =====================
-  // CONTACT US API (for Footer)
+  // CONTACT US API (for Footer) - Returns Observable for parallel loading
   // =====================
-  loadContactUsData(): void {
+  loadContactUsData(): Observable<ContactUsData | null> {
     if (this.contactUsResponseSignal() || this.contactUsLoading) {
-      return;
+      return of(this.contactUsResponseSignal());
     }
 
     this.contactUsLoading = true;
     
-    this.http.get<ContactUsResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_US}`).subscribe({
-      next: (data) => {
+    return this.http.get<ContactUsResponse | any>(`${this.baseUrl}${API_END_POINTS.CONTACT_US}`).pipe(
+      tap((data) => {
         const contactUs = data.contactUs || data;
         
         if (contactUs) {
@@ -178,7 +184,7 @@ export class SharedFeatureService {
               phone: contactUs.phone,
               address: contactUs.address
             },
-              social: contactUs.social ? {
+            social: contactUs.social ? {
               map_url: contactUs.social.map_url,
               facebook_url: contactUs.social.facebook_url,
               instagram_url: contactUs.social.instagram_url,
@@ -191,15 +197,16 @@ export class SharedFeatureService {
           this.contactUsResponseSignal.set(contactData);
         }
         this.contactUsLoading = false;
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         // Only log if it's not a network/CORS error (status 0)
         if (err.status !== 0) {
           console.error('Error loading contact us data:', err);
         }
         this.contactUsLoading = false;
-      }
-    });
+        return of(null);
+      })
+    );
   }
 
   // =====================
@@ -257,29 +264,30 @@ export class SharedFeatureService {
   }
 
   // =====================
-  // PARTNERS/CLIENTS API
+  // PARTNERS/CLIENTS API - Returns Observable for parallel loading
   // =====================
-  loadPartnersClients(): void {
+  loadPartnersClients(): Observable<PartnersClientsResponse | null> {
     if (this.partnersClientsResponseSignal() || this.partnersClientsLoading) {
-      return;
+      return of(this.partnersClientsResponseSignal());
     }
 
     this.partnersClientsLoading = true;
     
-    this.http.get<PartnersClientsResponse>(`${this.baseUrl}${API_END_POINTS.BANNERS}`).subscribe({
-      next: (data) => {
+    return this.http.get<PartnersClientsResponse>(`${this.baseUrl}${API_END_POINTS.BANNERS}`).pipe(
+      tap((data) => {
         if (data && (data.clients || data.partners)) {
           this.partnersClientsResponseSignal.set(data);
         }
         this.partnersClientsLoading = false;
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         if (err.status !== 0) {
           console.error('Error loading partners/clients:', err);
         }
         this.partnersClientsLoading = false;
-      }
-    });
+        return of(null);
+      })
+    );
   }
 
   // =====================

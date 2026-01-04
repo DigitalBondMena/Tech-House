@@ -48,7 +48,8 @@ export class HomeBannersSec implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Load data in ngOnInit (runs on both server and client)
     // Note: This may be called from parent component (home) as well, but loadPartnersClients has guard to prevent duplicate calls
-    this.sharedFeatureService.loadPartnersClients();
+    // Subscribe to Observable - data will be set in signal automatically
+    this.sharedFeatureService.loadPartnersClients().subscribe();
   }
 
   ngAfterViewInit(): void {

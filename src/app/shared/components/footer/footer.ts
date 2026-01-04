@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ResponsiveImage } from '../../../core/models/home.model';
@@ -14,6 +14,8 @@ import { SharedFeatureService } from '../../../core/services/sharedFeatureServic
 export class Footer implements OnInit, AfterViewInit {
   private sharedFeatureService = inject(SharedFeatureService);
   private sanitizer = inject(DomSanitizer);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // Contact Us Data from API
   contactUsData = this.sharedFeatureService.contactUsData;
@@ -22,9 +24,31 @@ export class Footer implements OnInit, AfterViewInit {
   servicesSection = this.sharedFeatureService.servicesSection;
 
   ngOnInit(): void {
-    // Load data in ngOnInit (runs on both server and client)
-    // Note: These may be called from other components as well, but services have guards to prevent duplicate calls
-    this.sharedFeatureService.loadContactUsData();
+    // Defer non-critical footer data loading to improve LCP
+    // Footer is below the fold, so we can delay loading its data
+    if (this.isBrowser) {
+      // Use requestIdleCallback if available, otherwise setTimeout
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => {
+          this.loadFooterData();
+        }, { timeout: 2000 });
+      } else {
+        // Fallback: delay by 1 second to let critical content load first
+        setTimeout(() => {
+          this.loadFooterData();
+        }, 1000);
+      }
+    } else {
+      // SSR: load immediately
+      this.loadFooterData();
+    }
+  }
+
+  private loadFooterData(): void {
+    // Load data - services have guards to prevent duplicate calls
+    // Subscribe to Observable - data will be set in signal automatically
+    this.sharedFeatureService.loadContactUsData().subscribe();
+    // loadServicesSection returns void, so no subscribe needed
     this.sharedFeatureService.loadServicesSection();
   }
 

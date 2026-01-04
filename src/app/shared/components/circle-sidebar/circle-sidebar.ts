@@ -18,7 +18,8 @@ export class CircleSidebar implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Load data in ngOnInit (runs on both server and client)
     // Note: This may be called from other components as well, but service has guard to prevent duplicate calls
-    this.sharedFeatureService.loadContactUsData();
+    // Subscribe to Observable - data will be set in signal automatically
+    this.sharedFeatureService.loadContactUsData().subscribe();
   }
 
   ngAfterViewInit(): void {
