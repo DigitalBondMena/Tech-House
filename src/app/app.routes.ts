@@ -7,7 +7,7 @@ export const routes: Routes = [
         path: '',  component: MainLayout,
         children: [
             {
-             path: '',  loadComponent: () => import('./features/home/home').then(m => m.Home)
+             path: '',  component: Home
             },
             {
                 path: 'About-Us', loadComponent: () => import('./features/about-us/about-us').then(m => m.AboutUs
