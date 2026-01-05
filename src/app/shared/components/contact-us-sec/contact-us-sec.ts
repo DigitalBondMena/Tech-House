@@ -145,7 +145,7 @@ export class ContactUsSec implements OnInit {
     this.selectedCountry.set(COUNTRIES[0]);
     this.initializeForm();
     
-    // Check if URL contains "/Done" and show popup if it does
+    // Check if URL contains "/done" and show popup if it does
     this.checkUrlForDone();
     
     // Listen to route changes
@@ -158,7 +158,7 @@ export class ContactUsSec implements OnInit {
   
   private checkUrlForDone(): void {
     const currentUrl = this.router.url.split('?')[0];
-    if (currentUrl.endsWith('/Done')) {
+    if (currentUrl.endsWith('/done')) {
       this.showSuccessPopup.set(true);
     }
   }
@@ -313,14 +313,14 @@ export class ContactUsSec implements OnInit {
           this.contactForm.reset();
           // Show success popup
           this.showSuccessPopup.set(true);
-          // Add "Done" to the route path using Location API
+          // Add "done" to the route path using Location API
           const currentUrl = this.location.path().split('?')[0];
-          if (!currentUrl.endsWith('/Done')) {
+          if (!currentUrl.endsWith('/done')) {
             const queryParams = this.router.parseUrl(this.router.url).queryParams;
             const queryString = Object.keys(queryParams).length > 0 
               ? '?' + new URLSearchParams(queryParams as any).toString() 
               : '';
-            this.location.replaceState(currentUrl + '/Done' + queryString);
+            this.location.replaceState(currentUrl + '/done' + queryString);
           }
         },
         error: (error) => {
@@ -417,10 +417,10 @@ export class ContactUsSec implements OnInit {
 
   onClosePopup(): void {
     this.showSuccessPopup.set(false);
-    // Remove "Done" from the route path using Location API
+    // Remove "done" from the route path using Location API
     const currentUrl = this.location.path().split('?')[0];
-    if (currentUrl.endsWith('/Done')) {
-      const baseUrl = currentUrl.replace('/Done', '');
+    if (currentUrl.endsWith('/done')) {
+      const baseUrl = currentUrl.replace('/done', '');
       const queryParams = this.router.parseUrl(this.router.url).queryParams;
       const queryString = Object.keys(queryParams).length > 0 
         ? '?' + new URLSearchParams(queryParams as any).toString() 

@@ -36,7 +36,10 @@ export class ProjectDet {
 
   // ===== HERO IMAGE =====
   heroImage = computed(() => {
-    return this.getResponsiveImage(this.project()?.image);
+    const project = this.project();
+    // Use banner_image if available, otherwise fallback to image
+    const imageSource = project?.banner_image ;
+    return this.getResponsiveImage(imageSource);
   });
 
   // ===== LOGO =====
@@ -77,7 +80,7 @@ export class ProjectDet {
     this.route.queryParams.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
-        this.router.navigate(['/Projects']);
+        this.router.navigate(['/projects']);
         return;
       }
       // Reset state when slug changes

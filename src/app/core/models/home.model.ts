@@ -390,6 +390,7 @@ export interface BlogDetail {
   slug: string;
   publish_at_ar: string;
   image: string[]; // Array of 3 image URLs [mobile, tablet, desktop]
+  banner_image: string | string[] | null; // Banner image URL (string or array)
   meta_title: string;
   meta_description: string;
   faq_schema: any | null;
@@ -471,6 +472,7 @@ export interface ProjectDetail {
   meta_title: string;
   meta_description: string;
   image: ResponsiveImage;
+  banner_image: ResponsiveImage | null;
   logo: ResponsiveImage;
   project_types: any[];
   project_information: any[];

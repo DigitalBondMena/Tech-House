@@ -61,15 +61,11 @@ export class Services implements OnInit, AfterViewInit {
   }
 
   getProjectsUrl(service: any): string {
-    return '/Projects';
+    return '/projects';
   }
 
   getServiceQueryParams(service: any): { service?: string } {
-    // Try to find matching service title by title to get slug
-    const matchingServiceTitle = this.serviceTitles().find(st => st.title === service.title);
-    if (matchingServiceTitle?.slug) {
-      return { service: matchingServiceTitle.slug };
-    }
+    // Return empty object to show all projects without filtering by service
     return {};
   }
 }

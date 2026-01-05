@@ -107,7 +107,7 @@ export class HomeProjects implements AfterViewInit, OnChanges {
     // On mobile, navigate directly to project details
     if (this.getWindowWidth() < 1024) {
       if (clickedProject.slug) {
-        this.router.navigate(['/Project-Det'], { queryParams: { slug: clickedProject.slug } });
+        this.router.navigate(['/project-det'], { queryParams: { slug: clickedProject.slug } });
       }
       return;
     }
@@ -116,7 +116,7 @@ export class HomeProjects implements AfterViewInit, OnChanges {
     if (clickedIndex === this.activeCardIndex) {
       // If clicking the active card, navigate to project details
       if (clickedProject.slug) {
-        this.router.navigate(['/Project-Det'], { queryParams: { slug: clickedProject.slug } });
+        this.router.navigate(['/project-det'], { queryParams: { slug: clickedProject.slug } });
       }
       return;
     }

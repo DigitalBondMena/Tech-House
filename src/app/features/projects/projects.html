@@ -7,16 +7,16 @@
 }
 
 <section class="container mx-auto px-5 lg:px-20 py-12 md:py-20 relative">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+    <!-- <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 lg:gap-12"> -->
         <!-- Right Sidebar - Service Titles -->
-        <div class="lg:col-span-4 relative">
-            <div #sidebarContainer class="sidebar-container">
+        <!-- <div class="lg:col-span-2 relative"> -->
+            <!-- <div #sidebarContainer class="sidebar-container">
                 <div class="sidebar hidden! md:flex!">
                     <div class="orbit">
                         <div class="orbit-triangle"></div>
                     </div>
                 </div>
-                
+                 -->
                 <!-- Arrow Indicator -->
                 <!-- <div #arrowElement class="arrow-indicator"
                     [style.transform]="'translateY(' + (selectedIndex() !== null ? getArrowPosition() : 0) + 'px) rotate(' + arrowRotation() + 'deg)'">
@@ -29,19 +29,19 @@
                 </div> -->
 
                 <!-- Service Titles List -->
-                <div class="service-titles-list md:ms-20 lg:ms-0" dir="rtl">
+                <!-- <div class="service-titles-list md:ms-20 lg:ms-0" dir="rtl">
                     <!-- "الكل" (All) Option -->
-                    <div class="service-item cursor-pointer py-1 px-4  "
+                    <!-- <div class="service-item cursor-pointer py-1 px-4  "
                         [class.active]="selectedIndex() === 0" (click)="selectService(null, 0)">
                         <h4 class="text-base font-semibold text-[#440000] border-b-2 border-transparent transition-all"
                             [class.border-[#ED2924]]="selectedIndex() === 0"
                             [class.text-[#440000]]="selectedIndex() === 0">
                             الكل
                         </h4>
-                    </div>
+                    </div> -->
 
                     <!-- Service Titles from API -->
-                    @if (serviceTitles().length > 0) {
+                    <!-- @if (serviceTitles().length > 0) {
                     @for (service of serviceTitles(); track service.slug; let i = $index) {
                     <div class="service-item cursor-pointer py-1 px-4  transition-colors"
                         [class.active]="selectedIndex() === i + 1" (click)="selectService(service.slug, i + 1)">
@@ -52,23 +52,23 @@
                         </h4>
                     </div>
                     }
-                    }
-                </div>
+                    } -->
+                <!-- </div> --> 
 
                
-            </div>
-        </div>
+            <!-- </div> -->
+        <!-- </div> -->
         <!-- Main Content Area - Project Cards -->
-        <div class="lg:col-span-8">
+        <!-- <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12"> -->
             @if (projectItems().length > 0) {
-            <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div class="projects-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 @for (project of projectItems(); track project.id) {
                 <div class="project-card cursor-pointer " 
                      (click)="navigateToProjectDetails(project)">
                     <!-- Project Image -->
                     <div class="project-image mb-4">
                         <img [src]="getProjectImage(project.image)" [alt]="project.title"
-                            class="w-[400px] h-[300px] rounded-2xl object-cover"
+                            class="w-full h-[300px] rounded-2xl object-cover"
                             (error)="$event.target.src = '/images/project.webp'">
                     </div>
 
@@ -107,14 +107,14 @@
             @if (projects() && totalRecords() > 0) {
             <div class="flex justify-center mt-12 md:mt-16" dir="ltr">
                 <p-paginator [first]="first()" [rows]="rows()" [totalRecords]="totalRecords()"
-                    [rowsPerPageOptions]="[9]" (onPageChange)="onPageChange($event)" styleClass="custom-paginator">
+                     (onPageChange)="onPageChange($event)" styleClass="custom-paginator">
                 </p-paginator>
             </div>
             }
-        </div>
+        <!-- </div> -->
 
 
-    </div>
+    <!-- </div> -->
 </section>
 
 <app-contact-us-sec></app-contact-us-sec>

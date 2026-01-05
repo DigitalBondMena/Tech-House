@@ -181,7 +181,7 @@ export class JopDet {
     this.initializeForm();
     this.initializeContactForm();
     
-    // Check if URL contains "/Done" and show popup if it does
+    // Check if URL contains "/done" and show popup if it does
     this.checkUrlForDone();
     
     // Listen to route changes
@@ -194,7 +194,7 @@ export class JopDet {
     this.route.queryParams.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
-        this.router.navigate(['/Jobs']);
+        this.router.navigate(['/jobs']);
         return;
       }
       // Reset state when slug changes
@@ -240,7 +240,7 @@ export class JopDet {
 
   // ===== NAVIGATION =====
   navigateToJobs(): void {
-    this.router.navigate(['/Jobs']);
+    this.router.navigate(['/jobs']);
   }
 
   scrollToApply(): void {
@@ -618,12 +618,12 @@ export class JopDet {
           this.showSuccessPopup.set(true);
           // Add "Done" to the route path
           const currentUrl = this.router.url.split('?')[0];
-          if (!currentUrl.endsWith('/Done')) {
+          if (!currentUrl.endsWith('/done')) {
             const queryParams = this.router.parseUrl(this.router.url).queryParams;
             const queryString = Object.keys(queryParams).length > 0 
               ? '?' + new URLSearchParams(queryParams as any).toString() 
               : '';
-            this.router.navigateByUrl(currentUrl + '/Done' + queryString, { replaceUrl: false });
+            this.router.navigateByUrl(currentUrl + '/done' + queryString, { replaceUrl: false });
           }
         },
         error: (error) => {
@@ -857,8 +857,8 @@ export class JopDet {
     this.showSuccessPopup.set(false);
     // Remove "Done" from the route path using Location API
     const currentUrl = this.location.path().split('?')[0];
-    if (currentUrl.endsWith('/Done')) {
-      const baseUrl = currentUrl.replace('/Done', '');
+    if (currentUrl.endsWith('/done')) {
+      const baseUrl = currentUrl.replace('/done', '');
       const queryParams = this.router.parseUrl(this.router.url).queryParams;
       const queryString = Object.keys(queryParams).length > 0 
         ? '?' + new URLSearchParams(queryParams as any).toString() 
@@ -869,7 +869,7 @@ export class JopDet {
   
   private checkUrlForDone(): void {
     const currentUrl = this.router.url.split('?')[0];
-    if (currentUrl.endsWith('/Done')) {
+    if (currentUrl.endsWith('/done')) {
       this.showSuccessPopup.set(true);
     }
   }

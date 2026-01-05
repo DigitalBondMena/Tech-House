@@ -34,7 +34,17 @@ export class BlogDet {
 
   // ===== HERO IMAGE =====
   heroImage = computed(() => {
-    return this.getResponsiveImage(this.blog()?.image);
+    const blog = this.blog();
+    // Use banner_image if available, otherwise fallback to image
+    const imageSource = blog?.banner_image ;
+    
+    // If banner_image is a string (single URL), return it directly
+    if (typeof imageSource === 'string') {
+      return imageSource;
+    }
+    
+    // If it's an array, use getResponsiveImage
+    return this.getResponsiveImage(imageSource);
   });
 
   // ===== SECTIONS =====
@@ -123,7 +133,7 @@ export class BlogDet {
     this.route.queryParams.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
-        this.router.navigate(['/Blogs']);
+        this.router.navigate(['/blogs']);
         return;
       }
       this.featureService.loadBlogDetails(slug);
@@ -236,7 +246,7 @@ export class BlogDet {
   }
 
   navigateToRelatedBlog(blog: any) {
-    this.router.navigate(['/Blog-Det'], {
+    this.router.navigate(['/blog-det'], {
       queryParams: { slug: blog.slug }
     });
   }

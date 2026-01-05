@@ -153,6 +153,8 @@ export class FeatureService {
     
     this.apiService.get<BlogDetailsResponse>(endpoint).pipe(
       tap((data) => {
+        console.log('=== Blog Details API Response ===', data);
+        console.log('Blog object:', data?.blog);
         if (data) {
           this.blogDetailsResponseSignal.set(data);
         }
@@ -218,6 +220,8 @@ export class FeatureService {
     // Try both response types - sometimes API might return different structure
     this.apiService.get<any>(endpoint).pipe(
       tap((data) => {
+        console.log('=== Project Details API Response ===', data);
+        console.log('Project object:', data?.project || data);
         if (data) {
           // Check if it's ProjectDetailsResponse (has project property)
           if (data.project) {

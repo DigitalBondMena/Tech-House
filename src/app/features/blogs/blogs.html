@@ -53,7 +53,7 @@
     <!-- Pagination -->
     @if (blogs() && totalRecords() > 0) {
     <div class="flex justify-center mt-12 md:mt-16" dir="ltr">
-        <p-paginator [first]="first()" [rows]="rows()" [totalRecords]="totalRecords()" [rowsPerPageOptions]="[9]"
+        <p-paginator [first]="first()" [rows]="rows()" [totalRecords]="totalRecords()" 
             (onPageChange)="onPageChange($event)" styleClass="custom-paginator">
         </p-paginator>
     </div>

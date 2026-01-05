@@ -46,13 +46,13 @@ export class HomeBlogs implements OnChanges {
   //! method to navigate to blog details
   navigateToBlogDetails(blog: Blog, event: Event) {
     event.stopPropagation();
-    this.router.navigate(['/Blog-Det'], { queryParams: { slug: blog.slug } });
+    this.router.navigate(['/blog-det'], { queryParams: { slug: blog.slug } });
   }
 
   //! method to navigate to project details
   navigateToProjectDetails(blog: Blog, event: Event) {
     event.stopPropagation();
-    this.router.navigate(['/Project-Det'], { queryParams: { slug: blog.slug } });
+    this.router.navigate(['/project-det'], { queryParams: { slug: blog.slug } });
   }
 
   // Helper method to get responsive image
