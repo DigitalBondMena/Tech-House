@@ -22,7 +22,7 @@ export const routes: Routes = [
                 )
             },
             {
-                path: 'Jops', loadComponent: () => import('./features/jops/jops').then(m => m.Jops
+                path: 'Jobs', loadComponent: () => import('./features/jops/jops').then(m => m.Jops
                 )
             },
             {
@@ -51,11 +51,11 @@ export const routes: Routes = [
                 )
             },
             {
-                path: 'Jop-Det/Done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                path: 'Job-Det/Done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             {
-                path: 'Jop-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                path: 'Job-Det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             { path: '**', redirectTo: '', pathMatch: 'full' },

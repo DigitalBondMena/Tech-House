@@ -194,7 +194,7 @@ export class JopDet {
     this.route.queryParams.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
-        this.router.navigate(['/Jops']);
+        this.router.navigate(['/Jobs']);
         return;
       }
       // Reset state when slug changes
@@ -240,7 +240,7 @@ export class JopDet {
 
   // ===== NAVIGATION =====
   navigateToJobs(): void {
-    this.router.navigate(['/Jops']);
+    this.router.navigate(['/Jobs']);
   }
 
   scrollToApply(): void {
