@@ -31,7 +31,8 @@
   
   <!-- Critical fonts - ONLY the most critical one, others loaded on-demand -->
   <link rel="preload" href="/fonts/cairo/Cairo-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <!-- Changa font loaded on-demand, not preloaded -->
+  <!-- Changa font preload for h1/h2 elements (used in LCP) -->
+  <!-- <link rel="preload" href="/fonts/changa/Changa-Regular.woff2" as="font" type="font/woff2" crossorigin> -->
 
   <!-- Inline critical CSS for LCP -->
   <style>
@@ -44,9 +45,23 @@
       font-display: optional;
     }
     
+    /* Changa font for h1/h2 - used in LCP */
+    @font-face {
+      font-family: 'Changa';
+      src: url('/fonts/changa/Changa-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    
     /* Base font family for immediate rendering */
     body {
       font-family: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    
+    /* Headings use Changa font */
+    h1, h2 {
+      font-family: "Changa", sans-serif;
     }
 
     .hero-lcp-container {
