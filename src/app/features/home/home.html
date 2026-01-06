@@ -54,7 +54,7 @@
     </div>
   </section>
   <!-- Home Banner - Deferred for better LCP -->
-  @defer (when heroSection()) {
+  @defer (on viewport; when heroSection()) {
     <app-home-banner class="translate-y-60 md:translate-y-40 relative z-20"
       [scrollTitle]="heroSection()!.scroll_title"></app-home-banner>
   } @placeholder {
@@ -89,7 +89,7 @@
   }
   
   <!-- Clients & Partners Banners - Deferred for better LCP -->
-  @defer (when isBannersLoaded()) {
+  @defer (on viewport; when isBannersLoaded()) {
     <app-home-banners-sec class=""></app-home-banners-sec>
   } @placeholder {
     <section class="container mx-auto px-5 lg:px-20 py-20 min-h-[300px]">

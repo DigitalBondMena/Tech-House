@@ -4,7 +4,7 @@
   [class]="customClass"
 >
   <div class="banner-container overflow-hidden">
-    <div #scrollContainer class="banner-track flex items-center gap-8 min-h-[64px]" [class.reverse]="direction === 'left'">
+    <div #scrollContainer class="banner-track flex items-center gap-8 min-h-[64px]">
       <!-- Multiple copies to ensure no gaps - seamless infinite loop -->
       @if (items && items.length > 0) {
         <!-- First set - visible on all screens -->
@@ -264,97 +264,7 @@
             </div>
           }
         }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
-        @for (item of items; track $index) {
-          @let hasUrl = item?.url;
-          @let imageUrl = getResponsiveImage(item?.image) || 'images/banner.webp';
-          @if (hasUrl) {
-            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </a>
-          } @else {
-            <div class="banner-item h-16 flex items-center px-2 shrink-0 min-w-[180px]">
-              <img [ngSrc]="imageUrl" [alt]="item?.title || ''" width="260" height="64" loading="lazy" class="h-full w-auto max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
-            </div>
-          }
-        }
+       
       } @else {
         <!-- Fallback when no items -->
         @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {

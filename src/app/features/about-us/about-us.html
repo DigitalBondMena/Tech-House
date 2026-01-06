@@ -36,21 +36,25 @@
 </section>
 }
 
-@if (partners().length) {
+@if (partners().length || clients().length) {
 <section class="py-60 pt-30 overflow-hidden">
   <div class=" container mx-auto px-5 lg:px-20 py-20">
     <app-section-title [title]="partnersTitle" customClass="mb-5"></app-section-title>
   </div>
-  <div class="w-full">
-    <app-banner [items]="partners()" direction="right"
-      customClass="-rotate-[28deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[160%] lg:w-[120%] -right-40">
-    </app-banner>
-  </div>
-  <div class="w-full">
-    <app-banner [items]="clients()" direction="left"
-      customClass="rotate-[28deg] lg:rotate-[10deg] translate-y-[10px] relative w-[160%] lg:w-[120%] -right-26 lg:-right-40 bg-[#940000]!">
-    </app-banner>
-  </div>
+  @if (partners().length) {
+    <div class="w-full">
+      <app-banner [items]="partners()" direction="right"
+        customClass="-rotate-[28deg] lg:-rotate-[10deg] translate-y-[130px] relative w-[160%] lg:w-[120%] -right-40">
+      </app-banner>
+    </div>
+  }
+  @if (clients().length) {
+    <div class="w-full">
+      <app-banner-reverse [items]="clients()"
+        customClass="rotate-[28deg] lg:rotate-[10deg] translate-y-[10px] relative w-[160%] lg:w-[120%] -right-26 lg:-right-40 bg-[#940000]!">
+      </app-banner-reverse>
+    </div>
+  }
 </section>
 }
 

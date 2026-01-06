@@ -7,6 +7,7 @@ import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { AppButton } from '../../shared/components/app-button/app-button';
 import { Banner } from '../../shared/components/banner/banner';
+import { BannerReverse } from '../../shared/components/banner-reverse/banner-reverse';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { SectionTitle } from '../../shared/components/section-title/section-title';
@@ -19,7 +20,7 @@ if (typeof window !== 'undefined') {
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [CommonModule, HeroSection, SectionTitle, AppButton, Banner, ContactUsSec],
+  imports: [CommonModule, HeroSection, SectionTitle, AppButton, Banner, BannerReverse, ContactUsSec],
   templateUrl: './about-us.html',
   styleUrls: ['./about-us.css']
 })
@@ -58,7 +59,8 @@ export class AboutUs implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // Load data when view initializes
     this.featureService.loadAboutData();
-    this.sharedFeatureService.loadPartnersClients();
+    // Subscribe to ensure data is loaded
+    this.sharedFeatureService.loadPartnersClients().subscribe();
 
     if (this.isBrowser) {
       // Wait for cards to be rendered

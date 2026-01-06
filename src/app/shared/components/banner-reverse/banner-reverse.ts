@@ -4,14 +4,13 @@ import { gsap } from 'gsap';
 import { ClientPartner } from '../../../core/models/home.model';
 
 @Component({
-  selector: 'app-banner',
+  selector: 'app-banner-reverse',
   imports: [NgOptimizedImage],
-  templateUrl: './banner.html',
-  styleUrl: './banner.css'
+  templateUrl: './banner-reverse.html',
+  styleUrl: './banner-reverse.css'
 })
-export class Banner implements AfterViewInit, OnChanges {
+export class BannerReverse implements AfterViewInit, OnChanges {
   @Input() customClass: string = '';
-  @Input() direction: 'left' | 'right' = 'left'; // 'left' for right-to-left, 'right' for left-to-right
   @Input() items: ClientPartner[] = []; // Array of client/partner items
   @Input() startAnimation?: boolean; // Control when to start animation (optional)
   @Input() useCssAnimation: boolean = false; // Use CSS animation instead of GSAP
@@ -370,7 +369,8 @@ export class Banner implements AfterViewInit, OnChanges {
     // Kill any existing tweens on the container
     gsap.killTweensOf(container);
 
-    const isRightToLeft = this.direction === 'left'; // Default direction is right-to-left when direction is 'left'
+    // REVERSE DIRECTION: This component always moves left-to-right (opposite of banner)
+    const isRightToLeft = false; // Always left-to-right for reverse banner
 
     // Reset position to start with hardware acceleration
     gsap.set(container, { 
@@ -410,7 +410,7 @@ export class Banner implements AfterViewInit, OnChanges {
 
     // Ensure we have a valid width
     if (finalSetWidth <= 0) {
-      console.warn('Banner: Invalid set width, retrying...');
+      console.warn('BannerReverse: Invalid set width, retrying...');
       setTimeout(() => {
         this.privateInitAnimation(paused);
       }, 200);
@@ -423,7 +423,8 @@ export class Banner implements AfterViewInit, OnChanges {
     const pixelsPerSecond = 60;
     const duration = finalSetWidth / pixelsPerSecond;
 
-    const targetX = isRightToLeft ? -finalSetWidth : finalSetWidth;
+    // REVERSE: Move from left to right (positive direction)
+    const targetX = finalSetWidth;
     
     // Create seamless infinite scroll using fromTo for proper seamless loop
     // fromTo ensures that when repeat happens, it starts from 0 again seamlessly

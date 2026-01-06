@@ -22,18 +22,12 @@
 
 @keyframes slide {
   0% {
-    transform: translateX(0%);
+    transform: translateX(500%);
   }
 
   100% {
-    transform: translateX(500%);
+    transform: translateX(0%);
   }
-}
-
-
-
-.banner-track.reverse {
-  animation-name: slide-reverse;
 }
 
 .banner-item {
@@ -71,5 +65,4 @@ body.is-scrolling .banner-track {
     contain: layout paint;
   }
 }
-
 
