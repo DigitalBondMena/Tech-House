@@ -4,6 +4,7 @@
   contain: layout paint style;
   transform: translateZ(0); /* Force hardware acceleration */
   will-change: contents; /* Optimize for content changes */
+  
 }
 
 .banner-container {
@@ -22,11 +23,11 @@
 
 @keyframes slide {
   0% {
-    transform: translateX(500%);
+    transform: translateX(0%);
   }
 
   100% {
-    transform: translateX(0%);
+    transform: translateX(-500%);
   }
 }
 
