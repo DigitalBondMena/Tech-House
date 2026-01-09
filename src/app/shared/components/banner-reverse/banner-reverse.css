@@ -18,7 +18,7 @@
   display: flex;
   white-space: nowrap;
   will-change: transform;
-  animation: slide 50s linear infinite;
+  animation: slide 60s linear infinite;
 }
 
 @keyframes slide {

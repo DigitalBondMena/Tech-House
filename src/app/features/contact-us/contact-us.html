@@ -1,3 +1,5 @@
+<!-- Main content wrapper with min-height to prevent footer from appearing at top -->
+<div class="min-h-screen">
 <!-- Hero Section -->
 @if (contactHero()) {
 <app-hero-section [title]="contactHero()?.title || 'تواصل معنا'"
@@ -8,11 +10,19 @@
     customClass=" h-[90vh] lg:h-[80vh]!" >
     
 </app-hero-section>
+} @else {
+<!-- Hero Section Skeleton -->
+<section class="bg-linear min-h-[90vh] lg:min-h-[80vh] relative flex items-center">
+  <div class="container mx-auto px-5 lg:px-20 hero-skeleton">
+    <p-skeleton width="60%" height="50px" styleClass="rounded-lg mb-4"></p-skeleton>
+    <p-skeleton width="80%" height="30px" styleClass="rounded-lg"></p-skeleton>
+  </div>
+</section>
 }
 
 <!-- Contact Information Section -->
 @if (contactUsData()) {
-<section class="overflow-hidden section-pattern section-pattern-right" >
+<section class="overflow-hidden section-pattern section-pattern-right font-medium" >
     <app-circle-sidebar class="hidden xl:block z-50!"></app-circle-sidebar>
     <div class="container mx-auto px-5 lg:px-20 py-40  relative ">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -26,7 +36,7 @@
             <!-- Right Side - Contact Info Text -->
             <div class="col-span-1 flex flex-col justify-start xl:pe-12 relative -z-10! ">
 
-                <p class="text-[#440000] text-xl font-medium leading-relaxed mb-8">
+                <p class="text-[#440000] text-xl font-semibold leading-relaxed mb-8">
                     في بيت التكنولوجيا، نحوّل رؤيتك إلى تجربة بصرية متقنة تترك أثراً حقيقياً في جمهورك.
                 </p>
 
@@ -93,4 +103,7 @@
 
 
 <!-- Contact Form Section -->
-<app-contact-us-sec></app-contact-us-sec>
+@if (isAllDataLoaded()) {
+  <app-contact-us-sec></app-contact-us-sec>
+}
+</div>

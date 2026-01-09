@@ -1,7 +1,8 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { SkeletonModule } from 'primeng/skeleton';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
@@ -15,7 +16,8 @@ import { SectionTitle } from '../../shared/components/section-title/section-titl
     HeroSection,
     ContactUsSec,
     SectionTitle,
-    PaginatorModule
+    PaginatorModule,
+    SkeletonModule
   ],
   templateUrl: './blogs.html',
   styleUrl: './blogs.css'
@@ -38,6 +40,28 @@ export class Blogs implements OnInit, AfterViewInit {
   currentPage = computed(() => this.blogs()?.current_page ?? 1);
   totalPages = computed(() => this.blogs()?.last_page ?? 1);
   first = computed(() => (this.currentPage() - 1) * this.rows());
+
+  // 🔹 Check if all sections are loaded (contact will only show when all sections are loaded)
+  isAllDataLoaded = computed(() => {
+    if (!this.bannerSection()) return false;
+    if (!this.blogItems()?.length) return false;
+    return true;
+  });
+
+  constructor() {
+    // Watch for data loading completion and scroll to top when ready
+    if (this.isBrowser) {
+      effect(() => {
+        const allLoaded = this.isAllDataLoaded();
+        if (allLoaded) {
+          // Force scroll to top when all data is loaded
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }, 50);
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     if (this.isBrowser) {

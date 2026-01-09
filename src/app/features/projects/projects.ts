@@ -1,7 +1,8 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, computed, ElementRef, inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { SkeletonModule } from 'primeng/skeleton';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
@@ -15,7 +16,8 @@ import { HeroSection } from '../../shared/components/hero-section/hero-section';
     CommonModule,
     HeroSection,
     ContactUsSec,
-    PaginatorModule
+    PaginatorModule,
+    SkeletonModule
   ],
   templateUrl: './projects.html',
   styleUrl: './projects.css'
@@ -54,6 +56,28 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
   arrowRotation = signal(0);
   selectedIndex = signal<number | null>(null);
   arrowPosition = signal(0);
+
+  // 🔹 Check if all sections are loaded (contact will only show when all sections are loaded)
+  isAllDataLoaded = computed(() => {
+    if (!this.bannerSection()) return false;
+    if (!this.projectItems()?.length) return false;
+    return true;
+  });
+
+  constructor() {
+    // Watch for data loading completion and scroll to top when ready
+    if (this.isBrowser) {
+      effect(() => {
+        const allLoaded = this.isAllDataLoaded();
+        if (allLoaded) {
+          // Force scroll to top when all data is loaded
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }, 50);
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     if (this.isBrowser) {

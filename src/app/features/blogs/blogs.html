@@ -1,3 +1,5 @@
+<!-- Main content wrapper with min-height to prevent footer from appearing at top -->
+<div class="min-h-screen">
 @if (bannerSection()) {
 <app-hero-section [title]="bannerSection()?.title || ''" [paragraph]="bannerSection()?.text || ''"
     customClass=" h-[90vh] lg:h-[80vh]!"
@@ -5,6 +7,14 @@
     [imagePosition]="bannerSection()?.image ? 'left' : 'none'"
     imageClass=" absolute -bottom-[0px]! -left-[0px]! lg:-left-[0px]!">
 </app-hero-section>
+} @else {
+<!-- Hero Section Skeleton -->
+<section class="bg-linear min-h-[90vh] lg:min-h-[80vh] relative flex items-center">
+  <div class="container mx-auto px-5 lg:px-20 hero-skeleton">
+    <p-skeleton width="60%" height="50px" styleClass="rounded-lg mb-4"></p-skeleton>
+    <p-skeleton width="80%" height="30px" styleClass="rounded-lg"></p-skeleton>
+  </div>
+</section>
 }
 <section class="container mx-auto px-5 lg:px-20 py-12 md:py-20 section-pattern section-pattern-right">
     <app-section-title [title]="articlesTitle" customClass=" mb-8 md:mb-10">
@@ -60,4 +70,7 @@
     }
 </section>
 
-<app-contact-us-sec></app-contact-us-sec>
+@if (isAllDataLoaded()) {
+  <app-contact-us-sec></app-contact-us-sec>
+}
+</div>

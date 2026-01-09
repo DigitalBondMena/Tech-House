@@ -1,12 +1,13 @@
 import { Component, OnInit, AfterViewInit, inject, computed } from '@angular/core';
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { CommonModule } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { PrivacyPolicyData, ResponsiveImage } from '../../core/models/home.model';
 
 @Component({
   selector: 'app-privacy-policy',
-  imports: [HeroSection, CommonModule],
+  imports: [HeroSection, CommonModule, SkeletonModule],
   templateUrl: './privacy-policy.html',
   styleUrl: './privacy-policy.css'
 })

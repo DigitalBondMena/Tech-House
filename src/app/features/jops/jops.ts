@@ -1,13 +1,14 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 
 @Component({
   selector: 'app-jops',
-  imports: [CommonModule, ContactUsSec],
+  imports: [CommonModule, ContactUsSec, SkeletonModule],
   templateUrl: './jops.html',
   styleUrl: './jops.css'
 })
@@ -51,6 +52,28 @@ export class Jops implements OnInit, AfterViewInit {
   totalJobsCount = computed(() => {
     return this.jobCategories().reduce((total, category) => total + category.jobs_count, 0);
   });
+
+  // 🔹 Check if all sections are loaded (contact will only show when all sections are loaded)
+  isAllDataLoaded = computed(() => {
+    if (!this.bannerSection()) return false;
+    if (!this.jobCategories()?.length) return false;
+    return true;
+  });
+
+  constructor() {
+    // Watch for data loading completion and scroll to top when ready
+    if (this.isBrowser) {
+      effect(() => {
+        const allLoaded = this.isAllDataLoaded();
+        if (allLoaded) {
+          // Force scroll to top when all data is loaded
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }, 50);
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     if (this.isBrowser) {

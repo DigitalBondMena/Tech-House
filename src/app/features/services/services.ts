@@ -1,6 +1,7 @@
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import { AfterViewInit, Component, computed, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
@@ -9,7 +10,7 @@ import { HeroSection } from '../../shared/components/hero-section/hero-section';
 
 @Component({
   selector: 'app-services',
-  imports: [CommonModule, NgOptimizedImage, RouterModule, HeroSection, ContactUsSec],
+  imports: [CommonModule, NgOptimizedImage, RouterModule, HeroSection, ContactUsSec, SkeletonModule],
   templateUrl: './services.html',
   styleUrl: './services.css'
 })
@@ -26,6 +27,28 @@ export class Services implements OnInit, AfterViewInit {
     return services.filter(s => s.is_active);
   });
   serviceTitles = computed(() => this.sharedFeatureService.servicesSection() ?? []);
+
+  // 🔹 Check if all sections are loaded (contact will only show when all sections are loaded)
+  isAllDataLoaded = computed(() => {
+    if (!this.bannerSection()) return false;
+    if (!this.services()?.length) return false;
+    return true;
+  });
+
+  constructor() {
+    // Watch for data loading completion and scroll to top when ready
+    if (this.isBrowser) {
+      effect(() => {
+        const allLoaded = this.isAllDataLoaded();
+        if (allLoaded) {
+          // Force scroll to top when all data is loaded
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }, 50);
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     if (this.isBrowser) {

@@ -1,13 +1,14 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, PLATFORM_ID, QueryList, ViewChildren, computed, inject } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, OnInit, PLATFORM_ID, QueryList, ViewChildren } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SkeletonModule } from 'primeng/skeleton';
 import { environment } from '../../../environments/environment';
 import { FeatureService } from '../../core/services/featureService';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { AppButton } from '../../shared/components/app-button/app-button';
-import { Banner } from '../../shared/components/banner/banner';
 import { BannerReverse } from '../../shared/components/banner-reverse/banner-reverse';
+import { Banner } from '../../shared/components/banner/banner';
 import { ContactUsSec } from '../../shared/components/contact-us-sec/contact-us-sec';
 import { HeroSection } from '../../shared/components/hero-section/hero-section';
 import { SectionTitle } from '../../shared/components/section-title/section-title';
@@ -20,7 +21,7 @@ if (typeof window !== 'undefined') {
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [CommonModule, HeroSection, SectionTitle, AppButton, Banner, BannerReverse, ContactUsSec],
+  imports: [CommonModule, HeroSection, SectionTitle, AppButton, Banner, BannerReverse, ContactUsSec, SkeletonModule],
   templateUrl: './about-us.html',
   styleUrls: ['./about-us.css']
 })
@@ -46,8 +47,36 @@ export class AboutUs implements OnInit, AfterViewInit {
   partners = this.sharedFeatureService.partners;
   clients = this.sharedFeatureService.clients;
 
+  // 🔹 Check if all sections are loaded (contact will only show when all sections are loaded)
+  isAllDataLoaded = computed(() => {
+    // Check banner section
+    if (!this.bannerSection()) return false;
+    
+    // Check about information
+    if (!this.aboutInformation()) return false;
+    
+    // Check about sections
+    if (!this.aboutSections()?.length) return false;
+    
+    // Check partners or clients
+    if (!this.partners()?.length && !this.clients()?.length) return false;
+    
+    return true;
+  });
+
   constructor() {
-    // Constructor should not load data - moved to ngAfterViewInit
+    // Watch for data loading completion and scroll to top when ready
+    if (this.isBrowser) {
+      effect(() => {
+        const allLoaded = this.isAllDataLoaded();
+        if (allLoaded) {
+          // Force scroll to top when all data is loaded
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }, 50);
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

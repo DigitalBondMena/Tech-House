@@ -1,5 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, computed, effect, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { SkeletonModule } from 'primeng/skeleton';
 import { environment } from '../../../environments/environment';
 import { SharedFeatureService } from '../../core/services/sharedFeatureService';
 import { CircleSidebar } from '../../shared/components/circle-sidebar/circle-sidebar';
@@ -12,7 +13,8 @@ import { HeroSection } from '../../shared/components/hero-section/hero-section';
     HeroSection,
     ContactUsSec,
     CommonModule,
-    CircleSidebar
+    CircleSidebar,
+    SkeletonModule
   ],
   templateUrl: './contact-us.html',
   styleUrl: './contact-us.css'
@@ -33,6 +35,13 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
 
   // 🔹 Counters Data from API
   counters = computed(() => this.sharedFeatureService.counters());
+
+  // 🔹 Check if all sections are loaded
+  isAllDataLoaded = computed(() => {
+    if (!this.contactHero()) return false;
+    if (!this.contactUsData()) return false;
+    return true;
+  });
 
   // 🔹 Animated counter values
   animatedCounters: number[] = [0, 0, 0];
