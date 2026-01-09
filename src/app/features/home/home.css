@@ -7,6 +7,8 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  /* Prevent layout shift by reserving space */
+  aspect-ratio: 1920 / 1080;
 }
 
 /* Hero GIF Video - Background layer - Enhanced after First Paint */

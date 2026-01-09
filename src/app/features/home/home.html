@@ -30,7 +30,7 @@
         <div class="hero-content relative h-full w-full flex items-center justify-between" dir="rtl">
           <div class="min-h-[120px] md:min-h-[140px]">
             <!-- H1 always rendered for LCP optimization - shows default text immediately -->
-            <h1 class="text-3xl md:text-4xl font-semibold text-white max-w-sm lg:max-w-lg min-h-[3rem] md:min-h-[4rem]">
+            <h1 class="text-3xl md:text-4xl font-semibold text-white max-w-sm lg:max-w-lg" style="min-height: 4.5rem; line-height: 1.5;">
               {{ heroSection()?.title || 'ابتكارات تسويقية رقمية تصنع الفرق لشركتك' }}
             </h1>
             @if (!heroSection()) {
@@ -67,7 +67,7 @@
   @defer (when isAboutLoaded()) {
     <app-home-about [aboutData]="aboutHome()"></app-home-about>
   } @placeholder {
-    <section class="container mx-auto px-5 lg:px-20 py-20 min-h-[500px]">
+    <section class="container mx-auto px-5 lg:px-20 py-20 min-h-[500px]" style="contain: layout style;">
       <div class="flex justify-between items-center min-h-[60px] mb-10">
         <p-skeleton width="200px" height="40px" styleClass="rounded-lg"></p-skeleton>
         <p-skeleton width="150px" height="30px" styleClass="rounded-lg"></p-skeleton>
@@ -163,7 +163,7 @@
   @defer (when isTestimonialsLoaded()) {
     <app-home-clients-review [testimonials]="testimonials()"></app-home-clients-review>
   } @placeholder {
-    <section class="container mx-auto px-5 lg:px-20 py-20 min-h-[500px]">
+    <section class="container mx-auto px-5 lg:px-20 py-20 min-h-[500px]" style="contain: layout style;">
       <div class="flex justify-between items-center mb-10">
         <p-skeleton width="200px" height="40px" styleClass="rounded-lg"></p-skeleton>
       </div>
