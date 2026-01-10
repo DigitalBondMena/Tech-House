@@ -48,17 +48,18 @@
                 }
               ],
               "outputHashing": "all",
-"optimization": {
-              "scripts": true,
-              "styles": {
-                "minify": true,
-                "inlineCritical": true,
-                "removeSpecialComments": true
-              },
-              "fonts": {
-                "inline": false
+              "namedChunks": false,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true,
+                  "removeSpecialComments": true
+                },
+                "fonts": {
+                  "inline": false
+                }
               }
-            }
             },
             "development": {
               "optimization": false,

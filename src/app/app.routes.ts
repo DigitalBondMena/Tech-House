@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { Home } from './features/home/home';
 import { MainLayout } from './layouts/main-layout/main-layout';
 
 export const routes: Routes = [
@@ -7,7 +6,7 @@ export const routes: Routes = [
         path: '',  component: MainLayout,
         children: [
             {
-             path: '',  component: Home
+             path: '',  loadComponent: () => import('./features/home/home').then(m => m.Home)
             },
             {
                 path: 'about-us', loadComponent: () => import('./features/about-us/about-us').then(m => m.AboutUs
