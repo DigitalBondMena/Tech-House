@@ -152,8 +152,7 @@ export class HomeBooking implements AfterViewInit, OnDestroy {
       playPromise
         .then(() => {
         })
-        .catch((error) => {
-          console.warn('⚠️ Video autoplay prevented:', error);
+        .catch(() => {
           // Try to play again on user interaction
           this.setupUserInteractionPlay(video);
         });
@@ -174,9 +173,7 @@ export class HomeBooking implements AfterViewInit, OnDestroy {
           .then(() => {
             this.cleanupInteractionListeners();
           })
-          .catch((err) => {
-            console.warn('Failed to play video on interaction:', err);
-          });
+          .catch(() => {});
       }
     };
 

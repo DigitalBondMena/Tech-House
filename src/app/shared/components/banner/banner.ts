@@ -410,7 +410,6 @@ export class Banner implements AfterViewInit, OnChanges {
 
     // Ensure we have a valid width
     if (finalSetWidth <= 0) {
-      console.warn('Banner: Invalid set width, retrying...');
       setTimeout(() => {
         this.privateInitAnimation(paused);
       }, 200);

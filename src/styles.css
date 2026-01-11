@@ -15,8 +15,8 @@
 
 
 body {
-    font-family: "Cairo", sans-serif !important;
-
+    font-family: "Cairo", "Segoe UI", Tahoma, sans-serif !important;
+    font-size-adjust: 0.5;
 }
 
 .cairo-font{
@@ -25,7 +25,8 @@ body {
 
 h1,
 h2 {
-    font-family: "Changa", sans-serif;
+    font-family: "Changa", "Cairo", "Segoe UI", Tahoma, sans-serif;
+    font-size-adjust: 0.5;
 }
 
 

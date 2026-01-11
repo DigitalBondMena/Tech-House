@@ -195,7 +195,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
   // 🔹 Helper method to get responsive image based on screen size
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
     if (!image) {
-      console.warn('getResponsiveImage: No image provided');
       return '/images/placeholder.webp';
     }
     
@@ -214,7 +213,6 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     }
     
     if (!imageUrl) {
-      console.warn('getResponsiveImage: No image URL found, using placeholder');
       return '/images/placeholder.webp';
     }
     

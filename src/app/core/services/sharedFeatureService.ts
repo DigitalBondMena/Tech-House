@@ -138,8 +138,6 @@ export class SharedFeatureService {
         
         if (heroData) {
           this.contactHeroResponseSignal.set(heroData);
-        } else {
-          console.warn('Contact Hero Data is null or empty:', data);
         }
         this.contactHeroLoading = false;
       },

@@ -20,8 +20,11 @@
   font-family: 'Cairo';
   src: url('/fonts/cairo/Cairo-Regular.woff2') format('woff2');
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  font-display: optional;
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 20%;
+  line-gap-override: 0%;
 }
 
 /* @font-face {
@@ -87,8 +90,11 @@
   font-family: 'Changa';
   src: url('/fonts/changa/Changa-Regular.woff2') format('woff2');
   font-weight: 400;
-  font-style: normal;
   font-display: optional;
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 20%;
+  line-gap-override: 0%;
 }
 
 /* @font-face {

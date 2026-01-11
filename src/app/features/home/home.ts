@@ -165,16 +165,12 @@ export class Home implements OnInit, AfterViewInit {
               videoElement.load();
               // Wait for video to be ready
               videoElement.addEventListener('canplay', () => {
-                videoElement.play().catch((error) => {
-                  console.warn('Video autoplay prevented:', error);
-                });
+                videoElement.play().catch(() => {});
               }, { once: true });
               // Fallback - try to play after a delay
               setTimeout(() => {
                 if (videoElement.paused) {
-                  videoElement.play().catch((error) => {
-                    console.warn('Video autoplay prevented:', error);
-                  });
+                  videoElement.play().catch(() => {});
                 }
               }, 1000);
             }

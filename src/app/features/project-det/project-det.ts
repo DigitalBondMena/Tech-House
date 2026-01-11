@@ -105,9 +105,7 @@ export class ProjectDet {
           this.hasError.set(false);
           this.errorMessage.set('');
         } else if (data && !project) {
-          // Data loaded but no project - check what we actually got
-          console.warn('Data loaded but project is null. Data structure:', data);
-          console.warn('Trying to extract project from data...');
+          // Data loaded but no project - try to extract from data
           
           // Try to extract project from different possible structures
           let extractedProject = null;
