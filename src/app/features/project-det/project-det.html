@@ -199,7 +199,84 @@
 </section>
 }
 
+<!-- Project Images Carousel -->
+@if (hasProject() && projectImages().length > 0) {
+<section class="container mx-auto px-5  py-20 md:py-26">
+    <div class="project-images-carousel">
+        <p-carousel 
+            #projectCarousel
+            [value]="projectImages()" 
+            [numVisible]="3" 
+            [numScroll]="1" 
+            [circular]="true" 
+            [responsiveOptions]="carouselResponsiveOptions" 
+            [autoplayInterval]="4000"
+            [showNavigators]="false"
+            [showIndicators]="false">
+            <ng-template let-image pTemplate="item">
+                <div class="carousel-image-wrapper" (click)="openImagePopup(image)">
+                    <img [src]="getProjectImageUrl(image)" 
+                         [alt]="'صورة المشروع'" 
+                         class="carousel-project-image">
+                </div>
+            </ng-template>
+        </p-carousel>
+        
+        <!-- Custom Navigation -->
+        <div class="carousel-custom-nav">
+            <button class="carousel-arrow carousel-arrow-next" (click)="projectCarousel.navForward($event)" aria-label="التالي">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+         
+            <div class="carousel-custom-dots">
+                @for (image of projectImages(); track image.id || $index; let i = $index) {
+                    <button class="carousel-custom-dot" 
+                            [class.active]="i === projectCarousel.page"
+                            (click)="projectCarousel.onDotClick($event, i)"
+                            [attr.aria-label]="'انتقل للصورة ' + (i + 1)">
+                    </button>
+                }
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" (click)="projectCarousel.navBackward($event)" aria-label="السابق">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</section>
+}
+
 @if (hasProject() || hasError()) {
 <!-- Contact Us Section -->
 <app-contact-us-sec />
+}
+
+<!-- Image Popup Modal -->
+@if (popupImage()) {
+<div class="image-popup-overlay" (click)="closeImagePopup()">
+    <div class="image-popup-container h-[80vh]!" (click)="$event.stopPropagation()">
+        <!-- Previous Button -->
+        <button class="popup-nav-btn popup-nav-prev" (click)="prevPopupImage()" aria-label="السابق">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+        
+        <!-- Image -->
+        <img [src]="popupImage()" alt="صورة المشروع" class="popup-image  object-contain object-center  w-[400px] rounded-2xl!">
+        
+        <!-- Next Button -->
+        <button class="popup-nav-btn popup-nav-next" (click)="nextPopupImage()" aria-label="التالي">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+        </button>
+        
+        
+     
+    </div>
+</div>
 }

@@ -2,13 +2,14 @@ import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { Component, computed, effect, inject, PLATFORM_ID, signal, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
+import { CarouselModule } from 'primeng/carousel';
 import { FeatureService } from "../../core/services/featureService";
 import { ContactUsSec } from "../../shared/components/contact-us-sec/contact-us-sec";
 
 @Component({
   selector: 'app-project-det',
   standalone: true,
-  imports: [CommonModule, ContactUsSec],
+  imports: [CommonModule, ContactUsSec, CarouselModule],
   templateUrl: './project-det.html',
   styleUrl: './project-det.css',
   encapsulation: ViewEncapsulation.None
@@ -66,6 +67,75 @@ export class ProjectDet {
   projectTechnologies = computed(() => this.project()?.project_technologies ?? []);
   projectInformation = computed(() => this.project()?.project_information ?? []);
   projectSections = computed(() => this.project()?.projects_sections ?? []);
+  projectImages = computed(() => this.project()?.project_images ?? []);
+
+  // ===== CAROUSEL OPTIONS =====
+  carouselResponsiveOptions = [
+    {
+      breakpoint: '1400px',
+      numVisible: 2,
+      numScroll: 1
+    },
+    {
+      breakpoint: '1199px',
+      numVisible: 2,
+      numScroll: 1
+    },
+    {
+      breakpoint: '991px',
+      numVisible: 2,
+      numScroll: 1
+    },
+    {
+      breakpoint: '767px',
+      numVisible: 1,
+      numScroll: 1
+    }
+  ];
+
+  // ===== IMAGE POPUP =====
+  popupImage = signal<string | null>(null);
+  popupImageIndex = signal<number>(0);
+
+  openImagePopup(image: any): void {
+    const images = this.projectImages();
+    // Find the correct index by matching the image
+    let foundIndex = images.findIndex((img: any) => 
+      img.id === image.id || 
+      img.main_image === image.main_image ||
+      this.getProjectImageUrl(img) === this.getProjectImageUrl(image)
+    );
+    if (foundIndex === -1) foundIndex = 0;
+    
+    this.popupImage.set(this.getProjectImageUrl(image));
+    this.popupImageIndex.set(foundIndex);
+    if (this.isBrowser) {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  closeImagePopup(): void {
+    this.popupImage.set(null);
+    if (this.isBrowser) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  nextPopupImage(): void {
+    const images = this.projectImages();
+    if (images.length === 0) return;
+    const nextIndex = (this.popupImageIndex() + 1) % images.length;
+    this.popupImageIndex.set(nextIndex);
+    this.popupImage.set(this.getProjectImageUrl(images[nextIndex]));
+  }
+
+  prevPopupImage(): void {
+    const images = this.projectImages();
+    if (images.length === 0) return;
+    const prevIndex = (this.popupImageIndex() - 1 + images.length) % images.length;
+    this.popupImageIndex.set(prevIndex);
+    this.popupImage.set(this.getProjectImageUrl(images[prevIndex]));
+  }
 
   // ===== CONTENT =====
   fullContent = computed(() => {
@@ -216,5 +286,12 @@ export class ProjectDet {
 
   sanitizeHtml(html: string) {
     return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  getProjectImageUrl(image: any): string {
+    if (!image) return '/images/placeholder.webp';
+    if (typeof image === 'string') return image;
+    if (image.main_image) return image.main_image;
+    return this.getResponsiveImage(image);
   }
 }

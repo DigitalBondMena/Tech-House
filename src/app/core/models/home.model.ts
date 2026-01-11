@@ -458,6 +458,16 @@ export interface ProjectsResponse {
 /**
  * Project Detail Item
  */
+/**
+ * Project Image Item
+ */
+export interface ProjectImage {
+  id: number;
+  project_id: number;
+  main_image: string;
+  is_active: boolean;
+}
+
 export interface ProjectDetail {
   id: number;
   title: string;
@@ -477,6 +487,7 @@ export interface ProjectDetail {
   project_types: any[];
   project_information: any[];
   project_technologies: any[];
+  project_images: ProjectImage[];
   projects_sections: any[];
 }
 

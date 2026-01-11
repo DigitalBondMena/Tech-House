@@ -375,3 +375,377 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== PROJECT IMAGES CAROUSEL (PrimeNG) ===== */
+.project-images-carousel {
+  width: 100%;
+  padding: 20px 0px;
+}
+
+
+.carousel-project-image {
+  /* width: 100%; */
+  width: 472px;
+  height: 378px;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: all 0.5s ease;
+  margin: 0 auto;
+  display: block;
+
+}
+
+.carousel-project-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ 
+}
+
+/* Responsive Carousel Images - 3 images on large screens */
+@media (min-width: 1401px) {
+  .carousel-project-image {
+    max-width: 400px;
+    height: 320px;
+  }
+}
+
+/* PrimeNG Carousel Custom Styles */
+.project-images-carousel :deep(.p-carousel) {
+  padding: 0;
+}
+
+.project-images-carousel :deep(.p-carousel-content) {
+  padding: 20px 0;
+  flex-direction: column;
+}
+
+.project-images-carousel :deep(.p-carousel-items-content) {
+  overflow: visible;
+}
+
+/* Hide default side navigation - move to bottom */
+.project-images-carousel :deep(.p-carousel-prev),
+.project-images-carousel :deep(.p-carousel-next) {
+  position: static;
+  width: 32px;
+  height: 32px;
+  color: #ED2924;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.project-images-carousel :deep(.p-carousel-prev:hover),
+.project-images-carousel :deep(.p-carousel-next:hover) {
+  color: #440000;
+  background: transparent;
+}
+
+.project-images-carousel :deep(.p-carousel-prev:focus),
+.project-images-carousel :deep(.p-carousel-next:focus) {
+  box-shadow: none;
+}
+
+/* Carousel Footer - Arrows + Indicators */
+.project-images-carousel :deep(.p-carousel-footer) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+/* Carousel Indicators (Dots) */
+.project-images-carousel :deep(.p-carousel-indicators) {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-images-carousel :deep(.p-carousel-indicator) {
+  margin: 0;
+  padding: 0;
+}
+
+.project-images-carousel :deep(.p-carousel-indicator button) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #ccc;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.project-images-carousel :deep(.p-carousel-indicator button:hover) {
+  border-color: #ED2924;
+}
+
+.project-images-carousel :deep(.p-carousel-indicator.p-highlight button) {
+  background: #ED2924;
+  border-color: #ED2924;
+}
+
+/* Hide default indicators since we're using custom ones */
+.project-images-carousel :deep(.p-carousel-indicators) {
+  display: none;
+}
+
+/* Custom Navigation Styles */
+.carousel-custom-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.carousel-arrow {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #ED2924;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-arrow:hover {
+  color: #440000;
+}
+
+.carousel-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.carousel-custom-dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carousel-custom-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #ccc;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-custom-dot:hover {
+  border-color: #ED2924;
+}
+
+.carousel-custom-dot.active {
+  background: #ED2924;
+  border-color: #ED2924;
+}
+
+/* Responsive Carousel Images */
+@media (max-width: 1030px) {
+  .carousel-project-image {
+    width: 350px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 900px) {
+  .carousel-project-image {
+    width: 340px;
+    height: 272px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-project-image {
+    width: 100%;
+    max-width: 472px;
+    height: auto;
+    aspect-ratio: 472 / 378;
+  }
+  
+  .carousel-image-wrapper {
+    padding: 0 8px;
+  }
+  
+  .carousel-custom-nav {
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .carousel-arrow {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .carousel-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .carousel-custom-dots {
+    gap: 8px;
+  }
+  
+  .carousel-custom-dot {
+    width: 8px;
+    height: 8px;
+    border-width: 1.5px;
+  }
+}
+
+/* ===== IMAGE POPUP MODAL ===== */
+.image-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image-popup-container {
+  position: relative;
+  width: 70vw;
+  max-width: 70vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-image {
+  width: auto;
+  max-width: 100%;
+  height: 70vh;
+  object-fit: cover;
+  border-radius: 16px;
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Navigation Buttons */
+.popup-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.popup-nav-btn:hover {
+  background: rgba(237, 41, 36, 0.8);
+}
+
+.popup-nav-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.popup-nav-prev {
+  right: -70px;
+}
+
+.popup-nav-next {
+  left: -70px;
+}
+
+/* Image Counter */
+.popup-counter {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 14px;
+  font-family: "Cairo", sans-serif;
+}
+
+/* Cursor for clickable images */
+.carousel-image-wrapper {
+  cursor: pointer;
+  padding: 20px 0px;
+}
+
+/* Responsive Popup */
+@media (max-width: 768px) {
+  .image-popup-container {
+    width: 95vw;
+    max-width: 95vw;
+  }
+  
+  .popup-image {
+    width: 100%;
+    height: 350px;
+    border-radius: 12px;
+  }
+  
+  .popup-nav-prev {
+    right: 10px;
+    top: auto;
+    bottom: -60px;
+    transform: none;
+  }
+  
+  .popup-nav-next {
+    left: 10px;
+    top: auto;
+    bottom: -60px;
+    transform: none;
+  }
+  
+  .popup-nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .popup-counter {
+    bottom: -100px;
+  }
+}
