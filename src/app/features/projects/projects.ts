@@ -293,7 +293,7 @@ export class Projects implements OnInit, AfterViewInit, OnDestroy {
       event.stopPropagation();
     }
     if (project?.slug) {
-      this.router.navigate(['/project-det'], { queryParams: { slug: project.slug } });
+      this.router.navigate(['/project-det', project.slug]);
     }
   }
 }

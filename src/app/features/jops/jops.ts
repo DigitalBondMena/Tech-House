@@ -118,7 +118,7 @@ export class Jops implements OnInit, AfterViewInit {
       event.stopPropagation();
     }
     if (job?.slug) {
-      this.router.navigate(['/job-det'], { queryParams: { slug: job.slug } });
+      this.router.navigate(['/job-det', job.slug]);
     }
   }
 }

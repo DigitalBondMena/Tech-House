@@ -77,7 +77,7 @@ export class ProjectDet {
   });
 
   constructor() {
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
         this.router.navigate(['/projects']);
@@ -116,7 +116,7 @@ export class ProjectDet {
           } else if ((data as any).projects && Array.isArray((data as any).projects.data)) {
             // It's a ProjectsResponse - get the first project or search by slug
             const projects = (data as any).projects.data;
-            const currentSlug = this.route.snapshot.queryParams['slug'];
+            const currentSlug = this.route.snapshot.params['slug'];
             extractedProject = projects.find((p: any) => p.slug === currentSlug) || projects[0];
           } else if ((data as any).id) {
             // Direct project object

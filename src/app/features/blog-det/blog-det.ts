@@ -130,7 +130,7 @@ export class BlogDet {
   });
 
   constructor() {
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
         this.router.navigate(['/blogs']);
@@ -246,9 +246,7 @@ export class BlogDet {
   }
 
   navigateToRelatedBlog(blog: any) {
-    this.router.navigate(['/blog-det'], {
-      queryParams: { slug: blog.slug }
-    });
+    this.router.navigate(['/blog-det', blog.slug]);
   }
 
   getResponsiveImage(images?: string[] | null): string {

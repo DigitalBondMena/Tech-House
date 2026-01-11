@@ -191,7 +191,7 @@ export class JopDet {
       this.checkUrlForDone();
     });
     
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       const slug = params['slug'];
       if (!slug) {
         this.router.navigate(['/jobs']);
@@ -619,11 +619,7 @@ export class JopDet {
           // Add "Done" to the route path
           const currentUrl = this.router.url.split('?')[0];
           if (!currentUrl.endsWith('/done')) {
-            const queryParams = this.router.parseUrl(this.router.url).queryParams;
-            const queryString = Object.keys(queryParams).length > 0 
-              ? '?' + new URLSearchParams(queryParams as any).toString() 
-              : '';
-            this.router.navigateByUrl(currentUrl + '/done' + queryString, { replaceUrl: false });
+            this.router.navigateByUrl(currentUrl + '/done', { replaceUrl: false });
           }
         },
         error: (error) => {
@@ -859,11 +855,7 @@ export class JopDet {
     const currentUrl = this.location.path().split('?')[0];
     if (currentUrl.endsWith('/done')) {
       const baseUrl = currentUrl.replace('/done', '');
-      const queryParams = this.router.parseUrl(this.router.url).queryParams;
-      const queryString = Object.keys(queryParams).length > 0 
-        ? '?' + new URLSearchParams(queryParams as any).toString() 
-        : '';
-      this.location.replaceState(baseUrl + queryString);
+      this.location.replaceState(baseUrl);
     }
   }
   

@@ -42,19 +42,19 @@ export const routes: Routes = [
             },
           
             {
-                path: 'project-det', loadComponent: () => import('./features/project-det/project-det').then(m => m.ProjectDet
+                path: 'project-det/:slug', loadComponent: () => import('./features/project-det/project-det').then(m => m.ProjectDet
                 )
             },
             {
-                path: 'blog-det', loadComponent: () => import('./features/blog-det/blog-det').then(m => m.BlogDet
+                path: 'blog-det/:slug', loadComponent: () => import('./features/blog-det/blog-det').then(m => m.BlogDet
                 )
             },
             {
-                path: 'job-det/done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                path: 'job-det/:slug/done', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             {
-                path: 'job-det', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
+                path: 'job-det/:slug', loadComponent: () => import('./features/jop-det/jop-det').then(m => m.JopDet
                 )
             },
             { path: '**', redirectTo: '', pathMatch: 'full' },

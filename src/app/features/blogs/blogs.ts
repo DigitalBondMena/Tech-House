@@ -86,7 +86,7 @@ export class Blogs implements OnInit, AfterViewInit {
   }
 
   navigateToBlogDetail(blog: any): void {
-    this.router.navigate(['/blog-det'], { queryParams: { slug: blog.slug } });
+    this.router.navigate(['/blog-det', blog.slug]);
   }
 
   getResponsiveImage(image: { desktop: string; tablet: string; mobile: string } | null | undefined): string {
