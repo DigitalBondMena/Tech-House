@@ -1,10 +1,9 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { loadingInterceptor } from './core/interceptors/loading-interceptor';
@@ -31,8 +30,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideHttpClient(withInterceptors([loadingInterceptor])),
-    importProvidersFrom(NgxSpinnerModule)
-
+    provideHttpClient(withInterceptors([loadingInterceptor]))
   ]
 };

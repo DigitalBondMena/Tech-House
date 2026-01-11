@@ -23,7 +23,7 @@
         <p class="text-lg text-[#666] mb-8 max-w-md">{{ errorMessage() || 'الوظيفة المطلوبة غير موجودة أو تم حذفها.' }}
         </p>
         <button (click)="navigateToJobs()"
-            class="bg-[#ED2924] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#c41e1a] transition-colors">
+            class="bg-[#B91C17] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#c41e1a] transition-colors">
             العودة إلى الوظائف
         </button>
     </div>
@@ -66,7 +66,7 @@
                 <div class="job-hero-actions mt-6">
                     <button class="job-apply-btn" (click)="scrollToApply()">
                         {{ heroBtnText() }}
-                        <img src="/images/icons/arrow-left.webp" alt="arrow-left" width="28" height="28" class="apply-arrow">
+                        <img src="/images/icons/arrow-left.webp" alt="" width="22" height="22" class="apply-arrow w-[22px] h-[22px]">
                     </button>
                 </div>
                 }
@@ -307,7 +307,7 @@
                 </a>
                 <app-app-button [btnText]="isSubmitting() ? 'جاري الإرسال...' : 'إرسال'"
                     [disabled]="jobApplicationForm.invalid || isSubmitting()" (buttonClick)="onSubmitApplication()"
-                    customClass="ps-7 pe-3 py-4 bg-[#ED2924] text-white rounded-lg flex items-center justify-center transition duration-300 hover:bg-[#c41e1a]">
+                    customClass="ps-7 pe-3 py-4 bg-[#B91C17] text-white rounded-lg flex items-center justify-center transition duration-300 hover:bg-[#c41e1a]">
                 </app-app-button>
             </div>
         </form>
