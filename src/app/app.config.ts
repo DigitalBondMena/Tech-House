@@ -1,12 +1,11 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
-import { loadingInterceptor } from './core/interceptors/loading-interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -20,7 +19,12 @@ export const appConfig: ApplicationConfig = {
       }),
       withViewTransitions()
     ),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(
+      withEventReplay(),
+      withHttpTransferCacheOptions({
+        includePostRequests: false
+      })
+    ),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -30,6 +34,8 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideHttpClient(withInterceptors([loadingInterceptor]))
+    provideHttpClient(
+      withFetch(),
+    )
   ]
 };
